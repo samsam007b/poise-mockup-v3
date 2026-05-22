@@ -126,6 +126,53 @@ footer a{color:var(--ink);text-decoration:none;opacity:.6;transition:opacity .3s
 footer a:hover{opacity:1;}
 @media(max-width:768px){footer{flex-direction:column;gap:12px;text-align:center;}}
 
+/* ── DUALITY ─── */
+.duality-section{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;}
+.studio-half{padding:clamp(60px,10vw,120px) clamp(32px,6vw,80px);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.studio-half--simple{background:var(--ink);color:var(--cream);}
+.studio-half--sqwr{background:var(--cream);color:var(--ink);border-left:1px solid rgba(14,13,10,.08);}
+.studio-half-eyebrow{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:32px;display:block;}
+.studio-half--simple .studio-half-eyebrow{color:var(--sage);}
+.studio-half--sqwr .studio-half-eyebrow{color:rgba(14,13,10,.4);}
+.studio-half-name{font-family:var(--font-f);font-weight:300;font-style:italic;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.95;letter-spacing:-.02em;margin-bottom:12px;}
+.studio-half--simple .studio-half-name{color:var(--cream);}
+.studio-half--sqwr .studio-half-name{color:var(--ink);}
+.studio-half-role{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:40px;}
+.studio-half--simple .studio-half-role{color:rgba(237,232,223,.3);}
+.studio-half--sqwr .studio-half-role{color:rgba(14,13,10,.3);}
+.studio-half-list{list-style:none;display:flex;flex-direction:column;gap:14px;flex:1;margin-bottom:40px;}
+.studio-half-list li{font-family:var(--font-j);font-weight:300;font-size:13px;letter-spacing:.03em;line-height:1.6;display:flex;align-items:baseline;gap:10px;}
+.studio-half--simple .studio-half-list li{color:rgba(237,232,223,.5);}
+.studio-half--sqwr .studio-half-list li{color:rgba(14,13,10,.5);}
+.studio-half-list li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.studio-half--simple .studio-half-list li::before{background:var(--sage);}
+.studio-half--sqwr .studio-half-list li::before{background:var(--terra);}
+.studio-half-link{font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s;}
+.studio-half--simple .studio-half-link{color:var(--cream);opacity:.45;}
+.studio-half--simple .studio-half-link:hover{opacity:1;}
+.studio-half--sqwr .studio-half-link{color:var(--ink);opacity:.45;}
+.studio-half--sqwr .studio-half-link:hover{opacity:1;}
+
+.duality-statement{background:var(--ink);color:var(--cream);padding:80px clamp(32px,8vw,120px);border-top:1px solid rgba(237,232,223,.06);}
+.duality-statement-text{font-family:var(--font-f);font-weight:300;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.4;letter-spacing:-.01em;color:rgba(237,232,223,.7);max-width:860px;}
+.duality-statement-text em{font-style:italic;color:var(--cream);}
+
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--ink);border-top:1px solid rgba(237,232,223,.06);}
+.why-item{padding:48px 40px;border-right:1px solid rgba(237,232,223,.06);}
+.why-item:last-child{border-right:none;}
+.why-num{font-family:var(--font-f);font-weight:300;font-size:2.5rem;color:var(--sage);line-height:1;margin-bottom:16px;}
+.why-title{font-family:var(--font-j);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);margin-bottom:10px;}
+.why-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.03em;line-height:1.7;color:rgba(237,232,223,.35);}
+
+@media(max-width:900px){
+  .duality-section{grid-template-columns:1fr;}
+  .studio-half--sqwr{border-left:none;border-top:1px solid rgba(14,13,10,.08);}
+  .why-grid{grid-template-columns:1fr;}
+  .why-item{border-right:none;border-bottom:1px solid rgba(237,232,223,.06);}
+  .why-item:last-child{border-bottom:none;}
+  .duality-statement{padding:60px 24px;}
+}
+
 /* Intersection Observer Fade */
 [data-fade]{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;}
 [data-fade].visible{opacity:1;transform:translateY(0);}
@@ -160,6 +207,67 @@ footer a:hover{opacity:1;}
     Visiter sqwr.be <span>↗</span>
   </a>
 </section>
+
+<!-- DUALITÉ -->
+<section class="duality-section" data-fade>
+
+  <!-- Simple Studio — gauche ink -->
+  <div class="studio-half studio-half--simple">
+    <div>
+      <span class="studio-half-eyebrow">Intelligence · Automatisation</span>
+      <h2 class="studio-half-name">Simple<br>Studio</h2>
+      <p class="studio-half-role">Agents IA pour les PME</p>
+      <ul class="studio-half-list">
+        <li>FAQ, support & conciergerie automatisés</li>
+        <li>Secrétariat e-mail et WhatsApp</li>
+        <li>Prospection B2B et SEO continu</li>
+        <li>Déployé en 72h · Support mensuel inclus</li>
+      </ul>
+    </div>
+    <a href="agents.html" class="studio-half-link">Voir les agents →</a>
+  </div>
+
+  <!-- SQWR Studio — droite cream -->
+  <div class="studio-half studio-half--sqwr">
+    <div>
+      <span class="studio-half-eyebrow">Créativité · Identité</span>
+      <h2 class="studio-half-name">SQWR<br>Studio</h2>
+      <p class="studio-half-role">Branding & sites sur mesure</p>
+      <ul class="studio-half-list">
+        <li>Identité visuelle & systèmes de design</li>
+        <li>Sites web Next.js · React · TypeScript</li>
+        <li>Direction artistique & copywriting</li>
+        <li>Bruxelles · sqwr.be · depuis 2024</li>
+      </ul>
+    </div>
+    <a href="https://sqwr.be" target="_blank" rel="noopener" class="studio-half-link">Visiter sqwr.be ↗</a>
+  </div>
+
+</section>
+
+<!-- STATEMENT -->
+<div class="duality-statement" data-fade>
+  <p class="duality-statement-text">Un agent IA dans un site générique, <em>c'est du potentiel gaspillé.</em><br>Dans une identité cohérente — DA sur mesure, ton calibré — c'est quelque chose que vos clients retiennent.</p>
+</div>
+
+<!-- POURQUOI ENSEMBLE -->
+<div class="why-grid" data-fade>
+  <div class="why-item">
+    <div class="why-num">01</div>
+    <div class="why-title">Un seul brief</div>
+    <div class="why-desc">Une équipe. Une vision partagée dès le départ. Pas de traduction entre créatifs et techniciens.</div>
+  </div>
+  <div class="why-item">
+    <div class="why-num">02</div>
+    <div class="why-title">Cohérence totale</div>
+    <div class="why-desc">L'agent parle exactement dans le ton de votre marque. Pas approximativement. Exactement.</div>
+  </div>
+  <div class="why-item">
+    <div class="why-num">03</div>
+    <div class="why-title">Du pixel au message</div>
+    <div class="why-desc">De l'identité visuelle jusqu'à l'agent déployé — tout conçu pour fonctionner ensemble.</div>
+  </div>
+</div>
 
 <section class="anim-section" data-fade>
   <h2 class="section-title">Chaque interaction est une décision.</h2>
