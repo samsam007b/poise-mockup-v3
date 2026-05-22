@@ -1112,8 +1112,10 @@ if (!reduced) {
 
   sqTrio.style.gap = '0';
   sqTrio.style.width = '100%';
+  sqTrio.style.height = '100%';
   sqTrio.style.left = '0';
-  sqTrio.style.bottom = '0';
+  sqTrio.style.top = '0';
+  sqTrio.style.bottom = '';
   sqTrio.style.transform = 'none';
   Array.from(sqEls).forEach((sq, i) => {
     const cx = panelStartX + i * panelW + panelW / 2;
