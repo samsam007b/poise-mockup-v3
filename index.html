@@ -1058,6 +1058,7 @@ lenis.on('scroll', ScrollTrigger.update);
 
 let act2State = 'idle'; // 'idle' | 'playing' | 'done' | 'reversing'
 let scrollTl;
+let exitAct2Fn = null; // assigné dans if(!reduced), appelé par animateKpiPanel
 
 /* ── TIMELINE MAÎTRE — Acte 1 + Acte 2 carrés (une seule scrub) ── */
 if (!reduced) {
@@ -1152,6 +1153,40 @@ if (!reduced) {
         });
     }
   });
+
+  /* ── EXIT ACT 2 — panels → carrés → roulent vers la droite ── */
+  exitAct2Fn = function() {
+    /* 1 — tous les panels se referment simultanément */
+    gsap.to('#sq-chat-b', { scale:0,  duration:0.3, ease:'power2.in', transformOrigin:'center bottom' });
+    gsap.to('#sq-chat-g', { scaleX:0, duration:0.3, ease:'power2.in', transformOrigin:'left center'   });
+    gsap.to('#sq-chat-t', { scale:0,  duration:0.3, ease:'power2.in', transformOrigin:'center bottom' });
+
+    gsap.delayedCall(0.35, () => {
+      /* 2 — carrés réapparaissent à leur position */
+      gsap.set(sqArr, { opacity:1, y:0, x:0, rotation:0 });
+
+      /* 3 — roulent vers la droite en tournant sur eux-mêmes */
+      gsap.to(sqArr, {
+        x:        '160vw',
+        rotation:  1080,   /* 3 tours complets */
+        duration:  0.75,
+        ease:      'power2.in',
+        stagger:   0.07,
+        onComplete() {
+          /* 4 — reset silencieux */
+          gsap.set(sqTrio, { opacity:0 });
+          gsap.set(sqArr,  { x:0, y:startY, rotation:0, opacity:1 });
+          gsap.set(['#sq-chat-b','#sq-chat-g','#sq-chat-t'], { opacity:0 });
+          ['sq-msgs-b','sq-msgs-g'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.innerHTML = '';
+          });
+          gsap.set(['#sq-chat-b-outcome','#sq-chat-g-outcome'], { display:'none' });
+          gsap.set(['#sq-kpi-s1','#sq-kpi-s2','#sq-kpi-cta'], { opacity:0, y:8 });
+          lenis.start();
+        }
+      });
+    });
+  };
 }
 
 /* ── SQUARES CHAT — expansion functions ─────────────────── */
@@ -1325,7 +1360,11 @@ function animateKpiPanel() {
   gsap.to('#sq-kpi-cta', { opacity:1, duration:0.35, ease:'power3.out', delay:0.35,
     onComplete() {
       act2State = 'done';
-      lenis.start();
+      /* 1.5s de lecture du panel KPI, puis sortie en roulant */
+      gsap.delayedCall(1.5, () => {
+        if (exitAct2Fn) exitAct2Fn();
+        else lenis.start();
+      });
     }
   });
 }
