@@ -1057,6 +1057,7 @@ lenis.on('scroll', ScrollTrigger.update);
 })();
 
 let act2State = 'idle'; // 'idle' | 'playing' | 'done' | 'reversing'
+let scrollTl;
 
 /* ── HERO SCROLL TRANSITION — bands → cream bg ─────────────── */
 if (!reduced) {
@@ -1067,7 +1068,7 @@ if (!reduced) {
   const cSX = 5;
   const cSY = (vh / 72) * 1.8;
 
-  const scrollTl = gsap.timeline({
+  scrollTl = gsap.timeline({
     scrollTrigger:{
       trigger:'#hero',
       start:'top top',
@@ -1131,6 +1132,7 @@ if (!reduced) {
     onEnter() {
       if (act2State !== 'idle') return;
       act2State = 'playing';
+      if (scrollTl) scrollTl.progress(1); // force Acte 1 à 100% — élimine le lag scrub
       lenis.stop();
 
       gsap.set(sqTrio, { opacity:1 });
