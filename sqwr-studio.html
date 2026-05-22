@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SQWR Studio — Simple Studio</title>
+<title>SQWR Studio — Branding & Identité</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Spectral:wght@300;400&family=Fraunces:ital,wght@1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -26,10 +28,10 @@ body{background:#ede8df;color:#0e0d0a;cursor:none;overflow-x:hidden;font-family:
 #cursor.expand{width:32px;height:32px;}
 
 /* ── NAV ─── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 40px;mix-blend-mode:difference;pointer-events:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 40px;background:rgba(237,232,223,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(14,13,10,.06);pointer-events:all;}
 .nav-logo{font-family:var(--font-j);font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);pointer-events:all;display:flex;align-items:baseline;text-decoration:none;}
-.nl-poise{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:18px;letter-spacing:-.025em;text-transform:none;}
-.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;}
+.nl-poise{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:18px;letter-spacing:-.025em;text-transform:none;color:var(--sage);}
+.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;color:var(--ink);}
 .nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
 .nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .2s;}
 .nav-links a:hover,.nav-links a.active{opacity:1;}
@@ -38,118 +40,101 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 @media(max-width:768px){.nav-links{display:none;}.nav-cta{display:none;}}
 
 /* ── HERO ─── */
-.hero{min-height:100vh;padding:clamp(120px,18vh,200px) clamp(32px,8vw,120px) clamp(64px,10vh,100px);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border-bottom:1px solid rgba(14,13,10,.06);}
-.hero-bg-word{position:absolute;top:50%;left:clamp(32px,8vw,120px);transform:translateY(-52%);font-family:var(--font-f);font-weight:300;font-size:clamp(10rem,22vw,20rem);line-height:.88;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(14,13,10,.06);pointer-events:none;user-select:none;}
-.hero-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:28px;}
-.hero-title{font-family:var(--font-f);font-weight:300;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.95;letter-spacing:-.02em;color:var(--ink);max-width:700px;margin-bottom:32px;}
-.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
-.hero-desc{font-family:var(--font-j);font-weight:300;font-size:clamp(.9rem,1.2vw,1rem);line-height:1.7;color:rgba(14,13,10,.4);max-width:380px;}
-@media(max-width:768px){.hero-bottom{flex-direction:column;align-items:flex-start;}}
+.hero{min-height:100vh;padding:140px 40px 60px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;background:var(--cream);}
+.hero-logo-wrap{max-width:520px;width:100%;margin-bottom:48px;animation:fadeInUp 1.2s ease-out;}
+.hero-logo-wrap svg{width:100%;height:auto;display:block;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.hero-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(14,13,10,.4);display:block;margin-bottom:24px;text-align:center;}
+.hero-title{font-family:var(--font-f);font-weight:300;font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.2;letter-spacing:-.02em;color:var(--ink);text-align:center;margin-bottom:16px;max-width:700px;}
+.hero-desc{font-family:var(--font-j);font-weight:300;font-size:14px;line-height:1.7;color:rgba(14,13,10,.5);max-width:420px;margin:0 auto 40px;text-align:center;}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-j);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--cream);padding:14px 28px;border-radius:4px;text-decoration:none;transition:opacity .3s ease;cursor:pointer;}
+.hero-cta:hover{opacity:.85;transform:translateX(4px);}
+@media(max-width:768px){.hero{padding:120px 24px 40px;}.hero-title{font-size:2rem;}}
 
-/* ── DUALITÉ ─── */
-.duality{display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid rgba(14,13,10,.06);}
-.duality-sep{background:rgba(14,13,10,.06);}
-.duality-col{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);}
-.duality-num{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(14,13,10,.18);display:block;margin-bottom:28px;}
-.duality-name{font-family:var(--font-f);font-weight:300;font-size:clamp(1.8rem,3.5vw,3rem);color:var(--ink);line-height:1;margin-bottom:16px;}
-.duality-role{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:28px;}
-.duality-col:first-child .duality-role{color:var(--sage);}
-.duality-col:last-child .duality-role{color:var(--bleu);}
-.duality-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.04em;line-height:1.75;color:rgba(14,13,10,.38);max-width:300px;}
-.duality-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
-.duality-tag{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(14,13,10,.1);color:rgba(14,13,10,.35);}
-@media(max-width:768px){.duality{grid-template-columns:1fr;}.duality-sep{display:none;}.duality-col{border-bottom:1px solid rgba(14,13,10,.06);}}
+/* ── ANIMATIONS SECTION ─── */
+.anim-section{background:var(--ink);color:var(--cream);padding:80px 40px;position:relative;z-index:2;}
+.section-title{font-family:var(--font-f);font-weight:300;font-size:clamp(2rem,4vw,3.2rem);text-align:center;margin-bottom:60px;letter-spacing:-.01em;}
+.anim-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(237,232,223,.08);max-width:1200px;margin:0 auto;border:1px solid rgba(237,232,223,.08);}
+.anim-card{background:rgba(237,232,223,.03);border:1px solid rgba(237,232,223,.08);padding:40px;display:flex;flex-direction:column;}
+.anim-card-visual{height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:32px;overflow:hidden;background:rgba(14,13,10,.3);border-radius:4px;position:relative;}
+.anim-name{font-family:var(--font-j);font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);margin-bottom:12px;opacity:.8;}
+.anim-desc{font-family:var(--font-j);font-size:12px;font-weight:300;color:rgba(237,232,223,.4);line-height:1.7;flex:1;}
 
-/* ── STATEMENT ─── */
-.statement{padding:clamp(72px,12vh,120px) clamp(32px,8vw,120px);border-bottom:1px solid rgba(14,13,10,.06);max-width:1000px;}
-.statement-text{font-family:var(--font-f);font-weight:300;font-size:clamp(1.6rem,3.2vw,2.8rem);color:var(--ink);line-height:1.3;letter-spacing:-.01em;}
-.statement-text em{color:var(--sage);font-style:normal;}
+/* Pixel Grid Demo */
+.pixel-grid{display:grid;grid-template-columns:repeat(12,6px);gap:3px;width:fit-content;margin:0 auto;}
+.pixel{width:6px;height:6px;background:var(--cream);opacity:.08;border-radius:1px;}
+.pixel.lit{opacity:.4;animation:pixelPulse 2s ease-in-out infinite;}
+@keyframes pixelPulse{0%,100%{opacity:.4;}50%{opacity:.7;}}
 
-/* ── PROJETS ─── */
-.projects-section{padding:clamp(56px,8vh,100px) clamp(32px,8vw,120px);border-bottom:1px solid rgba(14,13,10,.06);}
-.projects-label{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:56px;}
-.project-card{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(40px,6vw,100px);align-items:center;padding:56px 0;border-top:1px solid rgba(14,13,10,.06);}
-.project-card:last-child{border-bottom:1px solid rgba(14,13,10,.06);}
-@media(max-width:768px){.project-card{grid-template-columns:1fr;gap:36px;}}
-.project-num{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;color:rgba(14,13,10,.18);display:block;margin-bottom:20px;}
-.project-name{font-family:var(--font-f);font-weight:300;font-size:clamp(2rem,4vw,3.5rem);color:var(--ink);line-height:.95;letter-spacing:-.02em;margin-bottom:10px;}
-.project-sector{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-bottom:24px;}
-.project-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.03em;line-height:1.75;color:rgba(14,13,10,.38);margin-bottom:32px;max-width:320px;}
-.project-services{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
-.project-service-tag{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;}
-.project-service-tag.sqwr{border:1px solid rgba(155,176,196,.3);color:var(--bleu);}
-.project-service-tag.poise{border:1px solid rgba(122,153,119,.3);color:var(--sage);}
-.project-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.5;transition:opacity .2s,gap .2s;}
-.project-link:hover{opacity:1;gap:18px;}
+/* Scatter Text Demo */
+.scatter-text{display:flex;gap:.5em;justify-content:center;font-family:var(--font-f);font-size:28px;letter-spacing:.8em;color:var(--cream);opacity:.5;}
+.letter{display:inline-block;animation:letterFloat 3.5s ease-in-out infinite;}
+@keyframes letterFloat{0%{transform:translateX(0) translateY(0);opacity:.3;}50%{transform:translateX(8px) translateY(-8px);opacity:.7;}100%{transform:translateX(0) translateY(0);opacity:.3;}}
+.letter:nth-child(1){animation-delay:0s;}
+.letter:nth-child(2){animation-delay:.3s;}
+.letter:nth-child(3){animation-delay:.6s;}
+.letter:nth-child(4){animation-delay:.9s;}
 
-/* ── VISUAL MOCK ─── */
-.project-visual{aspect-ratio:16/10;background:rgba(14,13,10,.04);border:1px solid rgba(14,13,10,.06);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.project-visual-inner{width:88%;height:88%;background:rgba(14,13,10,.03);border:1px solid rgba(14,13,10,.04);display:flex;flex-direction:column;padding:20px 24px;gap:10px;}
-.pv-bar{height:2px;background:rgba(14,13,10,.06);border-radius:1px;}
-.pv-bar.accent{background:rgba(122,153,119,.35);width:40%;}
-.pv-hero-block{flex:1;display:flex;align-items:flex-end;padding:0 0 8px;}
-.pv-hero-text{font-family:var(--font-f);font-weight:300;font-size:clamp(.9rem,2.5vw,1.6rem);color:rgba(14,13,10,.2);letter-spacing:-.01em;line-height:1;}
-.pv-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
-.pv-card{height:28px;background:rgba(14,13,10,.04);border:1px solid rgba(14,13,10,.04);}
-.pv-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(14,13,10,.04);}
-.pv-dot{width:5px;height:5px;border-radius:50%;}
-.pv-dot.sage{background:var(--sage);opacity:.5;}
-.pv-dot.cream{background:var(--ink);opacity:.15;}
-.pv-url{font-family:var(--font-j);font-weight:800;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:rgba(14,13,10,.15);}
+/* Intro Animation Demo */
+.intro-demo{width:80px;height:80px;background:rgba(14,13,10,.9);border-radius:4px;display:flex;align-items:center;justify-content:center;margin:0 auto;}
+.intro-demo svg{width:60px;height:auto;opacity:.5;animation:logoPulse 2.5s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.7;transform:scale(1.05);}}
 
-/* ── CTA SQWR ─── */
-.sqwr-cta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(14,13,10,.06);}
-@media(max-width:768px){.sqwr-cta{grid-template-columns:1fr;}}
-.sqwr-cta-left{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);border-right:1px solid rgba(14,13,10,.06);}
-.sqwr-cta-right{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);display:flex;flex-direction:column;justify-content:space-between;}
-.sqwr-cta-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--bleu);display:block;margin-bottom:24px;}
-.sqwr-cta-title{font-family:var(--font-f);font-weight:300;font-size:clamp(1.8rem,3.5vw,3rem);color:var(--ink);line-height:1.1;margin-bottom:20px;}
-.sqwr-cta-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.04em;line-height:1.75;color:rgba(14,13,10,.35);max-width:320px;}
-.sqwr-cta-stat{margin-bottom:16px;}
-.sqwr-cta-stat-val{font-family:var(--font-j);font-weight:800;font-size:clamp(2rem,4vw,3.5rem);color:var(--ink);display:block;}
-.sqwr-cta-stat-lbl{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(14,13,10,.3);}
-.sqwr-cta-btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;background:var(--ink);padding:16px 32px;margin-top:40px;transition:background .2s;align-self:flex-start;}
-.sqwr-cta-btn:hover{background:var(--sage);}
-.sqwr-cta-btn-arrow{transition:transform .2s;}
-.sqwr-cta-btn:hover .sqwr-cta-btn-arrow{transform:translateX(6px);}
+/* Flip Demo */
+.flip-demo{width:120px;height:120px;margin:0 auto;perspective:1000px;cursor:pointer;}
+.flip-demo-inner{width:100%;height:100%;background:rgba(237,232,223,.1);border:1px solid rgba(237,232,223,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:28px;transition:transform .6s cubic-bezier(.68,-.55,.265,1.55);transform-style:preserve-3d;position:relative;}
+.flip-demo:hover .flip-demo-inner{transform:rotateY(12deg) rotateX(-8deg);}
+.flip-demo-inner::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><defs><filter id="noise"><feTurbulence baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter></defs><rect width="120" height="120" fill="rgba(237,232,223,0.05)" filter="url(%23noise)"/></svg>');border-radius:4px;opacity:.3;pointer-events:none;}
 
-/* ── POISE INTERSTITIEL ─── */
-.poise-interstitiel{
-  border-top:1px solid rgba(14,13,10,.06);
-  padding:clamp(48px,7vh,80px) clamp(32px,8vw,120px);
-  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
-  background:rgba(122,153,119,.04);
-}
-.pi-text{
-  font-family:var(--font-f);font-weight:300;
-  font-size:clamp(1.3rem,2.5vw,1.9rem);color:rgba(14,13,10,.55);
-  line-height:1.2;
-}
-.pi-text em{color:var(--ink);font-style:normal;}
-.pi-btn{
-  flex-shrink:0;display:inline-flex;align-items:center;gap:12px;
-  font-family:var(--font-j);font-weight:800;font-size:9px;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ink);background:var(--sage);
-  padding:14px 28px;text-decoration:none;
-  transition:background .2s;
-}
-.pi-btn:hover{background:var(--ink);}
-.pi-btn-arrow{transition:transform .2s;}
-.pi-btn:hover .pi-btn-arrow{transform:translateX(6px);}
+/* ── PORTFOLIO ─── */
+.portfolio{background:var(--cream);padding:80px 40px;position:relative;z-index:2;}
+.portfolio-intro{text-align:center;font-size:14px;color:rgba(14,13,10,.5);margin-bottom:48px;}
+.portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(14,13,10,.06);max-width:1200px;margin:0 auto;border:1px solid rgba(14,13,10,.06);}
+.portfolio-item{background:var(--cream);padding:48px 40px;position:relative;overflow:hidden;border:1px solid rgba(14,13,10,.06);min-height:320px;display:flex;flex-direction:column;justify-content:space-between;}
+.portfolio-num{font-family:var(--font-f);font-size:clamp(3rem,8vw,6rem);font-weight:300;color:rgba(14,13,10,.04);position:absolute;top:24px;right:24px;line-height:1;z-index:0;}
+.portfolio-content{position:relative;z-index:1;}
+.portfolio-name{font-family:var(--font-f);font-size:24px;font-weight:300;color:var(--ink);margin-bottom:8px;}
+.portfolio-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.portfolio-sector{font-family:var(--font-j);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);}
+.portfolio-year{font-family:var(--font-j);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(14,13,10,.3);}
+.portfolio-desc{font-size:13px;color:rgba(14,13,10,.45);line-height:1.6;margin-bottom:24px;}
+.portfolio-link{font-family:var(--font-j);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.4;transition:opacity .3s ease;display:inline-flex;gap:6px;}
+.portfolio-link:hover{opacity:1;}
+@media(max-width:768px){.anim-grid,.portfolio-grid{grid-template-columns:1fr;gap:1px;}.anim-section,.portfolio{padding:60px 24px;}.portfolio-num{font-size:3rem;}.section-title{font-size:1.8rem;}}
+
+/* ── STACK ─── */
+.stack-section{background:var(--cream);padding:40px;border-top:1px solid rgba(14,13,10,.06);border-bottom:1px solid rgba(14,13,10,.06);text-align:center;}
+.stack-strip{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;align-items:center;max-width:1200px;margin:0 auto;}
+.stack-tag{font-family:var(--font-j);font-size:11px;font-weight:400;letter-spacing:.06em;color:rgba(14,13,10,.45);}
+.stack-sep{color:var(--sage);opacity:.5;}
+
+/* ── CTA DOUBLE ─── */
+.cta-double{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--cream);border-top:1px solid rgba(14,13,10,.08);min-height:280px;}
+.cta-half{padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(14,13,10,.08);}
+.cta-half:last-child{border-right:none;}
+.cta-half-title{font-family:var(--font-f);font-size:24px;font-weight:300;color:var(--ink);line-height:1.3;}
+.cta-half-link{font-family:var(--font-j);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border-radius:4px;text-decoration:none;display:inline-flex;gap:8px;transition:opacity .3s ease;cursor:pointer;align-self:flex-start;}
+.cta-half:first-child .cta-half-link{background:var(--ink);color:var(--cream);}
+.cta-half:first-child .cta-half-link:hover{opacity:.85;transform:translateX(4px);}
+.cta-half:last-child .cta-half-link{border:1px solid rgba(14,13,10,.18);color:var(--ink);}
+.cta-half:last-child .cta-half-link:hover{background:rgba(14,13,10,.04);transform:translateX(4px);}
+@media(max-width:768px){.cta-double{grid-template-columns:1fr;}.cta-half{border-right:none;border-bottom:1px solid rgba(14,13,10,.08);}.cta-half:last-child{border-bottom:none;}}
 
 /* ── FOOTER ─── */
-footer{padding:32px clamp(32px,8vw,120px);display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(14,13,10,.06);}
-footer span{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(14,13,10,.2);}
-footer a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(14,13,10,.2);text-decoration:none;}
-footer a:hover{color:rgba(14,13,10,.5);}
+footer{background:var(--cream);padding:40px;border-top:1px solid rgba(14,13,10,.08);text-align:center;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(14,13,10,.4);}
+footer a{color:var(--ink);text-decoration:none;opacity:.6;transition:opacity .3s ease;}
+footer a:hover{opacity:1;}
+@media(max-width:768px){footer{flex-direction:column;gap:12px;text-align:center;}}
+
+/* Intersection Observer Fade */
+[data-fade]{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;}
+[data-fade].visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
 
 <div id="cursor"></div>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo"><em class="nl-poise">Simple</em><span class="nl-studio">Studio</span></a>
   <ul class="nav-links">
@@ -160,210 +145,381 @@ footer a:hover{color:rgba(14,13,10,.5);}
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-word" aria-hidden="true">SQWR</div>
-  <span class="hero-tag">Notre jumeau créatif</span>
-  <h1 class="hero-title">La forme et le fond.<br>Ensemble.</h1>
-  <div class="hero-bottom">
-    <p class="hero-desc">Simple Studio automatise et déploie les agents IA. SQWR Studio crée les identités, les sites et les systèmes visuels. Les deux travaillent ensemble quand un projet le mérite.</p>
+<section class="hero" data-fade>
+  <div class="hero-logo-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="501" height="356" viewBox="0 0 501.0 355.7"><path fill="#0a0a0a" d="M175.183 77.1843C178.661 77.4064 184.218 77.244 187.888 77.2445L212.014 77.2482C211.973 80.2019 211.996 83.1562 212.086 86.1088C214.522 86.3536 219.103 86.1829 221.831 86.2497C221.687 83.544 221.791 80.0504 221.746 77.2443C227.685 77.2604 233.868 77.353 239.787 77.2391L239.754 206.773C237.354 206.632 222.836 207.086 221.872 206.442C221.505 191.347 221.928 175.923 221.715 160.778C218.464 160.805 215.323 160.693 211.989 160.755C211.98 163.806 211.943 166.52 211.764 169.563L189.917 169.575C185.783 169.563 179.252 169.371 175.257 169.717C175.239 166.825 175.165 163.753 175.306 160.877C172.184 160.707 169.283 160.673 166.156 160.655L166.007 151.061C163.081 150.996 159.742 151 156.861 150.708C156.82 132.831 156.423 113.931 156.925 96.1501C159.371 95.945 163.45 96.0174 166.018 95.9868C165.931 92.7056 165.948 89.4225 166.068 86.1424C168.926 86.2743 172.31 86.1967 175.207 86.1902C175.223 83.1882 175.215 80.1861 175.183 77.1843ZM183.674 104.238C180.715 104.233 177.665 104.269 174.714 104.169C175.058 116.513 174.574 129.674 174.762 142.164C177.76 142.237 180.759 142.26 183.758 142.232C183.733 145.411 183.739 148.591 183.774 151.77L203.43 151.748C204.784 151.75 211.083 151.853 212.132 151.676C212.29 151.164 212.298 151.096 212.246 150.562C212.237 147.881 212.299 144.78 212.199 142.132C215.388 142.303 218.726 142.249 221.932 142.247C221.562 139.199 221.749 132.469 221.752 129.08L221.741 104.241L212.285 104.192C212.162 101.233 212.107 98.2727 212.122 95.3119C209.876 95.4045 207.452 95.3363 205.197 95.2752C198.102 95.0829 190.773 95.5277 183.703 95.2113C183.848 98.1581 183.731 101.277 183.674 104.238Z"/><path fill="#0a0a0a" d="M361.804 76.1912L362.017 76.2664C362.472 77.052 362.175 100.973 362.231 103.598C359.146 103.507 356.058 103.529 352.974 103.663C352.905 111.568 352.893 119.472 352.938 127.376C352.944 131.448 353.076 136.609 352.782 140.598C349.828 140.494 346.78 140.812 343.764 140.679L343.697 168.742C341.066 168.597 337.144 168.716 334.403 168.719L316.547 168.75C316.435 162.904 316.581 156.859 316.512 150.991C316.488 148.937 316.394 142.632 316.658 140.91C313.528 140.7 310.39 140.644 307.254 140.741C307.113 129.45 306.875 115.064 307.271 103.789C304.333 103.629 300.033 103.861 297.489 103.554C297.576 115.892 297.28 128.461 297.507 140.77C294.325 140.645 290.921 140.756 287.717 140.807C288.134 149.533 287.419 159.796 287.678 168.706C278.557 168.791 269.332 168.609 260.229 168.8L260.207 150.921C260.204 147.841 260.092 143.866 260.276 140.845C257.272 140.713 254.264 140.682 251.258 140.753C251.134 131.947 251.096 123.14 251.142 114.334C251.163 111.453 250.985 106.442 251.258 103.779L244.99 103.556L241.771 103.545L241.829 76.2691C247.863 76.1964 253.898 76.1901 259.932 76.2502C260.261 85.1443 259.751 94.8569 260.01 103.984C262.239 104.066 266.516 103.776 268.444 104.293C269.512 105.629 268.92 136.299 269.057 141.227C273.678 141.392 278.865 141.204 283.592 141.281C283.286 137.886 283.449 131.606 283.452 127.998L283.512 104.038C286.765 104.085 290.018 104.058 293.269 103.958C293.027 94.8322 293.277 85.2918 293.218 76.1117C297.043 76.4288 307.5 76.2513 311.53 76.1627C311.278 84.9942 311.435 95.0849 311.496 103.963C314.493 104.066 317.711 104.028 320.727 104.04C320.644 116.439 320.654 128.839 320.757 141.238C325.446 141.322 330.261 141.28 334.962 141.316C335.206 137.032 334.609 105.467 335.58 104.326C337.167 103.945 342.284 103.995 344.255 103.964C344.071 94.7642 344.267 85.3339 344.207 76.0997C349.131 76.4258 356.68 76.202 361.804 76.1912ZM343.027 167.655C343.079 165.074 343.335 147.117 342.764 145.896C342.608 146.348 342.442 147.073 342.493 147.521C342.803 150.213 341.711 166.671 343.027 167.655Z"/><path fill="#0a0a0a" d="M342.764 145.896C343.335 147.117 343.079 165.074 343.027 167.655C341.711 166.671 342.803 150.213 342.493 147.521C342.442 147.073 342.608 146.348 342.764 145.896Z"/><path fill="#0a0a0a" d="M90.1794 76.1997C94.7712 76.4484 100.991 76.2456 105.782 76.2448L135.987 76.2692C135.96 79.2053 135.987 82.1417 136.069 85.0768C138.917 85.3303 142.354 85.2227 145.253 85.2065C145.241 88.4587 145.259 91.7108 145.308 94.9626L154.751 95.0054C154.809 97.8897 154.599 100.931 154.88 103.795C147.192 103.505 134.925 103.455 127.262 103.763L127.187 94.2949C116.756 94.5085 105.229 94.2433 94.696 94.247C95.0458 98.753 94.7183 108.174 94.7621 113.214C105.429 113.266 116.096 113.265 126.763 113.209C126.593 116.113 126.717 119.994 126.737 122.974C132.872 123.21 139.562 123.119 145.7 123.034L145.742 132.27C148.779 132.275 151.816 132.256 154.853 132.214C154.465 135.975 154.73 145.889 154.746 150.061C151.908 149.905 148.609 149.958 145.767 150.012C145.77 153.243 145.616 156.481 145.686 159.72C142.65 159.655 139.538 159.886 136.49 159.71L136.413 168.667C135.538 168.592 134.516 168.595 133.625 168.578C121.943 168.826 110.208 168.526 98.5218 168.583C95.7543 168.597 93.0306 168.517 90.2633 168.684C90.2311 165.877 90.1119 162.586 90.276 159.818C87.1547 159.704 84.0319 159.632 80.9086 159.603C80.6919 156.766 80.7554 152.913 80.7333 150.025C77.5856 149.994 74.4382 149.945 71.2911 149.877C71.2525 146.958 71.229 144.039 71.2204 141.119C74.6983 141.355 79.3047 141.233 82.8556 141.231C88.0822 141.226 93.5635 141.311 98.7722 141.17C98.7279 144.369 98.7273 147.567 98.7706 150.765C108.76 150.53 122.321 150.513 132.261 150.764C132.158 146.611 131.98 135.817 132.284 131.834C122.872 131.419 108.822 131.543 99.2565 131.771L99.2332 122.05C95.9345 121.94 83.3161 122.298 81.3006 121.533C80.4851 120.171 80.9233 114.782 80.9097 112.765C77.7778 112.703 74.5441 112.675 71.4397 113.088C70.9618 109.202 71.2445 99.228 71.2582 95.014C74.3987 95.1039 77.7882 95.0196 80.9503 94.9923C80.6833 91.9465 80.8208 88.3758 80.8589 85.2839C83.9167 85.2007 87.145 85.2438 90.2177 85.2406C90.2327 82.2269 90.22 79.2132 90.1794 76.1997Z"/><path fill="#0a0a0a" d="M392.154 76.189C398.764 76.5202 408.148 76.2473 414.996 76.2502C414.995 80.2534 415.22 90.7366 414.666 94.2671C407.06 94.1652 399.321 94.4216 391.722 94.2415C391.909 97.0738 391.759 100.409 391.701 103.281L382.715 103.207C382.936 105.425 382.806 109.628 382.801 111.968L382.761 127.828L382.706 168.752C377.97 168.45 369.826 168.729 364.836 168.74C364.756 164.585 364.693 160.368 364.743 156.212C365.064 129.634 364.194 102.759 364.852 76.2096C370.435 76.4068 377.114 76.2662 382.78 76.2426L382.847 85.0058C385.397 85.2039 389.517 85.063 392.195 85.0415C392.214 82.0906 392.201 79.1396 392.154 76.189ZM381.997 167.598C382.105 166.681 382.4 165.393 381.745 164.647C381.531 165.531 381.182 166.919 381.997 167.598Z"/><path fill="#0a0a0a" d="M381.745 164.647C382.4 165.393 382.105 166.681 381.997 167.598C381.182 166.919 381.531 165.531 381.745 164.647Z"/><path fill="#E01919" d="M398.097 150.2C404.091 150.236 410.085 150.238 416.079 150.206C416.016 156.361 416.162 162.549 416.027 168.701C410.04 168.755 404.053 168.767 398.066 168.737C398.008 162.755 397.927 156.15 398.097 150.2Z"/><path fill="#0a0a0a" d="M305.286 126.15L305.562 126.405C305.844 127.796 305.913 129.987 305.636 131.382C304.63 129.639 306.005 127.617 305.286 126.15Z"/><g id="studio" transform="translate(0,271.00) scale(1,0.72) translate(0,-271.00)"><path transform="matrix(0.095406,0,0,-0.095406,71.8533,271.0000)" d="M276 -9Q188 -9 138.0 32.5Q88 74 86 147H166Q168 107 197.0 84.0Q226 61 276 61H327Q379 61 407.5 84.5Q436 108 436 150Q436 188 417.5 211.5Q399 235 363 239L219 259Q159 268 126.0 305.5Q93 343 93 406Q93 477 142.0 518.0Q191 559 276 559H323Q402 559 451.5 520.0Q501 481 506 418H426Q422 449 394.5 470.0Q367 491 323 491H276Q227 491 199.0 468.0Q171 445 171 406Q171 342 238 333L374 314Q442 305 478.0 263.0Q514 221 514 152Q514 76 464.5 33.5Q415 -9 327 -9Z" fill="#0a0a0a"/><path transform="matrix(0.095406,0,0,-0.095406,129.0972,271.0000)" d="M355 0Q288 0 249.0 37.5Q210 75 210 140V478H51V550H210V705H290V550H516V478H290V140Q290 108 307.5 90.0Q325 72 355 72H511V0Z" fill="#0a0a0a"/><path transform="matrix(0.095406,0,0,-0.095406,186.3411,271.0000)" d="M299 -10Q205 -10 150.0 46.0Q95 102 95 198V550H174V198Q174 134 207.5 97.0Q241 60 299 60Q358 60 392.0 97.0Q426 134 426 198V550H505V198Q505 102 449.0 46.0Q393 -10 299 -10Z" fill="#0a0a0a"/><path transform="matrix(0.095406,0,0,-0.095406,243.5850,271.0000)" d="M273 -10Q191 -10 141.5 44.5Q92 99 92 193V356Q92 450 141.0 505.0Q190 560 273 560Q334 560 375.0 530.5Q416 501 425 450L424 573V730H503V0H424V100Q414 49 374.0 19.5Q334 -10 273 -10ZM298 59Q356 59 390.0 95.5Q424 132 424 197V353Q424 418 390.5 454.5Q357 491 298 491Q238 491 204.5 458.0Q171 425 171 356V193Q171 124 204.5 91.5Q238 59 298 59Z" fill="#0a0a0a"/><path transform="matrix(0.095406,0,0,-0.095406,300.8289,271.0000)" d="M88 0V72H284V478H109V550H364V72H550V0ZM315 651Q284 651 265.5 667.0Q247 683 247 711Q247 740 265.5 757.0Q284 774 315 774Q346 774 364.5 757.0Q383 740 383 711Q383 683 364.5 667.0Q346 651 315 651Z" fill="#0a0a0a"/><path transform="matrix(0.095406,0,0,-0.095406,358.0728,271.0000)" d="M300 -9Q204 -9 147.0 48.0Q90 105 90 206V344Q90 445 146.5 502.0Q203 559 300 559Q397 559 453.5 502.0Q510 445 510 344V206Q510 105 453.0 48.0Q396 -9 300 -9ZM300 62Q361 62 396.0 97.0Q431 132 431 199V351Q431 418 396.0 453.0Q361 488 300 488Q239 488 204.0 453.0Q169 418 169 351V199Q169 132 204.0 97.0Q239 62 300 62Z" fill="#0a0a0a"/></g></svg>
+  </div>
+
+  <div class="hero-tag">sqwr.be — Studio créatif · Bruxelles</div>
+
+  <h1 class="hero-title">Branding.<br>Identité.<br>Sites sur mesure.</h1>
+
+  <p class="hero-desc">L'atelier de création de Samuel et Joakim Baudon. Design, code, et stratégie pour les marques qui osent.</p>
+
+  <a href="https://sqwr.be" target="_blank" rel="noopener" class="hero-cta">
+    Visiter sqwr.be <span>↗</span>
+  </a>
+</section>
+
+<section class="anim-section" data-fade>
+  <h2 class="section-title">Chaque interaction est une décision.</h2>
+
+  <div class="anim-grid">
+    <div class="anim-card">
+      <div class="anim-card-visual">
+        <div class="pixel-grid">
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel lit"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+          <div class="pixel"></div>
+        </div>
+      </div>
+      <div class="anim-name">Pixel Grid Hero</div>
+      <div class="anim-desc">Pixels qui émergent, voyagent et convergent pour former le logo. Canvas 2D, 60fps, interactif.</div>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-card-visual">
+        <div class="scatter-text">
+          <span class="letter">S</span>
+          <span class="letter">C</span>
+          <span class="letter">A</span>
+          <span class="letter">T</span>
+        </div>
+      </div>
+      <div class="anim-name">Scatter Text</div>
+      <div class="anim-desc">Chaque lettre a sa trajectoire. Le scroll assemble. Le scroll disperse.</div>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-card-visual">
+        <div class="intro-demo">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="501" height="356" viewBox="0 0 501.0 355.7"><path fill="#ede8df" d="M175.183 77.1843C178.661 77.4064 184.218 77.244 187.888 77.2445L212.014 77.2482C211.973 80.2019 211.996 83.1562 212.086 86.1088C214.522 86.3536 219.103 86.1829 221.831 86.2497C221.687 83.544 221.791 80.0504 221.746 77.2443C227.685 77.2604 233.868 77.353 239.787 77.2391L239.754 206.773C237.354 206.632 222.836 207.086 221.872 206.442C221.505 191.347 221.928 175.923 221.715 160.778C218.464 160.805 215.323 160.693 211.989 160.755C211.98 163.806 211.943 166.52 211.764 169.563L189.917 169.575C185.783 169.563 179.252 169.371 175.257 169.717C175.239 166.825 175.165 163.753 175.306 160.877C172.184 160.707 169.283 160.673 166.156 160.655L166.007 151.061C163.081 150.996 159.742 151 156.861 150.708C156.82 132.831 156.423 113.931 156.925 96.1501C159.371 95.945 163.45 96.0174 166.018 95.9868C165.931 92.7056 165.948 89.4225 166.068 86.1424C168.926 86.2743 172.31 86.1967 175.207 86.1902C175.223 83.1882 175.215 80.1861 175.183 77.1843ZM183.674 104.238C180.715 104.233 177.665 104.269 174.714 104.169C175.058 116.513 174.574 129.674 174.762 142.164C177.76 142.237 180.759 142.26 183.758 142.232C183.733 145.411 183.739 148.591 183.774 151.77L203.43 151.748C204.784 151.75 211.083 151.853 212.132 151.676C212.29 151.164 212.298 151.096 212.246 150.562C212.237 147.881 212.299 144.78 212.199 142.132C215.388 142.303 218.726 142.249 221.932 142.247C221.562 139.199 221.749 132.469 221.752 129.08L221.741 104.241L212.285 104.192C212.162 101.233 212.107 98.2727 212.122 95.3119C209.876 95.4045 207.452 95.3363 205.197 95.2752C198.102 95.0829 190.773 95.5277 183.703 95.2113C183.848 98.1581 183.731 101.277 183.674 104.238Z"/></svg>
+        </div>
+      </div>
+      <div class="anim-name">Intro Animation</div>
+      <div class="anim-desc">Écran d'intro pixel — apparaît au chargement, morphe en page en 4.8s.</div>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-card-visual">
+        <div class="flip-demo">
+          <div class="flip-demo-inner">
+            3D Flip
+          </div>
+        </div>
+      </div>
+      <div class="anim-name">Grain + 3D Flip</div>
+      <div class="anim-desc">Texture grain animée 6s · Boutons magnétiques · Cards 3D flip.</div>
+    </div>
   </div>
 </section>
 
-<!-- DUALITÉ -->
-<div class="duality">
-  <div class="duality-col">
-    <span class="duality-num">01</span>
-    <div class="duality-name">Simple<br>Studio</div>
-    <div class="duality-role">Intelligence · Automatisation</div>
-    <p class="duality-desc">Agents IA déployés en 72h. FAQ, WhatsApp, Instagram DM, Emailing B2B. L'infrastructure qui travaille 24h/24 à la place de vos équipes.</p>
-    <div class="duality-tags">
-      <span class="duality-tag">Agents IA</span>
-      <span class="duality-tag">Automatisation</span>
-      <span class="duality-tag">Présence digitale</span>
-    </div>
-  </div>
-  <div class="duality-sep"></div>
-  <div class="duality-col">
-    <span class="duality-num">02</span>
-    <div class="duality-name">SQWR<br>Studio</div>
-    <div class="duality-role">Créativité · Identité</div>
-    <p class="duality-desc">Branding, design system, sites web sur mesure. Chaque pixel est une décision. Chaque typographie est un argument. L'identité qui fait la différence avant même que l'agent parle.</p>
-    <div class="duality-tags">
-      <span class="duality-tag">Branding</span>
-      <span class="duality-tag">Site web</span>
-      <span class="duality-tag">Design system</span>
-    </div>
-  </div>
-</div>
+<section class="portfolio" data-fade>
+  <div class="portfolio-intro">4 projets sur sqwr.be</div>
 
-<!-- STATEMENT -->
-<div class="statement">
-  <p class="statement-text">Un agent IA déployé dans un site générique, c'est du potentiel gaspillé. Un agent déployé dans une <em>identité cohérente</em>, une DA sur mesure, un site qui reflète exactement qui vous êtes — c'est une expérience que vos clients retiennent.</p>
-</div>
-
-<!-- PROJETS CONJOINTS -->
-<section class="projects-section">
-  <span class="projects-label">Réalisations conjointes</span>
-
-  <!-- AW CONSTRUCT -->
-  <div class="project-card">
-    <div class="project-meta">
-      <span class="project-num">Projet 01</span>
-      <h2 class="project-name">A.W<br>Construct</h2>
-      <div class="project-sector">Construction & Rénovation · Overijse</div>
-      <p class="project-desc">Identité de marque complète et site vitrine pour une entreprise de construction premium en région bruxelloise. SQWR Studio a conçu le branding et le site. Simple Studio intègre la présence digitale automatisée.</p>
-      <div class="project-services">
-        <span class="project-service-tag sqwr">Branding SQWR</span>
-        <span class="project-service-tag sqwr">Site web SQWR</span>
-        <span class="project-service-tag poise">Agent FAQ Poise</span>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <div class="portfolio-num">01</div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-name">Villa Coladeira</h3>
+        <div class="portfolio-meta">
+          <span class="portfolio-sector">Web</span>
+          <span class="portfolio-sector">Branding</span>
+          <span class="portfolio-year">Cap-Vert 2025</span>
+        </div>
+        <p class="portfolio-desc">Site vitrine et identité pour une villa de luxe au Cap-Vert.</p>
+        <a href="https://sqwr.be/portfolio/villa-coladeira" target="_blank" rel="noopener" class="portfolio-link">Voir le projet <span>↗</span></a>
       </div>
-      <a href="https://aw-construct.com" target="_blank" rel="noopener" class="project-link">
-        Voir le site <span>↗</span>
-      </a>
     </div>
-    <div class="project-visual">
-      <div class="project-visual-inner">
-        <!-- Simulated nav -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-bottom:1px solid rgba(14,13,10,.1);margin-bottom:6px;">
-          <div style="font-family:var(--font-j);font-size:5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);opacity:.7;">A.W CONSTRUCT</div>
-          <div style="display:flex;gap:8px;">
-            <div style="width:18px;height:3px;background:rgba(14,13,10,.18);border-radius:1px;"></div>
-            <div style="width:18px;height:3px;background:rgba(14,13,10,.18);border-radius:1px;"></div>
-            <div style="width:18px;height:3px;background:rgba(14,13,10,.18);border-radius:1px;"></div>
-          </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-num">02</div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-name">izzico</h3>
+        <div class="portfolio-meta">
+          <span class="portfolio-sector">Branding</span>
+          <span class="portfolio-year">Bruxelles 2025</span>
         </div>
-        <!-- Hero block -->
-        <div class="pv-hero-block">
-          <div style="font-family:var(--font-j);font-size:5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:4px;opacity:.8;">CONSTRUCTION · RENOVATION</div>
-          <div class="pv-hero-text">A.W Construct<br>Bâtisseurs de confiance.</div>
-          <div style="display:flex;gap:6px;margin-top:8px;">
-            <div style="background:var(--sage);padding:3px 8px;font-family:var(--font-j);font-size:4px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);">Demander un devis</div>
-            <div style="border:1px solid rgba(14,13,10,.25);padding:3px 8px;font-family:var(--font-j);font-size:4px;font-weight:300;letter-spacing:.08em;color:rgba(14,13,10,.5);">Nos réalisations</div>
-          </div>
+        <p class="portfolio-desc">Identité de marque pour une plateforme SaaS co-living.</p>
+        <a href="https://sqwr.be/portfolio/izzico" target="_blank" rel="noopener" class="portfolio-link">Voir le projet <span>↗</span></a>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-num">03</div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-name">Nanou Mendels</h3>
+        <div class="portfolio-meta">
+          <span class="portfolio-sector">Web</span>
+          <span class="portfolio-year">Bruxelles 2025</span>
         </div>
-        <!-- Services grid -->
-        <div style="font-family:var(--font-j);font-size:4px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(14,13,10,.25);margin:6px 0 4px;">Services</div>
-        <div class="pv-grid">
-          <div class="pv-card" style="position:relative;">
-            <div style="position:absolute;top:6px;left:6px;width:8px;height:2px;background:var(--sage);opacity:.6;"></div>
-          </div>
-          <div class="pv-card"></div>
-          <div class="pv-card"></div>
+        <p class="portfolio-desc">Site vitrine pour une créatrice textile indépendante.</p>
+        <a href="https://sqwr.be/portfolio/nanou" target="_blank" rel="noopener" class="portfolio-link">Voir le projet <span>↗</span></a>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="portfolio-num">04</div>
+      <div class="portfolio-content">
+        <h3 class="portfolio-name">La Villa</h3>
+        <div class="portfolio-meta">
+          <span class="portfolio-sector">Branding</span>
+          <span class="portfolio-year">Bruxelles 2024</span>
         </div>
-        <!-- Footer sim -->
-        <div class="pv-footer" style="border-top:1px solid rgba(14,13,10,.08);padding-top:4px;margin-top:4px;">
-          <div style="display:flex;gap:5px;align-items:center;">
-            <div class="pv-dot sage"></div>
-            <div class="pv-dot cream"></div>
-          </div>
-          <span class="pv-url">aw-construct.com</span>
-        </div>
+        <p class="portfolio-desc">Identité de marque pour un espace événementiel intimiste.</p>
+        <a href="https://sqwr.be/portfolio/la-villa" target="_blank" rel="noopener" class="portfolio-link">Voir le projet <span>↗</span></a>
       </div>
     </div>
   </div>
-
-  <!-- À VENIR -->
-  <div class="project-card" style="opacity:.3;pointer-events:none;">
-    <div class="project-meta">
-      <span class="project-num">Projet 02</span>
-      <h2 class="project-name">Bientôt<br>dévoilé.</h2>
-      <div class="project-sector">Confidentiel · En production</div>
-      <p class="project-desc">Un nouveau projet conjoint est en cours. Branding SQWR Studio + agents Simple Studio. Publication prévue prochainement.</p>
-      <div class="project-services">
-        <span class="project-service-tag sqwr">Branding SQWR</span>
-        <span class="project-service-tag poise">Agents Poise</span>
-      </div>
-    </div>
-    <div class="project-visual">
-      <div class="project-visual-inner">
-        <div class="pv-bar" style="width:60%;"></div>
-        <div class="pv-hero-block"></div>
-        <div class="pv-grid">
-          <div class="pv-card"></div>
-          <div class="pv-card"></div>
-          <div class="pv-card"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </section>
 
-<!-- POISE INTERSTITIEL -->
-<div class="poise-interstitiel">
-  <p class="pi-text">Vous avez besoin des <em>agents sans le branding</em> ?<br>Simple Studio s'en charge seul.</p>
-  <a href="agents.html" class="pi-btn">Voir nos agents <span class="pi-btn-arrow">→</span></a>
-</div>
-
-<!-- CTA SQWR -->
-<div class="sqwr-cta">
-  <div class="sqwr-cta-left">
-    <span class="sqwr-cta-tag">SQWR Studio</span>
-    <h2 class="sqwr-cta-title">Besoin d'un projet<br>complet — forme<br>et fond ?</h2>
-    <p class="sqwr-cta-desc">Branding, site web, design system et agents IA. On coordonne les deux studios pour que vous n'ayez qu'un interlocuteur et une vision cohérente de bout en bout.</p>
+<section class="stack-section" data-fade>
+  <div class="stack-strip">
+    <span class="stack-tag">Next.js 16</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">React 19</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">TypeScript 5.9</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">Tailwind CSS</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">Framer Motion 11</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">GSAP 3</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">Vercel</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">Plausible</span>
+    <span class="stack-sep">·</span>
+    <span class="stack-tag">i18n 4 langues</span>
   </div>
-  <div class="sqwr-cta-right">
-    <div>
-      <div class="sqwr-cta-stat">
-        <span class="sqwr-cta-stat-val">4+</span>
-        <span class="sqwr-cta-stat-lbl">Projets livrés ensemble</span>
-      </div>
-      <div class="sqwr-cta-stat">
-        <span class="sqwr-cta-stat-val">72h</span>
-        <span class="sqwr-cta-stat-lbl">Du brief au premier livrable</span>
-      </div>
-      <div class="sqwr-cta-stat">
-        <span class="sqwr-cta-stat-val">1</span>
-        <span class="sqwr-cta-stat-lbl">Vision partagée, de l'identité à l'agent</span>
-      </div>
-    </div>
-    <a href="https://sqwr.be" target="_blank" rel="noopener" class="sqwr-cta-btn">
-      Découvrir SQWR Studio <span class="sqwr-cta-btn-arrow">→</span>
+</section>
+
+<section class="cta-double" data-fade>
+  <div class="cta-half">
+    <h3 class="cta-half-title">Besoin d'un site SQWR ?</h3>
+    <a href="https://sqwr.be/contact" target="_blank" rel="noopener" class="cta-half-link">
+      Lancer un projet <span>↗</span>
     </a>
   </div>
-</div>
+  <div class="cta-half">
+    <h3 class="cta-half-title">Agents + identité ensemble ?</h3>
+    <a href="contact.html" class="cta-half-link">
+      Découvrir le pack <span>↗</span>
+    </a>
+  </div>
+</section>
 
-<!-- FOOTER -->
 <footer>
   <span>Simple Studio — Bruxelles · 2026</span>
   <a href="mailto:studio@simple.be">studio@simple.be</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script>
-/* ── CURSOR ─── */
-const cur = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
-});
-document.querySelectorAll('a,button').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
-});
-
-/* ── HERO BG WORD PARALLAX ─── */
-const bgWord = document.querySelector('.hero-bg-word');
-if (bgWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  window.addEventListener('scroll', () => {
-    bgWord.style.transform = `translateY(calc(-52% + ${window.scrollY * 0.18}px))`;
-  }, { passive:true });
+// Cursor tracking
+const cursor = document.getElementById('cursor');
+if(cursor){
+  document.addEventListener('mousemove',(e)=>{
+    cursor.style.left=e.clientX+'px';
+    cursor.style.top=e.clientY+'px';
+  });
+  document.querySelectorAll('a, button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('expand'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('expand'));
+  });
 }
 
-/* ── FADE IN ON SCROLL ─── */
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      gsap.to(entry.target, { opacity:1, y:0, duration:.6, ease:'power3.out' });
-      obs.unobserve(entry.target);
+// Smooth parallax on hero logo
+gsap.registerPlugin(ScrollTrigger);
+const heroLogo=document.querySelector('.hero-logo-wrap');
+if(heroLogo){
+  gsap.to(heroLogo,{y:60,scrollTrigger:{trigger:heroLogo,start:'top center',end:'bottom center',scrub:1,markers:false}});
+}
+
+// Fade-in on scroll
+const fadeElements=document.querySelectorAll('[data-fade]');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     }
   });
-}, { threshold:0.08 });
+},{threshold:.1});
+fadeElements.forEach(el=>observer.observe(el));
 
-document.querySelectorAll('.project-card:not([style*="opacity:.3"])').forEach(el => {
-  gsap.set(el, { opacity:0, y:24 });
-  obs.observe(el);
-});
+// Flip card tilt on mousemove
+const flipDemo=document.querySelector('.flip-demo');
+if(flipDemo){
+  flipDemo.addEventListener('mousemove',(e)=>{
+    const rect=flipDemo.getBoundingClientRect();
+    const centerX=rect.width/2;
+    const centerY=rect.height/2;
+    const x=e.clientX-rect.left-centerX;
+    const y=e.clientY-rect.top-centerY;
+    const rotateX=(y/centerY)*8;
+    const rotateY=(x/centerX)*8;
+    const inner=flipDemo.querySelector('.flip-demo-inner');
+    inner.style.transform=`rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  flipDemo.addEventListener('mouseleave',()=>{
+    const inner=flipDemo.querySelector('.flip-demo-inner');
+    inner.style.transform='rotateX(0) rotateY(0)';
+  });
+}
 </script>
+
 </body>
 </html>
