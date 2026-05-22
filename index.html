@@ -68,77 +68,6 @@ body{overflow-x:hidden;background:#0e0d0a;color:#ede8df;cursor:none}
   --ease-breath:cubic-bezier(.45,.05,.55,.95); /* sine.inOut — loops */
 }
 
-/* ── §0 HEADER ──────────────────────────────────────── */
-#header{
-  position:relative;height:100vh;
-  background:var(--ink);
-  display:flex;flex-direction:column;
-  justify-content:flex-end;
-  padding:0 clamp(32px,7vw,100px) clamp(32px,6vh,64px);
-  overflow:hidden;
-}
-.hd-wordmark{
-  display:flex;flex-direction:column;
-  gap:0;
-  position:absolute;
-  top:50%;left:clamp(32px,7vw,100px);
-  transform:translateY(-52%);
-}
-.hd-poise{
-  font-family:var(--font-f);font-weight:300;
-  font-size:clamp(6rem,15vw,14rem);
-  color:var(--cream);letter-spacing:-.03em;line-height:.92;
-}
-.hd-sep{
-  width:100%;height:1px;
-  background:rgba(237,232,223,.12);
-  margin:clamp(10px,1.4vw,20px) 0;
-}
-.hd-studio{
-  font-family:var(--font-j);font-weight:800;font-size:10px;
-  letter-spacing:.5em;text-transform:uppercase;
-  color:rgba(237,232,223,.45);
-}
-.hd-tagline{
-  position:absolute;
-  right:clamp(32px,7vw,100px);
-  top:50%;transform:translateY(calc(-50% + clamp(5rem,8vw,7rem)));
-  max-width:260px;
-  font-family:var(--font-f);font-weight:300;
-  font-size:clamp(.85rem,1.2vw,1.1rem);line-height:1.5;
-  color:rgba(237,232,223,.35);
-  text-align:right;
-}
-.hd-bottom{
-  display:flex;justify-content:space-between;align-items:flex-end;
-  width:100%;
-}
-.hd-location{
-  font-family:var(--font-j);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(237,232,223,.2);
-}
-.hd-scroll{
-  display:flex;flex-direction:column;align-items:flex-end;gap:12px;
-}
-.hd-scroll-line{
-  width:1px;height:48px;background:rgba(237,232,223,.15);
-  transform-origin:top;
-}
-.hd-scroll-label{
-  font-family:var(--font-j);font-size:8px;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(237,232,223,.2);
-  writing-mode:vertical-rl;transform:rotate(180deg);
-}
-/* Décor — fragment diagonal, cohérent avec les bandes du hero */
-.hd-diagonal{
-  position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
-}
-.hd-diagonal::before{
-  content:'';position:absolute;
-  top:clamp(40px,8vh,80px);right:0;
-  width:1px;height:clamp(80px,18vh,160px);
-  background:rgba(122,153,119,.18); /* sage */
-}
 
 /* ── CURSOR ─────────────────────────────────────────── */
 #cursor{
@@ -254,6 +183,14 @@ nav{
   position:absolute;bottom:48px;right:40px;
   font-family:var(--font-f);font-size:13px;
   color:var(--cream);opacity:.35;
+}
+/* Hero tagline — bottom-center */
+.hero-tagline{
+  position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-f);font-weight:300;font-style:italic;
+  font-size:clamp(.9rem,1.4vw,1.3rem);letter-spacing:.01em;
+  color:var(--cream);opacity:0;white-space:nowrap;
+  will-change:opacity;
 }
 /* Hero init line — disparaît au premier scroll */
 
@@ -876,29 +813,6 @@ nav{
 <!-- CURSOR -->
 <div id="cursor"></div>
 
-<!-- §0 HEADER ─────────────────────────────────────────── -->
-<header id="header">
-  <div class="hd-diagonal"></div>
-  <!-- Wordmark centré-gauche -->
-  <div class="hd-wordmark" id="hd-wordmark">
-    <span class="hd-poise">Poise</span>
-    <div class="hd-sep" id="hd-sep"></div>
-    <span class="hd-studio">Studio</span>
-  </div>
-  <!-- Tagline droite -->
-  <p class="hd-tagline" id="hd-tagline">
-    L'infrastructure digitale<br>qui ne ferme jamais.
-  </p>
-  <!-- Bas de page -->
-  <div class="hd-bottom">
-    <span class="hd-location" id="hd-location">Bruxelles · Belgique</span>
-    <div class="hd-scroll" id="hd-scroll">
-      <span class="hd-scroll-label">Scroll</span>
-      <div class="hd-scroll-line"></div>
-    </div>
-  </div>
-</header>
-
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo"><em class="nl-poise">Poise</em><span class="nl-studio">Studio</span></a>
@@ -925,6 +839,7 @@ nav{
     <div class="hero-typo" id="hero-typo"><span class="ht-poise">Poıse</span><span class="ht-studio">Studio</span></div>
     <span class="hero-label">01 — Permanence</span>
     <span class="hero-index">2026</span>
+    <p class="hero-tagline" id="hero-tagline">Le standing du réel, en permanence.</p>
   </div>
 </section>
 
@@ -1346,32 +1261,6 @@ ScrollTrigger.scrollerProxy(document.body, {
   getBoundingClientRect() { return { top:0, left:0, width:window.innerWidth, height:window.innerHeight } }
 });
 
-/* ── §0 HEADER — entrée load ─────────────────────────────── */
-(function initHeader() {
-  if (reduced) return;
-  const tl = gsap.timeline({ delay:.2 });
-  tl.from('.hd-poise',    { opacity:0, y:22, duration:1.1, ease:'power3.out' })
-    .fromTo('#hd-sep',    { scaleX:0 }, { scaleX:1, duration:.9, ease:'power3.inOut', transformOrigin:'left' }, '-=.5')
-    .from('.hd-studio',   { opacity:0, duration:.7, ease:'power3.out' }, '-=.4')
-    .from('#hd-tagline',  { opacity:0, x:12, duration:.8, ease:'power3.out' }, '-=.55')
-    .from('#hd-location', { opacity:0, duration:.6, ease:'power3.out' }, '-=.4')
-    .from('#hd-scroll',   { opacity:0, duration:.6, ease:'power3.out' }, '-=.3');
-
-  /* Scroll line — boucle descendante */
-  gsap.fromTo('.hd-scroll-line',
-    { scaleY:0, transformOrigin:'top' },
-    { scaleY:1, duration:1.1, ease:'power3.inOut',
-      repeat:-1, repeatDelay:.5,
-      onRepeat() { gsap.set('.hd-scroll-line', { scaleY:0 }); }
-    }
-  );
-
-  /* Header disparaît en scrollant vers le hero */
-  gsap.to('#header', {
-    opacity:0,
-    scrollTrigger:{ trigger:'#header', start:'70% top', end:'bottom top', scrub:1 }
-  });
-})();
 
 /* ── M-14 chromatic-ramp (Agio) ──────────────────────────── */
 function playChromaticRamp(containerSelector, onDone) {
@@ -1504,7 +1393,8 @@ function initPanelShuffle(stageId) {
     .to(bands[2], { scaleY:3.6, x:'22vw',  y:80,   duration:0.75, ease:'power3.inOut' }, '<0.08')
     .to(bands[3], { x:'-36vw', y:-120, scaleY:2.8, opacity:.75, duration:0.7, ease:'power3.inOut' }, '<0.1')
     .to(bands[4], { x:' 36vw', y: 120, scaleY:2.4, opacity:.55, duration:0.7, ease:'power3.inOut' }, '<')
-    .to(heroTypo, { opacity:1, scale:1, duration:0.55, ease:'power3.out' }, '-=0.25');
+    .to(heroTypo, { opacity:1, scale:1, duration:0.55, ease:'power3.out' }, '-=0.25')
+    .to('#hero-tagline', { opacity:.55, duration:0.6, ease:'power3.out' }, '-=0.1');
 })();
 
 /* ── HERO SCROLL TRANSITION — bands → cream bg ─────────────── */
@@ -1527,7 +1417,7 @@ if (!reduced) {
 
   scrollTl
     /* wordmark fade — légèrement décalé pour qu'on le voit devant les bands */
-    .to([sTypo,'.hero-label','.hero-index'],
+    .to([sTypo,'.hero-label','.hero-index','#hero-tagline'],
       { opacity:0, duration:0.18, ease:'none' }, 0.05)
     .to([sBands[3], sBands[4], sBands[1]],
       { opacity:0, duration:0.14, ease:'none' }, 0)
