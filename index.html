@@ -124,7 +124,7 @@ nav{
 /* ── §1 HERO ─────────────────────────────────────────── */
 #hero{
   position:relative;
-  height:340vh;
+  height:500vh;
   background:var(--ink);
 }
 .hero-sticky{
@@ -1014,10 +1014,6 @@ const lenis = new Lenis({ lerp:0.09, smoothWheel:true });
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 lenis.on('scroll', ScrollTrigger.update);
-ScrollTrigger.scrollerProxy(document.body, {
-  scrollTop(v) { return arguments.length ? lenis.scrollTo(v,{immediate:true}) : window.scrollY },
-  getBoundingClientRect() { return { top:0, left:0, width:window.innerWidth, height:window.innerHeight } }
-});
 
 
 /* ── BAND-MORPH — Entry autoplay (A→B→C→E condensé) ─────── */
@@ -1129,7 +1125,7 @@ if (!reduced) {
 
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top -228vh',
+    start: 'top -280vh',
     onEnter() {
       gsap.set(sqTrio, { opacity:1 });
       gsap.set(sqEls,  { y:startY, rotation:0, opacity:1 });
