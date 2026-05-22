@@ -173,56 +173,58 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .card-cta:hover .cta-arrow{transform:translateX(6px);}
 .cta-arrow{transition:transform .2s;}
 
-/* ── SPÉCIALISÉS SECTION ─── */
-.specialises-section{
-  padding:0 clamp(32px,8vw,120px) clamp(64px,10vh,100px);
-}
-.specialises-header{
+/* ── SPÉCIALISÉS SECTION HEADER ─── */
+.spec-section-intro{
+  padding:clamp(48px,6vh,72px) clamp(24px,6vw,80px) clamp(32px,4vh,48px);
+  border-top:1px solid rgba(237,232,223,.06);
   display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
-  padding:clamp(48px,6vh,72px) 0 clamp(32px,4vh,48px);
-  border-bottom:1px solid rgba(237,232,223,.06);
-  margin-bottom:0;
 }
-.specialises-title{
+.spec-section-tag{
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--terra);
+}
+.spec-section-title{
   font-family:var(--font-f);font-weight:300;
   font-size:clamp(1.6rem,3vw,2.4rem);color:rgba(237,232,223,.4);letter-spacing:-.02em;
 }
-.specialises-tag{
-  font-family:var(--font-j);font-weight:800;font-size:8px;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--sage);
+
+/* ── DARK CARD VARIANT ─── */
+.agent-card.dark{
+  background:rgba(237,232,223,.04);
+  color:var(--cream);
+  border:1px solid rgba(237,232,223,.09);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.4),
+    0 8px 20px rgba(0,0,0,.5),
+    0 24px 56px rgba(0,0,0,.6),
+    0 48px 100px rgba(0,0,0,.4);
 }
-.spec-list{display:flex;flex-direction:column;}
-.spec-item{
-  display:grid;grid-template-columns:1fr auto;
-  align-items:center;gap:32px;
-  padding:clamp(20px,3vh,28px) 0;
-  border-bottom:1px solid rgba(237,232,223,.04);
+.agent-card.dark:hover{
+  box-shadow:
+    0 4px 8px rgba(0,0,0,.5),
+    0 16px 36px rgba(0,0,0,.65),
+    0 40px 80px rgba(0,0,0,.75),
+    0 70px 130px rgba(0,0,0,.55);
+  border-color:rgba(237,232,223,.18);
 }
-@media(max-width:768px){.spec-item{grid-template-columns:1fr;gap:16px;}}
-.spec-item-name{
-  font-family:var(--font-f);font-weight:300;
-  font-size:clamp(1.2rem,2vw,1.7rem);color:var(--cream);
-  letter-spacing:-.01em;margin-bottom:5px;
-}
-.spec-item-desc{
-  font-family:var(--font-j);font-weight:300;font-size:11px;
-  letter-spacing:.04em;color:rgba(237,232,223,.25);line-height:1.55;
-  max-width:500px;
-}
-.spec-item-right{
-  display:flex;align-items:center;gap:28px;flex-shrink:0;
-}
-.spec-item-price{
-  font-family:var(--font-j);font-weight:800;font-size:13px;
-  color:rgba(237,232,223,.35);white-space:nowrap;
-}
-.spec-item-cta{
-  font-family:var(--font-j);font-weight:800;font-size:8px;
-  letter-spacing:.16em;text-transform:uppercase;
-  color:var(--sage);text-decoration:none;
-  opacity:.55;transition:opacity .2s;white-space:nowrap;
-}
-.spec-item-cta:hover{opacity:1;}
+.agent-card.dark .card-name{color:var(--cream);}
+.agent-card.dark .card-baseline{color:rgba(237,232,223,.35);}
+.agent-card.dark .card-sep{background:rgba(237,232,223,.08);}
+.agent-card.dark .card-features li{color:rgba(237,232,223,.55);}
+.agent-card.dark .card-price{border-top-color:rgba(237,232,223,.08);}
+.agent-card.dark .card-price-setup{color:rgba(237,232,223,.25);}
+.agent-card.dark .card-price-setup strong{color:rgba(237,232,223,.5);}
+.agent-card.dark .card-price-val{color:var(--cream);}
+.agent-card.dark .card-price-period{color:rgba(237,232,223,.35);}
+.agent-card.dark .card-cta{color:var(--cream);border-color:rgba(237,232,223,.2);}
+.agent-card.dark .card-cta:hover{background:var(--cream);color:var(--ink);border-color:var(--cream);}
+.agent-card.dark .card-reassurance{color:rgba(237,232,223,.2);}
+
+/* accent bar on dark — slightly brighter */
+.agent-card.dark .card-accent.terra{background:var(--terra);opacity:.9;}
+.agent-card.dark .card-accent.sage{background:var(--sage);opacity:.9;}
+.agent-card.dark .card-accent.bleu{background:var(--bleu);opacity:.9;}
+.agent-card.dark .card-accent.custom{background:rgba(237,232,223,.3);}
 
 /* ── BOTTOM BAR ─── */
 .bottom-bar{
@@ -291,7 +293,7 @@ footer span{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spac
 <!-- INTRO -->
 <div class="page-intro">
   <div class="page-intro-left">
-    <span class="page-intro-tag">Standards · 5 agents</span>
+    <span class="page-intro-tag">9 agents · Standards & Spécialisés</span>
     <h1 class="page-intro-title">L'infrastructure<br>qui ne ferme jamais.</h1>
   </div>
   <p class="page-intro-sub">Chaque agent est configuré sur mesure, déployé en 72h, et tourne 24h/24 sans intervention de votre part.</p>
@@ -453,58 +455,132 @@ footer span{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spac
 </div>
 
 <!-- SPÉCIALISÉS -->
-<div class="specialises-section">
-  <div class="specialises-header">
-    <span class="specialises-tag">Spécialisés · 4 agents</span>
-    <span class="specialises-title">Pour des besoins plus ciblés.</span>
-  </div>
-  <div class="spec-list">
+<div class="spec-section-intro">
+  <span class="spec-section-tag">Spécialisés · 4 agents</span>
+  <span class="spec-section-title">Pour des besoins plus ciblés.</span>
+</div>
 
-    <div class="spec-item">
-      <div class="spec-item-left">
-        <div class="spec-item-name">Paid Social</div>
-        <div class="spec-item-desc">Gestion complète de vos campagnes Meta & TikTok Ads — stratégie, créations, optimisation et reporting mensuel.</div>
+<div class="agents-grid">
+
+  <!-- Card 6 — Paid Social -->
+  <article class="agent-card dark" data-tilt>
+    <div class="card-accent terra"></div>
+    <div class="card-shine" id="shine-6"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-tag terra">Performance</span>
+        <h2 class="card-name">Paid<br>Social</h2>
+        <p class="card-baseline">Vos campagnes Meta & TikTok gérées clé en main — de la stratégie au reporting, sans vous impliquer dans l'opérationnel.</p>
       </div>
-      <div class="spec-item-right">
-        <span class="spec-item-price">€600 / mois</span>
-        <a href="contact.html?agent=paid-social" class="spec-item-cta">Démarrer →</a>
+      <div class="card-sep"></div>
+      <ul class="card-features terra">
+        <li><span>Stratégie, ciblage avancé et créations visuelles inclus</span></li>
+        <li><span>Optimisation hebdomadaire basée sur les données de performance</span></li>
+        <li><span>Reporting mensuel clair avec recommandations actionnables</span></li>
+      </ul>
+      <div class="card-price">
+        <div class="card-price-row">
+          <span class="card-price-setup">Budget ads · non inclus</span>
+          <div class="card-price-main">
+            <span class="card-price-val">€600</span>
+            <span class="card-price-period">/ mois</span>
+          </div>
+        </div>
+        <a href="contact.html?agent=paid-social" class="card-cta">Démarrer <span class="cta-arrow">→</span></a>
+        <p class="card-reassurance">Sans engagement · Annulable à tout moment · Setup remboursé si insatisfait sous 14 jours</p>
       </div>
     </div>
+  </article>
 
-    <div class="spec-item">
-      <div class="spec-item-left">
-        <div class="spec-item-name">Agent SEO</div>
-        <div class="spec-item-desc">Production de contenus optimisés, maillage interne et suivi des positions — visibilité organique sans effort rédactionnel de votre part.</div>
+  <!-- Card 7 — Agent SEO -->
+  <article class="agent-card dark" data-tilt>
+    <div class="card-accent sage"></div>
+    <div class="card-shine" id="shine-7"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-tag sage">Visibilité</span>
+        <h2 class="card-name">Agent<br>SEO</h2>
+        <p class="card-baseline">Visibilité organique construite sur la durée — contenus optimisés, maillage et positions suivies sans effort de votre côté.</p>
       </div>
-      <div class="spec-item-right">
-        <span class="spec-item-price">€350 setup · €150 / mois</span>
-        <a href="contact.html?agent=agent-seo" class="spec-item-cta">Démarrer →</a>
+      <div class="card-sep"></div>
+      <ul class="card-features sage">
+        <li><span>Production de contenus optimisés chaque mois sur vos mots-clés cibles</span></li>
+        <li><span>Maillage interne et audit technique continu</span></li>
+        <li><span>Rapport de positions mensuel avec prochaines actions</span></li>
+      </ul>
+      <div class="card-price">
+        <div class="card-price-row">
+          <span class="card-price-setup">Setup unique · <strong>€350</strong></span>
+          <div class="card-price-main">
+            <span class="card-price-val">€150</span>
+            <span class="card-price-period">/ mois</span>
+          </div>
+        </div>
+        <a href="contact.html?agent=agent-seo" class="card-cta">Démarrer <span class="cta-arrow">→</span></a>
+        <p class="card-reassurance">Sans engagement · Annulable à tout moment · Setup remboursé si insatisfait sous 14 jours</p>
       </div>
     </div>
+  </article>
 
-    <div class="spec-item">
-      <div class="spec-item-left">
-        <div class="spec-item-name">Assistant Emailing B2B</div>
-        <div class="spec-item-desc">Séquences multitouch personnalisées via Apollo — prospection automatisée qui s'arrête dès que ça répond. Zéro doublon, reporting hebdo.</div>
+  <!-- Card 8 — Emailing B2B -->
+  <article class="agent-card dark" data-tilt>
+    <div class="card-accent bleu"></div>
+    <div class="card-shine" id="shine-8"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-tag bleu">Prospection</span>
+        <h2 class="card-name">Emailing<br>B2B</h2>
+        <p class="card-baseline">Conçu pour les équipes commerciales qui prospectent sans ressources dédiées — séquences multitouch qui s'arrêtent dès que ça répond.</p>
       </div>
-      <div class="spec-item-right">
-        <span class="spec-item-price">€350 setup · €150 / mois</span>
-        <a href="contact.html?agent=emailing-b2b" class="spec-item-cta">Démarrer →</a>
+      <div class="card-sep"></div>
+      <ul class="card-features bleu">
+        <li><span>Séquences personnalisées par industrie via Apollo / Instantly</span></li>
+        <li><span>Arrêt automatique dès réponse — zéro doublon, zéro spam</span></li>
+        <li><span>Reporting hebdomadaire : ouvertures, clics, réponses</span></li>
+      </ul>
+      <div class="card-price">
+        <div class="card-price-row">
+          <span class="card-price-setup">Setup unique · <strong>€350</strong></span>
+          <div class="card-price-main">
+            <span class="card-price-val">€150</span>
+            <span class="card-price-period">/ mois</span>
+          </div>
+        </div>
+        <a href="contact.html?agent=emailing-b2b" class="card-cta">Démarrer <span class="cta-arrow">→</span></a>
+        <p class="card-reassurance">Sans engagement · Annulable à tout moment · Setup remboursé si insatisfait sous 14 jours</p>
       </div>
     </div>
+  </article>
 
-    <div class="spec-item">
-      <div class="spec-item-left">
-        <div class="spec-item-name">Agent Sur Mesure</div>
-        <div class="spec-item-desc">Un besoin qui ne rentre dans aucune case ? On conçoit l'agent adapté à votre workflow exact — délai et tarif établis après brief.</div>
+  <!-- Card 9 — Sur Mesure -->
+  <article class="agent-card dark" data-tilt>
+    <div class="card-accent custom"></div>
+    <div class="card-shine" id="shine-9"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <span class="card-tag sage">Sur mesure</span>
+        <h2 class="card-name">Agent<br>Sur Mesure</h2>
+        <p class="card-baseline">Un besoin qui ne rentre dans aucune case ? On conçoit l'agent exact pour votre workflow — brief en 30 min, devis sous 48h.</p>
       </div>
-      <div class="spec-item-right">
-        <span class="spec-item-price">Sur devis</span>
-        <a href="contact.html?agent=sur-mesure" class="spec-item-cta">Prendre contact →</a>
+      <div class="card-sep"></div>
+      <ul class="card-features sage">
+        <li><span>Brief et analyse de votre workflow existant</span></li>
+        <li><span>Conception et déploiement d'un agent entièrement dédié</span></li>
+        <li><span>Support et itérations post-lancement inclus</span></li>
+      </ul>
+      <div class="card-price">
+        <div class="card-price-row">
+          <span class="card-price-setup">Tarif établi après brief</span>
+          <div class="card-price-main">
+            <span class="card-price-val">Devis</span>
+          </div>
+        </div>
+        <a href="contact.html?agent=sur-mesure" class="card-cta">Prendre contact <span class="cta-arrow">→</span></a>
+        <p class="card-reassurance">Brief confidentiel · Aucun engagement avant validation du devis</p>
       </div>
     </div>
+  </article>
 
-  </div>
 </div>
 
 <!-- BOTTOM BAR -->
@@ -542,10 +618,17 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.querySelectorAll('[data-tilt]').forEach(card => {
   const shine = card.querySelector('.card-shine');
+  const isDark = card.classList.contains('dark');
+  const shadowBase = isDark
+    ? '0 2px 4px rgba(0,0,0,.4), 0 8px 20px rgba(0,0,0,.5), 0 24px 56px rgba(0,0,0,.6), 0 48px 100px rgba(0,0,0,.4)'
+    : '0 2px 4px rgba(0,0,0,.15), 0 8px 20px rgba(0,0,0,.25), 0 24px 56px rgba(0,0,0,.35), 0 48px 100px rgba(0,0,0,.25)';
+  const shadowHover = isDark
+    ? '0 4px 8px rgba(0,0,0,.5), 0 20px 48px rgba(0,0,0,.65), 0 48px 96px rgba(0,0,0,.75), 0 80px 140px rgba(0,0,0,.55)'
+    : '0 4px 8px rgba(0,0,0,.2), 0 20px 48px rgba(0,0,0,.4), 0 48px 96px rgba(0,0,0,.5), 0 80px 140px rgba(0,0,0,.4)';
 
   card.addEventListener('mouseenter', () => {
     gsap.to(card, {
-      boxShadow: '0 4px 8px rgba(0,0,0,.2), 0 20px 48px rgba(0,0,0,.4), 0 48px 96px rgba(0,0,0,.5), 0 80px 140px rgba(0,0,0,.4)',
+      boxShadow: shadowHover,
       duration: .3,
       ease: 'power3.out'
     });
@@ -580,7 +663,7 @@ document.querySelectorAll('[data-tilt]').forEach(card => {
       rotateY: 0,
       z: 0,
       transformPerspective: 1100,
-      boxShadow: '0 2px 4px rgba(0,0,0,.15), 0 8px 20px rgba(0,0,0,.25), 0 24px 56px rgba(0,0,0,.35), 0 48px 100px rgba(0,0,0,.25)',
+      boxShadow: shadowBase,
       duration: .7,
       ease: 'elastic.out(1,.5)',
       overwrite: 'auto'
