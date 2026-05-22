@@ -1108,7 +1108,7 @@ if (!reduced) {
   const stickyH    = stickyEl.offsetHeight;
   const panelH     = document.getElementById('sq-chat-b').offsetHeight;
   const panelStartX = (stickyW - 3 * panelW) / 2;
-  const sqTop      = stickyH / 2 + panelH / 2 - sz;
+  const sqTop      = (stickyH - sz) / 2;
 
   sqTrio.style.gap = '0';
   sqTrio.style.width = '100%';
@@ -1241,7 +1241,7 @@ function expandChatGreen() {
   const bR      = panelB.getBoundingClientRect();
   const trioEls = trio.querySelectorAll('.sq');
 
-  const lx = bR.right - stickyR.left + 6;
+  const lx = bR.right - stickyR.left;
   const cy = bR.top   - stickyR.top  + bR.height / 2;
 
   gsap.set(panelG, {
