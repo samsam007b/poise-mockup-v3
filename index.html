@@ -1059,126 +1059,96 @@ lenis.on('scroll', ScrollTrigger.update);
 let act2State = 'idle'; // 'idle' | 'playing' | 'done' | 'reversing'
 let scrollTl;
 
-/* ── HERO SCROLL TRANSITION — bands → cream bg ─────────────── */
+/* ── TIMELINE MAÎTRE — Acte 1 + Acte 2 carrés (une seule scrub) ── */
 if (!reduced) {
   const sBands = gsap.utils.toArray('.bm-b');
   const sTypo  = document.getElementById('hero-typo');
   const vh     = window.innerHeight;
-
   const cSX = 5;
   const cSY = (vh / 72) * 1.8;
 
+  /* Setup carrés AVANT la timeline (valeurs nécessaires au scrub) */
+  const sqTrio = document.getElementById('sq-trio');
+  const sqEls  = sqTrio ? sqTrio.querySelectorAll('.sq') : [];
+  const sqArr  = Array.from(sqEls);
+  const sz     = sqEls[0] ? sqEls[0].offsetHeight || 72 : 72;
+  const startY = -(vh * 0.6 + sz);
+
+  const panelW      = document.getElementById('sq-chat-b').offsetWidth;
+  const sqW         = sqEls[0] ? (sqEls[0].offsetWidth || 72) : 72;
+  const stickyEl    = document.querySelector('.hero-sticky');
+  const stickyW     = stickyEl.offsetWidth;
+  const stickyH     = stickyEl.offsetHeight;
+  const panelH      = document.getElementById('sq-chat-b').offsetHeight;
+  const panelStartX = (stickyW - 3 * panelW) / 2;
+  const sqTop       = stickyH / 2 + panelH / 2 - sz;
+
+  sqTrio.style.cssText += ';gap:0;width:100%;height:100%;left:0;top:0;bottom:auto;transform:none;';
+  sqArr.forEach((sq, i) => {
+    const cx = panelStartX + i * panelW + panelW / 2;
+    gsap.set(sq, { position:'absolute', left: cx - sqW / 2, top: sqTop, y: startY, opacity:1 });
+  });
+  gsap.set(sqTrio, { opacity:0 });
+
+  /*
+   * TIMELINE UNIQUE — scrub 0 → 340vh
+   * t 0.00–1.00 : Acte 1 — bandes → fond cream     (= 0 → 240vh scroll)
+   * t 1.08–1.42 : Acte 2a — 3 carrés tombent        (= 240 → 340vh scroll)
+   * Mathématique : 240/340 = 0.706 = point exact fin Acte 1 dans le scrub
+   */
   scrollTl = gsap.timeline({
-    scrollTrigger:{
-      trigger:'#hero',
-      start:'top top',
-      end:'+=240vh',
-      scrub:2.5,
+    scrollTrigger: {
+      trigger: '#hero',
+      start:   'top top',
+      end:     '+=340vh',
+      scrub:   1,
     }
   });
 
+  /* — Acte 1 (t 0→1) */
   scrollTl
-    /* wordmark fade — légèrement décalé pour qu'on le voit devant les bands */
     .to([sTypo,'.hero-label','.hero-index','#hero-tagline'],
-      { opacity:0, duration:0.18, ease:'none' }, 0.05)
+        { opacity:0, duration:0.18, ease:'none' }, 0.05)
     .to([sBands[3], sBands[4], sBands[1]],
-      { opacity:0, duration:0.14, ease:'none' }, 0)
+        { opacity:0, duration:0.14, ease:'none' }, 0)
+    .to(sBands[0], { x:'-28vw', y:-240, scaleX:cSX, scaleY:cSY, opacity:1, duration:1, ease:'none' }, 0)
+    .to(sBands[2], { x:'28vw',  y: 240, scaleX:cSX, scaleY:cSY, opacity:1, duration:1, ease:'none' }, 0)
+  /* — Acte 2a carrés (t 1.08→1.42) */
+    .fromTo(sqTrio, { opacity:0 }, { opacity:1, duration:0.02 }, 1.08)
+    .fromTo(sqArr[0], { y:startY }, { y:0, ease:'power3.in', duration:0.28 }, 1.10)
+    .fromTo(sqArr[1], { y:startY }, { y:0, ease:'power3.in', duration:0.28 }, 1.17)
+    .fromTo(sqArr[2], { y:startY }, { y:0, ease:'power3.in', duration:0.28 }, 1.24);
 
-    /* cream bands — s'écartent, fond devient beige */
-    .to(sBands[0], {
-      x:'-28vw', y:-240,
-      scaleX:cSX, scaleY:cSY, opacity:1,
-      duration:1, ease:'none'
-    }, 0)
-    .to(sBands[2], {
-      x:'28vw', y:240,
-      scaleX:cSX, scaleY:cSY, opacity:1,
-      duration:1, ease:'none'
-    }, 0);
-
-  /* ── CARRÉS — apparaissent après le fond beige ── */
-  const sqTrio = document.getElementById('sq-trio');
-  const sqEls  = sqTrio ? sqTrio.querySelectorAll('.sq') : [];
-  const sz     = sqEls[0] ? sqEls[0].offsetHeight || 72 : 72;
-  const startY = -(vh * 0.55 + sz);
-  let sqTl     = null;
-
-  /* Positionne les carrés alignés sur le centre de chaque panel */
-  const panelW     = document.getElementById('sq-chat-b').offsetWidth;
-  const sqW        = sqEls[0] ? (sqEls[0].offsetWidth || 72) : 72;
-  const stickyEl   = document.querySelector('.hero-sticky');
-  const stickyW    = stickyEl.offsetWidth;
-  const stickyH    = stickyEl.offsetHeight;
-  const panelH     = document.getElementById('sq-chat-b').offsetHeight;
-  const panelStartX = (stickyW - 3 * panelW) / 2;
-  const sqTop      = stickyH / 2 + panelH / 2 - sz;
-
-  sqTrio.style.gap = '0';
-  sqTrio.style.width = '100%';
-  sqTrio.style.height = '100%';
-  sqTrio.style.left = '0';
-  sqTrio.style.top = '0';
-  sqTrio.style.bottom = '';
-  sqTrio.style.transform = 'none';
-  Array.from(sqEls).forEach((sq, i) => {
-    const cx = panelStartX + i * panelW + panelW / 2;
-    gsap.set(sq, { position:'absolute', left: cx - sqW / 2, top: sqTop });
-  });
-
-  /* ── ACTE 2 — scroll trigger bloquant (Option B : film linéaire) ── */
+  /* — Chat trigger : se déclenche APRÈS la fin du scrub (350vh) */
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top -260vh',
+    start:   'top -350vh',
     onEnter() {
       if (act2State !== 'idle') return;
       act2State = 'playing';
-      if (scrollTl) scrollTl.progress(1); // force Acte 1 à 100% — élimine le lag scrub
+      scrollTl.progress(1); /* snap sécurité */
       lenis.stop();
-
-      gsap.set(sqTrio, { opacity:1 });
-      gsap.set(sqEls,  { y:startY, rotation:0, opacity:1 });
       gsap.set(['#sq-chat-b','#sq-chat-g','#sq-chat-t'], { scale:0, opacity:0 });
-
-      sqTl = gsap.timeline({ onComplete: expandChatBefore });
-      Array.from(sqEls).forEach((sq, i) => {
-        const o = i * 0.16;
-        sqTl
-          .to(sq, { y:0,                    duration:0.65, ease:'power2.in'  }, o)
-          .to(sq, { y:-sz*0.38, rotation:14, duration:0.2,  ease:'power2.out' }, o + 0.65)
-          .to(sq, { y:0, rotation:0,         duration:0.52, ease:'power3.out' }, o + 0.85);
-      });
+      expandChatBefore();
     },
     onLeaveBack() {
       if (act2State === 'idle' || act2State === 'reversing') return;
       act2State = 'reversing';
-      lenis.start();
-      if (sqTl) sqTl.kill();
       gsap.killTweensOf(['#sq-chat-b','#sq-chat-g','#sq-chat-t']);
-
-      const sqArr = Array.from(sqEls);
-
-      gsap.timeline()
-        /* 1 — panels se referment dans l'ordre inverse */
-        .to('#sq-chat-t', { scale:0, duration:0.25, ease:'power2.in', transformOrigin:'center bottom' })
-        .to('#sq-chat-g', { scaleX:0, duration:0.25, ease:'power2.in', transformOrigin:'left center' }, '-=0.1')
-        .to('#sq-chat-b', { scale:0, duration:0.25, ease:'power2.in', transformOrigin:'center bottom' }, '-=0.1')
-        /* 2 — carrés réapparaissent à leur position */
+      /* Panels se referment — le scrub inverse gère les carrés */
+      gsap.timeline({ onComplete() { act2State = 'idle'; } })
+        .to('#sq-chat-t', { scale:0,  duration:0.22, ease:'power2.in', transformOrigin:'center bottom' })
+        .to('#sq-chat-g', { scaleX:0, duration:0.22, ease:'power2.in', transformOrigin:'left center'   }, '-=0.08')
+        .to('#sq-chat-b', { scale:0,  duration:0.22, ease:'power2.in', transformOrigin:'center bottom' }, '-=0.08')
         .call(() => {
-          gsap.set(sqTrio, { opacity:1 });
-          gsap.set(sqArr, { y:0, opacity:1, rotation:0 });
-        })
-        /* 3 — carrés s'envolent hors écran vers le haut (ordre inverse) */
-        .to([...sqArr].reverse(), { y:startY, duration:0.4, ease:'power2.in', stagger:0.09 })
-        /* 4 — reset complet */
-        .call(() => {
-          gsap.set(sqTrio, { opacity:0 });
-          gsap.set(sqArr, { y:0, opacity:1 });
+          /* rendre les carrés visibles pour que le scrub inverse les anime */
+          gsap.set(sqArr, { opacity:1 });
           ['sq-msgs-b','sq-msgs-g'].forEach(id => {
             const el = document.getElementById(id); if (el) el.innerHTML = '';
           });
           gsap.set(['#sq-chat-b-outcome','#sq-chat-g-outcome'], { display:'none' });
           gsap.set(['#sq-kpi-s1','#sq-kpi-s2','#sq-kpi-cta'], { opacity:0, y:8 });
-          act2State = 'idle';
+          lenis.start(); /* débloque le scroll → scrub reprend à l'envers */
         });
     }
   });
