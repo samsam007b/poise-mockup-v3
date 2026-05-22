@@ -1056,6 +1056,8 @@ lenis.on('scroll', ScrollTrigger.update);
     .to('#hero-tagline', { opacity:.55, duration:0.6, ease:'power3.out' }, '-=0.1');
 })();
 
+let act2State = 'idle'; // 'idle' | 'playing' | 'done'
+
 /* ── HERO SCROLL TRANSITION — bands → cream bg ─────────────── */
 if (!reduced) {
   const sBands = gsap.utils.toArray('.bm-b');
@@ -1122,25 +1124,33 @@ if (!reduced) {
     gsap.set(sq, { position:'absolute', left: cx - sqW / 2, top: sqTop });
   });
 
+  /* ── ACTE 2 — scroll trigger bloquant (Option B : film linéaire) ── */
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top -280vh',
+    start: 'top -260vh',
     onEnter() {
+      if (act2State !== 'idle') return;
+      act2State = 'playing';
+      lenis.stop();
+
       gsap.set(sqTrio, { opacity:1 });
       gsap.set(sqEls,  { y:startY, rotation:0, opacity:1 });
-      gsap.set(['#sq-chat-b','#sq-chat-g'], { scale:0, opacity:0 });
+      gsap.set(['#sq-chat-b','#sq-chat-g','#sq-chat-t'], { scale:0, opacity:0 });
+
       sqTl = gsap.timeline({ onComplete: expandChatBefore });
       Array.from(sqEls).forEach((sq, i) => {
         const o = i * 0.16;
         sqTl
-          .to(sq, { y:0,                     duration:0.65, ease:'power2.in'  }, o)
-          .to(sq, { y:-sz*0.38, rotation:14,  duration:0.2,  ease:'power2.out' }, o + 0.65)
-          .to(sq, { y:0, rotation:0,          duration:0.52, ease:'power3.out' }, o + 0.85);
+          .to(sq, { y:0,                    duration:0.65, ease:'power2.in'  }, o)
+          .to(sq, { y:-sz*0.38, rotation:14, duration:0.2,  ease:'power2.out' }, o + 0.65)
+          .to(sq, { y:0, rotation:0,         duration:0.52, ease:'power3.out' }, o + 0.85);
       });
     },
     onLeaveBack() {
+      act2State = 'idle';
+      lenis.start();
       if (sqTl) sqTl.kill();
-      gsap.killTweensOf(['#sq-chat-b','#sq-chat-g','#sq-chat-t']);
+      gsap.killTweensOf(['#sq-chat-b','#sq-chat-g','#sq-chat-t','#sq-trio']);
       gsap.to(['#sq-chat-b','#sq-chat-g','#sq-chat-t'], { scale:0, opacity:0, duration:0.25, ease:'power2.in' });
       ['sq-msgs-b','sq-msgs-g'].forEach(id => {
         const el = document.getElementById(id); if (el) el.innerHTML = '';
@@ -1322,7 +1332,12 @@ function expandChatTerra() {
 function animateKpiPanel() {
   gsap.to('#sq-kpi-s1', { opacity:1, y:0, duration:0.45, ease:'power3.out', delay:0.15 });
   gsap.to('#sq-kpi-s2', { opacity:1, y:0, duration:0.45, ease:'power3.out', delay:0.35 });
-  gsap.to('#sq-kpi-cta', { opacity:1, duration:0.5, ease:'power3.out', delay:0.6 });
+  gsap.to('#sq-kpi-cta', { opacity:1, duration:0.5, ease:'power3.out', delay:0.6,
+    onComplete() {
+      act2State = 'done';
+      lenis.start();
+    }
+  });
 }
 
 </script>
