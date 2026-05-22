@@ -194,6 +194,88 @@ nav{
 }
 /* Hero init line — disparaît au premier scroll */
 
+/* ── 3 CARRÉS — drop animation ───────────────────────────── */
+.sq-trio{
+  position:absolute;
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:clamp(44px,7vw,96px);
+  bottom:28%;left:50%;
+  transform:translateX(-50%);
+  opacity:0;z-index:15;pointer-events:none;
+}
+.sq{
+  width:clamp(58px,5.2vw,80px);
+  height:clamp(58px,5.2vw,80px);
+  flex-shrink:0;
+}
+.sq-1{background:var(--sage);}
+.sq-2{background:var(--terra);}
+.sq-3{background:var(--bleu);}
+
+/* ── CHAT PANELS ────────────────────────────────────────────── */
+.sq-chat{
+  position:absolute;
+  width:clamp(260px,28vw,400px);
+  height:clamp(360px,60vh,560px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:var(--cream);
+  border:1px solid rgba(14,13,10,.1);
+  opacity:0;
+  pointer-events:none;
+  z-index:50;
+  transform-origin:center center;
+}
+.sq-chat-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:var(--ink);flex-shrink:0;
+}
+.sq-chat-badge{
+  font-family:var(--font-j);font-size:8px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cream);opacity:.45;
+}
+.sq-chat-status{
+  font-family:var(--font-j);font-size:8px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--terra);
+}
+.sq-chat-body{
+  flex:1;overflow-y:auto;padding:14px;
+  display:flex;flex-direction:column;gap:8px;scrollbar-width:none;
+}
+.sq-cb{
+  font-size:clamp(10px,.82vw,12.5px);line-height:1.5;
+  padding:8px 12px;max-width:88%;border-radius:2px;
+}
+.sq-cb-user{background:rgba(14,13,10,.07);color:var(--ink);align-self:flex-start;}
+.sq-cb-auto{background:rgba(14,13,10,.08);color:rgba(14,13,10,.45);align-self:flex-end;font-style:italic;}
+.sq-chat-meta{
+  font-family:var(--font-j);font-size:7.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(14,13,10,.3);align-self:flex-end;
+}
+.sq-chat-outcome{
+  padding:10px 16px 12px;border-top:1px solid rgba(14,13,10,.07);
+  font-size:clamp(9px,.75vw,11px);line-height:1.55;color:rgba(14,13,10,.4);flex-shrink:0;
+}
+.sq-chat-outcome strong{display:block;margin-top:2px;color:rgba(14,13,10,.5);}
+.sq-chat-ft{
+  padding:10px 14px;border-top:1px solid rgba(14,13,10,.06);
+  flex-shrink:0;color:rgba(14,13,10,.22);font-size:11px;font-style:italic;
+}
+.sq-chat-hd-sage{background:var(--sage);}
+.sq-cb-agent{background:var(--sage);color:var(--cream);align-self:flex-end;}
+.sq-chat-outcome-good{
+  padding:10px 16px 12px;border-top:1px solid rgba(122,153,119,.2);
+  font-size:clamp(9px,.75vw,11px);line-height:1.55;color:rgba(14,13,10,.45);flex-shrink:0;
+}
+.sq-chat-outcome-good strong{display:block;margin-top:2px;color:var(--sage);}
+.hp-typing-ind{display:flex;gap:4px;padding:8px 12px;align-self:flex-start;}
+.hp-typing-ind span{width:5px;height:5px;border-radius:50%;background:rgba(14,13,10,.3);
+  animation:dot-pulse 1.2s infinite;display:block;}
+.hp-typing-ind span:nth-child(2){animation-delay:.2s;}
+.hp-typing-ind span:nth-child(3){animation-delay:.4s;}
+@keyframes dot-pulse{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+
 /* ── PANEL PRIMITIVES (Dokna + Agio) ────────────────── */
 .panel{
   display:block;
@@ -840,6 +922,36 @@ nav{
     <span class="hero-label">01 — Permanence</span>
     <span class="hero-index">2026</span>
     <p class="hero-tagline" id="hero-tagline">Le standing du réel, en permanence.</p>
+    <!-- 3 CARRÉS — tombent après le fond beige établi -->
+    <div class="sq-trio" id="sq-trio">
+      <div class="sq sq-1"></div>
+      <div class="sq sq-2"></div>
+      <div class="sq sq-3"></div>
+    </div>
+    <!-- Chat panel — Sans Poise Studio -->
+    <div id="sq-chat-b" class="sq-chat">
+      <div class="sq-chat-hd">
+        <span class="sq-chat-badge">Sans Poise Studio</span>
+        <span class="sq-chat-status">● Fermé</span>
+      </div>
+      <div class="sq-chat-body" id="sq-msgs-b"></div>
+      <div id="sq-chat-b-outcome" class="sq-chat-outcome" style="display:none">
+        Client a trouvé ailleurs.<br><strong>Perte : 1 rdv qualifié.</strong>
+      </div>
+      <div class="sq-chat-ft">Écrire un message…</div>
+    </div>
+    <!-- Chat panel — Avec Agent Poise Studio -->
+    <div id="sq-chat-g" class="sq-chat">
+      <div class="sq-chat-hd sq-chat-hd-sage">
+        <span class="sq-chat-badge" style="opacity:.7">Avec Agent Poise Studio</span>
+        <span class="sq-chat-status" style="color:rgba(237,232,223,.7)">● En ligne</span>
+      </div>
+      <div class="sq-chat-body" id="sq-msgs-g"></div>
+      <div id="sq-chat-g-outcome" class="sq-chat-outcome-good" style="display:none">
+        Réservation confirmée en 3 min.<br><strong>Confirmation envoyée par mail.</strong>
+      </div>
+      <div class="sq-chat-ft" style="border-top-color:rgba(122,153,119,.15)">Écrire un message…</div>
+    </div>
   </div>
 </section>
 
@@ -1434,6 +1546,210 @@ if (!reduced) {
       duration:1, ease:'none'
     }, 0);
 
+  /* ── CARRÉS — apparaissent après le fond beige ── */
+  const sqTrio = document.getElementById('sq-trio');
+  const sqEls  = sqTrio ? sqTrio.querySelectorAll('.sq') : [];
+  const sz     = sqEls[0] ? sqEls[0].offsetHeight || 72 : 72;
+  const startY = -(vh * 0.55 + sz);
+  let sqTl     = null;
+
+  /* Positionne les carrés alignés sur le centre de chaque panel */
+  const panelW     = document.getElementById('sq-chat-b').offsetWidth;
+  const sqW        = sqEls[0] ? (sqEls[0].offsetWidth || 72) : 72;
+  const stickyEl   = document.querySelector('.hero-sticky');
+  const stickyW    = stickyEl.offsetWidth;
+  const stickyH    = stickyEl.offsetHeight;
+  const panelH     = document.getElementById('sq-chat-b').offsetHeight;
+  const panelStartX = (stickyW - 3 * panelW) / 2;
+  const sqTop      = stickyH / 2 + panelH / 2 - sz;
+
+  sqTrio.style.gap = '0';
+  sqTrio.style.width = '100%';
+  sqTrio.style.left = '0';
+  sqTrio.style.bottom = '0';
+  sqTrio.style.transform = 'none';
+  Array.from(sqEls).forEach((sq, i) => {
+    const cx = panelStartX + i * panelW + panelW / 2;
+    gsap.set(sq, { position:'absolute', left: cx - sqW / 2, top: sqTop });
+  });
+
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top -228vh',
+    onEnter() {
+      gsap.set(sqTrio, { opacity:1 });
+      gsap.set(sqEls,  { y:startY, rotation:0, opacity:1 });
+      gsap.set(['#sq-chat-b','#sq-chat-g'], { scale:0, opacity:0 });
+      sqTl = gsap.timeline({ onComplete: expandChatBefore });
+      Array.from(sqEls).forEach((sq, i) => {
+        const o = i * 0.16;
+        sqTl
+          .to(sq, { y:0,                     duration:0.65, ease:'power2.in'  }, o)
+          .to(sq, { y:-sz*0.38, rotation:14,  duration:0.2,  ease:'power2.out' }, o + 0.65)
+          .to(sq, { y:0, rotation:0,          duration:0.52, ease:'power3.out' }, o + 0.85);
+      });
+    },
+    onLeaveBack() {
+      if (sqTl) sqTl.kill();
+      gsap.killTweensOf(['#sq-chat-b','#sq-chat-g']);
+      gsap.to(['#sq-chat-b','#sq-chat-g'], { scale:0, opacity:0, duration:0.25, ease:'power2.in' });
+      ['sq-msgs-b','sq-msgs-g'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.innerHTML = '';
+      });
+      gsap.set(['#sq-chat-b-outcome','#sq-chat-g-outcome'], { display:'none' });
+      gsap.to(sqTrio, { opacity:0, y:-80, duration:0.35, ease:'power2.in',
+        onComplete(){ gsap.set([sqTrio, ...Array.from(sqEls)], { y:0, opacity:1 }); }
+      });
+    }
+  });
+}
+
+/* ── SQUARES CHAT — expansion functions ─────────────────── */
+function expandChatBefore() {
+  const panel  = document.getElementById('sq-chat-b');
+  const sticky = document.querySelector('.hero-sticky');
+  const trio   = document.getElementById('sq-trio');
+  if (!panel || !sticky || !trio) return;
+
+  const stickyR = sticky.getBoundingClientRect();
+  const trioEls = trio.querySelectorAll('.sq');
+  const sq0R    = trioEls[0].getBoundingClientRect();
+
+  const cx = sq0R.left - stickyR.left + sq0R.width  / 2;
+  const cy = sq0R.top  - stickyR.top  + sq0R.height / 2;
+
+  gsap.set(panel, { left:cx, top:cy, xPercent:-50, yPercent:-50,
+    scale:0, opacity:1, pointerEvents:'auto', transformOrigin:'center center' });
+  gsap.to(trioEls[0], { opacity:0, duration:0.25, ease:'power2.out' });
+  gsap.to(panel, { scale:1, duration:0.65, ease:'power3.out',
+    onComplete: playChatBefore });
+}
+
+function playChatBefore() {
+  const chat = document.getElementById('sq-msgs-b');
+  if (!chat) return;
+  const MSG = 'Bonsoir, vous faites encore des rdv ce vendredi soir ?';
+
+  const elUser = document.createElement('div');
+  elUser.className = 'sq-cb sq-cb-user';
+  chat.appendChild(elUser);
+  let i = 0;
+  const iv = setInterval(() => {
+    elUser.textContent = MSG.slice(0, ++i);
+    chat.scrollTop = chat.scrollHeight;
+    if (i >= MSG.length) { clearInterval(iv); afterUserMsg(); }
+  }, 28);
+
+  function afterUserMsg() {
+    const m1 = document.createElement('div');
+    m1.className = 'sq-chat-meta'; m1.textContent = 'CLIENT — 18h42';
+    gsap.set(m1, {opacity:0}); chat.appendChild(m1);
+    gsap.to(m1, {opacity:1, duration:0.3});
+
+    setTimeout(() => {
+      const ind = document.createElement('div');
+      ind.className = 'hp-typing-ind';
+      ind.innerHTML = '<span></span><span></span><span></span>';
+      gsap.set(ind, {opacity:0}); chat.appendChild(ind);
+      chat.scrollTop = chat.scrollHeight;
+      gsap.to(ind, {opacity:1, duration:0.3});
+
+      setTimeout(() => {
+        ind.remove();
+        const elAuto = document.createElement('div');
+        elAuto.className = 'sq-cb sq-cb-auto';
+        elAuto.innerHTML = 'Notre secrétariat est indisponible<br>hors des heures de bureau.';
+        gsap.set(elAuto, {opacity:0, y:8}); chat.appendChild(elAuto);
+        chat.scrollTop = chat.scrollHeight;
+        gsap.to(elAuto, {opacity:1, y:0, duration:0.4, ease:'power3.out'});
+
+        const m2 = document.createElement('div');
+        m2.className = 'sq-chat-meta'; m2.textContent = 'RÉPONDEUR AUTO — 18h42';
+        gsap.set(m2, {opacity:0}); chat.appendChild(m2);
+        gsap.to(m2, {opacity:1, duration:0.3, delay:0.4});
+
+        setTimeout(() => {
+          const out = document.getElementById('sq-chat-b-outcome');
+          out.style.display = '';
+          gsap.set(out, {opacity:0, y:6});
+          gsap.to(out, {opacity:1, y:0, duration:0.5, ease:'power3.out'});
+          setTimeout(() => { expandChatGreen(); }, 800);
+        }, 1400);
+      }, 700);
+    }, 600);
+  }
+}
+
+function expandChatGreen() {
+  const panelB  = document.getElementById('sq-chat-b');
+  const panelG  = document.getElementById('sq-chat-g');
+  const sticky  = document.querySelector('.hero-sticky');
+  const trio    = document.getElementById('sq-trio');
+  if (!panelB || !panelG || !sticky || !trio) return;
+
+  const stickyR = sticky.getBoundingClientRect();
+  const bR      = panelB.getBoundingClientRect();
+  const trioEls = trio.querySelectorAll('.sq');
+
+  const lx = bR.right - stickyR.left + 6;
+  const cy = bR.top   - stickyR.top  + bR.height / 2;
+
+  gsap.set(panelG, {
+    left: lx, top: cy,
+    xPercent: 0, yPercent: -50,
+    scaleX: 0, scaleY: 1,
+    opacity: 1, pointerEvents: 'auto',
+    transformOrigin: 'left center'
+  });
+  gsap.to(trioEls[1], { opacity:0, duration:0.25, ease:'power2.out' });
+  gsap.to(panelG, { scaleX:1, duration:0.65, ease:'power3.out',
+    onComplete: playChatGreen });
+}
+
+function playChatGreen() {
+  const chat = document.getElementById('sq-msgs-g');
+  if (!chat) return;
+
+  const MSGS = [
+    { text: 'Bonsoir, vous avez encore de la disponibilité ce vendredi soir ?', user: true,  delay: 0 },
+    { text: 'Bonsoir ! Oui, vendredi 18h ou 19h — votre préférence ?',          user: false, delay: 2200 },
+    { text: '18h ce serait parfait.',                                            user: true,  delay: 3800 },
+    { text: 'Réservé pour vendredi 18h. Confirmation envoyée par mail.',         user: false, delay: 5000 }
+  ];
+
+  MSGS.forEach((msg, idx) => {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = msg.user ? 'sq-cb sq-cb-user' : 'sq-cb sq-cb-agent';
+      chat.appendChild(el);
+      if (msg.user) {
+        let i = 0;
+        const iv = setInterval(() => {
+          el.textContent = msg.text.slice(0, ++i);
+          chat.scrollTop = chat.scrollHeight;
+          if (i >= msg.text.length) clearInterval(iv);
+        }, 28);
+      } else {
+        el.textContent = msg.text;
+        chat.scrollTop = chat.scrollHeight;
+      }
+      const meta = document.createElement('div');
+      meta.className = 'sq-chat-meta';
+      const now = new Date();
+      const t = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+      meta.textContent = msg.user ? 'VOUS — ' + t : 'AGENT POISE — ' + t;
+      gsap.set(meta, {opacity:0}); chat.appendChild(meta);
+      gsap.to(meta, {opacity:1, duration:0.3});
+      if (idx === MSGS.length - 1) {
+        setTimeout(() => {
+          const out = document.getElementById('sq-chat-g-outcome');
+          out.style.display = '';
+          gsap.set(out, {opacity:0, y:6});
+          gsap.to(out, {opacity:1, y:0, duration:0.5, ease:'power3.out'});
+        }, 800);
+      }
+    }, msg.delay);
+  });
 }
 
 /* ── MANIFESTE — line reveal ─────────────────────────────── */
