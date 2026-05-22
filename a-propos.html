@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>À propos — Poise Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0e0d0a;color:#ede8df;cursor:none;overflow-x:hidden;font-family:'Plus Jakarta Sans',sans-serif;}
+
+:root{
+  --ink:#0e0d0a;
+  --cream:#ede8df;
+  --sage:#7a9977;
+  --terra:#c45c2b;
+  --bleu:#9bb0c4;
+  --font-j:'Plus Jakarta Sans',sans-serif;
+  --font-f:'Spectral',serif;
+}
+
+/* ── CURSOR ─── */
+#cursor{
+  position:fixed;width:10px;height:10px;border-radius:50%;
+  background:var(--cream);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+  transition:width .2s,height .2s;
+}
+#cursor.expand{width:32px;height:32px;}
+
+/* ── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 40px;
+  mix-blend-mode:difference;
+  pointer-events:none;
+}
+.nav-logo{
+  font-family:var(--font-j);font-weight:800;font-size:13px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cream);
+  pointer-events:all;display:flex;align-items:baseline;
+  text-decoration:none;
+}
+.nl-poise{font-family:var(--font-f);font-weight:300;font-size:18px;letter-spacing:-.025em;text-transform:none;}
+.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;}
+.nav-links{display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
+.nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.45;transition:opacity .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;}
+.nav-cta{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);text-decoration:none;pointer-events:all;border:1px solid rgba(237,232,223,.3);padding:8px 18px;transition:border-color .25s;}
+.nav-cta:hover{border-color:rgba(237,232,223,.9);}
+@media(max-width:768px){.nav-links{display:none;}.nav-cta{display:none;}}
+
+/* ── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:clamp(100px,14vh,160px) clamp(32px,8vw,120px) clamp(60px,10vh,100px);
+  border-bottom:1px solid rgba(237,232,223,.06);
+  position:relative;overflow:hidden;
+}
+.hero-bg-word{
+  position:absolute;right:-2vw;top:50%;transform:translateY(-50%);
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(180px,28vw,360px);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(237,232,223,.04);
+  pointer-events:none;user-select:none;line-height:1;white-space:nowrap;
+}
+.hero-tag{
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--sage);
+  display:block;margin-bottom:32px;
+}
+.hero-title{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(3.2rem,7vw,6.5rem);line-height:.95;letter-spacing:-.02em;
+  color:var(--cream);max-width:800px;
+}
+.hero-sub{
+  margin-top:40px;
+  font-family:var(--font-j);font-weight:300;font-size:14px;
+  letter-spacing:.04em;line-height:1.75;color:rgba(237,232,223,.45);
+  max-width:480px;
+}
+
+/* ── MANIFESTE ─── */
+.manifeste{
+  padding:clamp(80px,12vh,140px) clamp(32px,8vw,120px);
+  border-bottom:1px solid rgba(237,232,223,.06);
+}
+.manifeste-inner{
+  max-width:860px;
+}
+.manifeste-label{
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--sage);
+  display:block;margin-bottom:56px;
+}
+.manifeste-block{
+  margin-bottom:64px;
+}
+.manifeste-block:last-child{margin-bottom:0;}
+.manifeste-q{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.15;letter-spacing:-.01em;
+  color:var(--cream);margin-bottom:20px;
+}
+.manifeste-p{
+  font-family:var(--font-j);font-weight:300;font-size:14px;
+  letter-spacing:.03em;line-height:1.8;color:rgba(237,232,223,.45);
+}
+.manifeste-p em{
+  font-style:normal;color:rgba(237,232,223,.75);
+}
+
+/* ── FONDATEURS ─── */
+.fondateurs{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid rgba(237,232,223,.06);
+}
+@media(max-width:768px){.fondateurs{grid-template-columns:1fr;}}
+.fondateur{
+  padding:clamp(60px,10vh,120px) clamp(32px,7vw,100px);
+}
+.fondateur:first-child{border-right:1px solid rgba(237,232,223,.06);}
+@media(max-width:768px){.fondateur:first-child{border-right:none;border-bottom:1px solid rgba(237,232,223,.06);}}
+.fondateur-label{
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.22em;text-transform:uppercase;color:rgba(237,232,223,.2);
+  display:block;margin-bottom:32px;
+}
+.fondateur-name{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1;letter-spacing:-.02em;
+  color:var(--cream);margin-bottom:8px;
+}
+.fondateur-role{
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:32px;
+}
+.fondateur-role.sage{color:var(--sage);}
+.fondateur-role.bleu{color:var(--bleu);}
+.fondateur-bio{
+  font-family:var(--font-j);font-weight:300;font-size:12.5px;
+  letter-spacing:.03em;line-height:1.8;color:rgba(237,232,223,.4);
+}
+.fondateur-bio em{color:rgba(237,232,223,.65);font-style:normal;}
+
+/* ── VALEURS ─── */
+.valeurs-section{
+  padding:clamp(80px,12vh,140px) clamp(32px,8vw,120px);
+  border-bottom:1px solid rgba(237,232,223,.06);
+}
+.valeurs-label{
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--sage);
+  display:block;margin-bottom:64px;
+}
+.valeurs-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:clamp(32px,4vw,60px);
+}
+@media(max-width:768px){.valeurs-grid{grid-template-columns:1fr;gap:48px;}}
+.valeur{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.valeur.visible{opacity:1;transform:translateY(0);}
+.valeur-num{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(3rem,6vw,5rem);line-height:1;letter-spacing:-.03em;
+  color:rgba(237,232,223,.08);margin-bottom:16px;
+}
+.valeur-name{
+  font-family:var(--font-j);font-weight:800;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cream);
+  margin-bottom:16px;
+}
+.valeur-desc{
+  font-family:var(--font-j);font-weight:300;font-size:12px;
+  letter-spacing:.03em;line-height:1.8;color:rgba(237,232,223,.35);
+}
+
+/* ── CTA ─── */
+.cta-section{
+  padding:clamp(80px,12vh,140px) clamp(32px,8vw,120px);
+  display:flex;flex-direction:column;gap:40px;
+}
+@media(min-width:769px){
+  .cta-section{flex-direction:row;align-items:center;justify-content:space-between;}
+}
+.cta-text{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(2rem,4.5vw,3.8rem);line-height:1;letter-spacing:-.02em;
+  color:var(--cream);max-width:560px;
+}
+.cta-btn{
+  font-family:var(--font-j);font-weight:800;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);background:var(--cream);
+  padding:18px 40px;text-decoration:none;
+  display:inline-flex;align-items:center;gap:12px;
+  transition:background .2s;flex-shrink:0;
+}
+.cta-btn:hover{background:var(--sage);}
+.cta-btn-arrow{transition:transform .2s;}
+.cta-btn:hover .cta-btn-arrow{transform:translateX(6px);}
+
+/* ── FOOTER ─── */
+footer{
+  border-top:1px solid rgba(237,232,223,.06);
+  padding:28px clamp(32px,8vw,120px);
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;
+}
+footer span,footer a{
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.1em;color:rgba(237,232,223,.2);text-decoration:none;
+}
+footer a:hover{color:rgba(237,232,223,.5);}
+
+/* ── SCROLL REVEAL ─── */
+.reveal{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .65s ease,transform .65s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><em class="nl-poise">Poise</em><span class="nl-studio">Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="agents.html">Agents</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="sqwr-studio.html">Studio</a></li>
+    <li><a href="a-propos.html" class="active">À propos</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Réserver une démo →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-word">Poise</div>
+  <span class="hero-tag reveal">À propos · Bruxelles, 2026</span>
+  <h1 class="hero-title reveal reveal-delay-1">Deux studios.<br>Une obsession.</h1>
+  <p class="hero-sub reveal reveal-delay-2">Poise Studio déploie les agents IA. SQWR Studio signe l'identité. Ensemble, nous construisons une infrastructure complète — fonctionnelle, cohérente, durable.</p>
+</section>
+
+<!-- MANIFESTE -->
+<section class="manifeste">
+  <div class="manifeste-inner">
+    <span class="manifeste-label reveal">Manifeste</span>
+
+    <div class="manifeste-block reveal">
+      <h2 class="manifeste-q">Pourquoi l'IA pour les PME — maintenant ?</h2>
+      <p class="manifeste-p">Les grandes entreprises ont des équipes dédiées pour automatiser, personnaliser, répondre. Les PME, non. Résultat : elles perdent des clients à 2h du matin, ratent des leads le week-end, épuisent leur équipe sur des tâches répétitives. <em>L'IA ne remplace pas les équipes — elle leur redonne du temps.</em> Et ce temps, c'est ce qui permet de grandir sans s'effondrer.</p>
+    </div>
+
+    <div class="manifeste-block reveal">
+      <h2 class="manifeste-q">La différence entre un outil IA et une infrastructure IA.</h2>
+      <p class="manifeste-p">Un chatbot générique répond n'importe quoi. Un agent correctement configuré connaît votre menu, vos horaires, vos tarifs, votre ton. Il répond comme vous répondriez — en mieux, parce qu'il ne se fatigue pas. <em>C'est ça, une infrastructure IA : quelque chose qu'on configure une fois, qui fonctionne en continu, et qu'on met à jour en 24h quand quelque chose change.</em></p>
+    </div>
+
+    <div class="manifeste-block reveal">
+      <h2 class="manifeste-q">Notre conviction : la forme sans le fond, c'est du potentiel gaspillé.</h2>
+      <p class="manifeste-p">Un agent IA dans une identité incohérente inspire peu confiance. Un beau site sans automatisation laisse des conversions sur la table. C'est pourquoi Poise Studio et SQWR Studio travaillent ensemble — pas par commodité, mais par conviction que <em>l'outil et la marque doivent parler d'une seule voix.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- FONDATEURS -->
+<section class="fondateurs">
+  <div class="fondateur reveal">
+    <span class="fondateur-label">Fondateur · Stratégie & Agents</span>
+    <h2 class="fondateur-name">Samuel<br>Baudon</h2>
+    <p class="fondateur-role sage">Direction stratégie · Poise Studio</p>
+    <p class="fondateur-bio">Entrepreneur bruxellois, <em>formé en Relations Publiques & Affaires Européennes</em> à l'IHECS. Samuel pilote la stratégie produit, la configuration des agents, et les relations clients de Poise Studio. Il a également fondé <em>izzico</em>, une application de co-living en cours de développement — ce qui lui donne une perspective d'utilisateur autant que de concepteur.</p>
+  </div>
+  <div class="fondateur reveal reveal-delay-1">
+    <span class="fondateur-label">Fondateur · Créatif & DA</span>
+    <h2 class="fondateur-name">Joakim<br>Baudon</h2>
+    <p class="fondateur-role bleu">Direction créative · SQWR Studio</p>
+    <p class="fondateur-bio">Designer formé à <em>La Cambre</em> (École Nationale Supérieure des Arts Visuels, Bruxelles). Joakim dirige la direction artistique de SQWR Studio — identités visuelles, sites web, typographie, mise en espace. Son regard est la raison pour laquelle <em>chaque projet Poise existe dans une identité qui tient debout seule.</em></p>
+  </div>
+</section>
+
+<!-- VALEURS -->
+<section class="valeurs-section">
+  <span class="valeurs-label reveal">Ce qu'on défend</span>
+  <div class="valeurs-grid">
+    <div class="valeur">
+      <div class="valeur-num">01</div>
+      <div class="valeur-name">Transparence</div>
+      <p class="valeur-desc">Prix affichés. Délais tenus. Aucun engagement caché. Vous savez exactement ce que vous payez et ce que ça fait.</p>
+    </div>
+    <div class="valeur">
+      <div class="valeur-num">02</div>
+      <div class="valeur-name">Précision</div>
+      <p class="valeur-desc">Un agent mal configuré coûte plus cher qu'aucun agent. On prend le temps de comprendre votre activité avant de déployer quoi que ce soit.</p>
+    </div>
+    <div class="valeur">
+      <div class="valeur-num">03</div>
+      <div class="valeur-name">Durabilité</div>
+      <p class="valeur-desc">Pas de setup jetable. Nos agents évoluent avec votre activité — mise à jour sous 24h, support continu inclus dans la mensualité.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-text reveal">Prêt à construire quelque chose qui dure ?</p>
+  <a href="contact.html" class="cta-btn reveal reveal-delay-1">Réserver un brief <span class="cta-btn-arrow">→</span></a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Poise Studio — Bruxelles · 2026</span>
+  <a href="mailto:studio@poise.be">studio@poise.be</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+/* ── CURSOR ─── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
+});
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
+});
+
+/* ── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal,.valeur').forEach(el => observer.observe(el));
+
+/* ── HERO PARALLAX BG WORD ─── */
+const bgWord = document.querySelector('.hero-bg-word');
+window.addEventListener('scroll', () => {
+  if (bgWord) bgWord.style.transform = `translateY(calc(-50% + ${window.scrollY * 0.12}px))`;
+}, { passive: true });
+
+/* ── REDUCED MOTION ─── */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.reveal,.valeur').forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+}
+</script>
+</body>
+</html>

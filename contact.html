@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Poise Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0e0d0a;color:#ede8df;cursor:none;overflow-x:hidden;font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;}
+
+:root{
+  --ink:#0e0d0a;
+  --cream:#ede8df;
+  --sage:#7a9977;
+  --terra:#c45c2b;
+  --bleu:#9bb0c4;
+  --font-j:'Plus Jakarta Sans',sans-serif;
+  --font-f:'Spectral',serif;
+}
+
+/* ── CURSOR ─── */
+#cursor{
+  position:fixed;width:10px;height:10px;border-radius:50%;
+  background:var(--cream);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+  transition:width .2s,height .2s;
+}
+#cursor.expand{width:32px;height:32px;}
+
+/* ── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 40px;
+  mix-blend-mode:difference;
+  pointer-events:none;
+}
+.nav-logo{
+  font-family:var(--font-j);font-weight:800;font-size:13px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cream);
+  pointer-events:all;display:flex;align-items:baseline;
+  text-decoration:none;
+}
+.nl-poise{font-family:var(--font-f);font-weight:300;font-size:18px;letter-spacing:-.025em;text-transform:none;}
+.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;}
+.nav-links{display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
+.nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.45;transition:opacity .2s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);text-decoration:none;pointer-events:all;border:1px solid rgba(237,232,223,.3);padding:8px 18px;transition:border-color .25s;}
+.nav-cta:hover{border-color:rgba(237,232,223,.9);}
+@media(max-width:768px){.nav-links{display:none;}.nav-cta{display:none;}}
+
+/* ── LAYOUT ─── */
+.contact-layout{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  min-height:100vh;
+}
+@media(max-width:900px){.contact-layout{grid-template-columns:1fr;}}
+
+/* ── LEFT — BRAND ─── */
+.contact-left{
+  padding:clamp(100px,14vh,160px) clamp(32px,7vw,80px) 60px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-right:1px solid rgba(237,232,223,.06);
+}
+.contact-left-top{}
+.contact-tag{
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--sage);
+  display:block;margin-bottom:32px;
+}
+.contact-title{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;letter-spacing:-.02em;
+  color:var(--cream);margin-bottom:32px;
+}
+.contact-desc{
+  font-family:var(--font-j);font-weight:300;font-size:13px;
+  letter-spacing:.04em;line-height:1.7;color:rgba(237,232,223,.4);
+  max-width:340px;
+}
+.contact-info{
+  display:flex;flex-direction:column;gap:16px;
+}
+.contact-info-item{
+  display:flex;flex-direction:column;gap:2px;
+}
+.contact-info-label{
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(237,232,223,.2);
+}
+.contact-info-val{
+  font-family:var(--font-j);font-weight:300;font-size:12px;
+  letter-spacing:.06em;color:rgba(237,232,223,.5);
+  text-decoration:none;
+}
+.contact-info-val:hover{color:var(--cream);}
+
+/* ── RIGHT — FORM ─── */
+.contact-right{
+  padding:clamp(100px,14vh,160px) clamp(32px,7vw,80px) 60px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.form-group{
+  display:flex;flex-direction:column;gap:6px;
+  margin-bottom:28px;
+}
+.form-label{
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(237,232,223,.3);
+}
+.form-input,.form-select,.form-textarea{
+  background:transparent;border:none;border-bottom:1px solid rgba(237,232,223,.12);
+  padding:12px 0;font-family:var(--font-j);font-weight:300;font-size:14px;
+  letter-spacing:.04em;color:var(--cream);outline:none;width:100%;
+  transition:border-color .2s;
+  -webkit-appearance:none;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(237,232,223,.2);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--sage);}
+.form-select{cursor:pointer;background:transparent;}
+.form-select option{background:var(--ink);color:var(--cream);}
+.form-textarea{resize:none;height:100px;line-height:1.6;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+.form-submit{
+  margin-top:12px;
+  font-family:var(--font-j);font-weight:800;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);background:var(--cream);border:none;
+  padding:18px 40px;cursor:none;
+  transition:background .2s,color .2s;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.form-submit:hover{background:var(--sage);}
+.form-submit-arrow{transition:transform .2s;}
+.form-submit:hover .form-submit-arrow{transform:translateX(6px);}
+
+/* ── TIMINGS ─── */
+.contact-timings{
+  display:flex;gap:24px;margin-top:32px;
+}
+.contact-timing-item{display:flex;flex-direction:column;gap:3px;}
+.contact-timing-val{
+  font-family:var(--font-f);font-weight:300;
+  font-size:1.6rem;letter-spacing:-.02em;color:var(--sage);line-height:1;
+}
+.contact-timing-lbl{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,223,.3);
+}
+
+/* ── FORM REASSURANCE ─── */
+.form-reassurance{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:9px;
+  letter-spacing:.1em;color:rgba(237,232,223,.25);
+  margin-bottom:12px;line-height:1.6;
+}
+
+/* ── FOOTER ─── */
+footer{
+  border-top:1px solid rgba(237,232,223,.06);
+  padding:28px clamp(32px,7vw,80px);
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+footer span,footer a{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:10px;
+  letter-spacing:.1em;color:rgba(237,232,223,.2);text-decoration:none;
+}
+footer a:hover{color:rgba(237,232,223,.5);}
+
+/* ── FORM SUCCESS ─── */
+.form-success{
+  display:none;flex-direction:column;gap:16px;
+  padding:40px 0;
+}
+.form-success.show{display:flex;}
+.form-success-icon{font-size:28px;color:var(--sage);}
+.form-success-title{
+  font-family:var(--font-f);font-weight:300;
+  font-size:2rem;color:var(--cream);
+}
+.form-success-sub{
+  font-family:var(--font-j);font-weight:300;font-size:12px;
+  letter-spacing:.04em;line-height:1.7;color:rgba(237,232,223,.4);
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><em class="nl-poise">Poise</em><span class="nl-studio">Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="agents.html">Agents</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="sqwr-studio.html">Studio</a></li>
+    <li><a href="a-propos.html">À propos</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Réserver une démo →</a>
+</nav>
+
+<div class="contact-layout">
+
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="contact-left-top">
+      <span class="contact-tag">Contact · Bruxelles</span>
+      <h1 class="contact-title">Parlons<br>de votre<br>projet.</h1>
+      <p class="contact-desc">Brief en 30 minutes. Proposition sous 48h. Déploiement sous 72h si vous êtes convaincu.</p>
+      <div class="contact-timings">
+        <div class="contact-timing-item">
+          <span class="contact-timing-val">24h</span>
+          <span class="contact-timing-lbl">Réponse garantie</span>
+        </div>
+        <div class="contact-timing-item">
+          <span class="contact-timing-val">48h</span>
+          <span class="contact-timing-lbl">Proposition tarifaire</span>
+        </div>
+        <div class="contact-timing-item">
+          <span class="contact-timing-val">72h</span>
+          <span class="contact-timing-lbl">Agent live</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="contact-info-item">
+        <span class="contact-info-label">Email</span>
+        <a href="mailto:studio@poise.be" class="contact-info-val">studio@poise.be</a>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Téléphone</span>
+        <a href="tel:+32493302752" class="contact-info-val">+32 493 30 27 52</a>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-label">Localisation</span>
+        <span class="contact-info-val">Bruxelles, Belgique</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="contact-right">
+
+    <form id="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input type="text" class="form-input" placeholder="Samuel" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input type="text" class="form-input" placeholder="Baudon" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email professionnel</label>
+        <input type="email" class="form-input" placeholder="vous@votreentreprise.be" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Agent qui vous intéresse</label>
+        <select class="form-select" id="agent-select">
+          <option value="">Choisir un agent</option>
+          <optgroup label="Standards">
+            <option value="widget-faq">Widget FAQ — €100/mo</option>
+            <option value="assistant-whatsapp">Assistant WhatsApp — €150/mo</option>
+            <option value="assistant-instagram">Assistant Instagram — €100/mo</option>
+            <option value="secretariat-email">Secrétariat e-mail — €225/mo</option>
+            <option value="widget-conciergerie">Widget Conciergerie — €150/mo</option>
+          </optgroup>
+          <optgroup label="Spécialisés">
+            <option value="paid-social">Paid Social — €600/mo</option>
+            <option value="agent-seo">Agent SEO — €150/mo</option>
+            <option value="emailing-b2b">Assistant Emailing B2B — €150/mo</option>
+            <option value="sur-mesure">Agent Sur Mesure — sur devis</option>
+          </optgroup>
+          <option value="multi">Plusieurs agents / package</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message (optionnel)</label>
+        <textarea class="form-textarea" placeholder="Décrivez brièvement votre activité et votre situation actuelle…"></textarea>
+      </div>
+      <p class="form-reassurance">Réponse garantie sous 24h ouvrables · Aucune obligation · Brief confidentiel</p>
+      <button type="submit" class="form-submit">
+        Envoyer ma demande <span class="form-submit-arrow">→</span>
+      </button>
+    </form>
+
+    <div class="form-success" id="form-success">
+      <div class="form-success-icon">✓</div>
+      <div class="form-success-title">Message reçu.</div>
+      <p class="form-success-sub">On revient vers vous sous 24h ouvrables. En attendant, explorez nos agents pour vous préparer à la conversation.</p>
+      <a href="agents.html" style="font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);text-decoration:none;margin-top:8px;">Voir les agents →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>Poise Studio — Bruxelles · 2026</span>
+  <a href="mailto:studio@poise.be">studio@poise.be</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+/* ── CURSOR ─── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
+});
+document.querySelectorAll('a,button,input,select,textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
+});
+
+/* ── PRE-SELECT AGENT FROM URL ─── */
+const params = new URLSearchParams(window.location.search);
+const agentParam = params.get('agent');
+if (agentParam) {
+  const sel = document.getElementById('agent-select');
+  if (sel) sel.value = agentParam;
+}
+
+/* ── FORM SUBMIT (mockup — pas de backend) ─── */
+document.getElementById('contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  gsap.to(form, { opacity:0, y:-10, duration:.3, ease:'power3.inOut', onComplete:() => {
+    form.style.display = 'none';
+    success.classList.add('show');
+    gsap.from(success.children, { opacity:0, y:16, stagger:.12, duration:.5, ease:'power3.out' });
+  }});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQWR Studio — Poise Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0e0d0a;color:#ede8df;cursor:none;overflow-x:hidden;font-family:'Plus Jakarta Sans',sans-serif;}
+
+:root{
+  --ink:#0e0d0a;
+  --cream:#ede8df;
+  --sage:#7a9977;
+  --terra:#c45c2b;
+  --bleu:#9bb0c4;
+  --font-j:'Plus Jakarta Sans',sans-serif;
+  --font-f:'Spectral',serif;
+}
+
+/* ── CURSOR ─── */
+#cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--cream);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .2s,height .2s;}
+#cursor.expand{width:32px;height:32px;}
+
+/* ── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 40px;mix-blend-mode:difference;pointer-events:none;}
+.nav-logo{font-family:var(--font-j);font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);pointer-events:all;display:flex;align-items:baseline;text-decoration:none;}
+.nl-poise{font-family:var(--font-f);font-weight:300;font-size:18px;letter-spacing:-.025em;text-transform:none;}
+.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;}
+.nav-links{display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
+.nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.45;transition:opacity .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;}
+.nav-cta{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);text-decoration:none;pointer-events:all;border:1px solid rgba(237,232,223,.3);padding:8px 18px;transition:border-color .25s;}
+.nav-cta:hover{border-color:rgba(237,232,223,.9);}
+@media(max-width:768px){.nav-links{display:none;}.nav-cta{display:none;}}
+
+/* ── HERO ─── */
+.hero{min-height:100vh;padding:clamp(120px,18vh,200px) clamp(32px,8vw,120px) clamp(64px,10vh,100px);display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border-bottom:1px solid rgba(237,232,223,.06);}
+.hero-bg-word{position:absolute;top:50%;left:clamp(32px,8vw,120px);transform:translateY(-52%);font-family:var(--font-f);font-weight:300;font-size:clamp(10rem,22vw,20rem);line-height:.88;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(237,232,223,.06);pointer-events:none;user-select:none;}
+.hero-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:28px;}
+.hero-title{font-family:var(--font-f);font-weight:300;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.95;letter-spacing:-.02em;color:var(--cream);max-width:700px;margin-bottom:32px;}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
+.hero-desc{font-family:var(--font-j);font-weight:300;font-size:clamp(.9rem,1.2vw,1rem);line-height:1.7;color:rgba(237,232,223,.4);max-width:380px;}
+@media(max-width:768px){.hero-bottom{flex-direction:column;align-items:flex-start;}}
+
+/* ── DUALITÉ ─── */
+.duality{display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid rgba(237,232,223,.06);}
+.duality-sep{background:rgba(237,232,223,.06);}
+.duality-col{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);}
+.duality-num{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(237,232,223,.18);display:block;margin-bottom:28px;}
+.duality-name{font-family:var(--font-f);font-weight:300;font-size:clamp(1.8rem,3.5vw,3rem);color:var(--cream);line-height:1;margin-bottom:16px;}
+.duality-role{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:28px;}
+.duality-col:first-child .duality-role{color:var(--sage);}
+.duality-col:last-child .duality-role{color:var(--bleu);}
+.duality-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.04em;line-height:1.75;color:rgba(237,232,223,.38);max-width:300px;}
+.duality-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.duality-tag{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(237,232,223,.1);color:rgba(237,232,223,.35);}
+@media(max-width:768px){.duality{grid-template-columns:1fr;}.duality-sep{display:none;}.duality-col{border-bottom:1px solid rgba(237,232,223,.06);}}
+
+/* ── STATEMENT ─── */
+.statement{padding:clamp(72px,12vh,120px) clamp(32px,8vw,120px);border-bottom:1px solid rgba(237,232,223,.06);max-width:1000px;}
+.statement-text{font-family:var(--font-f);font-weight:300;font-size:clamp(1.6rem,3.2vw,2.8rem);color:var(--cream);line-height:1.3;letter-spacing:-.01em;}
+.statement-text em{color:var(--sage);font-style:normal;}
+
+/* ── PROJETS ─── */
+.projects-section{padding:clamp(56px,8vh,100px) clamp(32px,8vw,120px);border-bottom:1px solid rgba(237,232,223,.06);}
+.projects-label{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:56px;}
+.project-card{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(40px,6vw,100px);align-items:center;padding:56px 0;border-top:1px solid rgba(237,232,223,.06);}
+.project-card:last-child{border-bottom:1px solid rgba(237,232,223,.06);}
+@media(max-width:768px){.project-card{grid-template-columns:1fr;gap:36px;}}
+.project-num{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;color:rgba(237,232,223,.18);display:block;margin-bottom:20px;}
+.project-name{font-family:var(--font-f);font-weight:300;font-size:clamp(2rem,4vw,3.5rem);color:var(--cream);line-height:.95;letter-spacing:-.02em;margin-bottom:10px;}
+.project-sector{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-bottom:24px;}
+.project-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.03em;line-height:1.75;color:rgba(237,232,223,.38);margin-bottom:32px;max-width:320px;}
+.project-services{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.project-service-tag{font-family:var(--font-j);font-weight:800;font-size:8px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;}
+.project-service-tag.sqwr{border:1px solid rgba(155,176,196,.3);color:var(--bleu);}
+.project-service-tag.poise{border:1px solid rgba(122,153,119,.3);color:var(--sage);}
+.project-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.5;transition:opacity .2s,gap .2s;}
+.project-link:hover{opacity:1;gap:18px;}
+
+/* ── VISUAL MOCK ─── */
+.project-visual{aspect-ratio:16/10;background:rgba(237,232,223,.04);border:1px solid rgba(237,232,223,.06);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.project-visual-inner{width:88%;height:88%;background:rgba(237,232,223,.03);border:1px solid rgba(237,232,223,.04);display:flex;flex-direction:column;padding:20px 24px;gap:10px;}
+.pv-bar{height:2px;background:rgba(237,232,223,.06);border-radius:1px;}
+.pv-bar.accent{background:rgba(122,153,119,.35);width:40%;}
+.pv-hero-block{flex:1;display:flex;align-items:flex-end;padding:0 0 8px;}
+.pv-hero-text{font-family:var(--font-f);font-weight:300;font-size:clamp(.9rem,2.5vw,1.6rem);color:rgba(237,232,223,.2);letter-spacing:-.01em;line-height:1;}
+.pv-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.pv-card{height:28px;background:rgba(237,232,223,.04);border:1px solid rgba(237,232,223,.04);}
+.pv-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(237,232,223,.04);}
+.pv-dot{width:5px;height:5px;border-radius:50%;}
+.pv-dot.sage{background:var(--sage);opacity:.5;}
+.pv-dot.cream{background:var(--cream);opacity:.15;}
+.pv-url{font-family:var(--font-j);font-weight:800;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,223,.15);}
+
+/* ── CTA SQWR ─── */
+.sqwr-cta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(237,232,223,.06);}
+@media(max-width:768px){.sqwr-cta{grid-template-columns:1fr;}}
+.sqwr-cta-left{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);border-right:1px solid rgba(237,232,223,.06);}
+.sqwr-cta-right{padding:clamp(56px,8vh,100px) clamp(32px,6vw,80px);display:flex;flex-direction:column;justify-content:space-between;}
+.sqwr-cta-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--bleu);display:block;margin-bottom:24px;}
+.sqwr-cta-title{font-family:var(--font-f);font-weight:300;font-size:clamp(1.8rem,3.5vw,3rem);color:var(--cream);line-height:1.1;margin-bottom:20px;}
+.sqwr-cta-desc{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.04em;line-height:1.75;color:rgba(237,232,223,.35);max-width:320px;}
+.sqwr-cta-stat{margin-bottom:16px;}
+.sqwr-cta-stat-val{font-family:var(--font-j);font-weight:800;font-size:clamp(2rem,4vw,3.5rem);color:var(--cream);display:block;}
+.sqwr-cta-stat-lbl{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,223,.3);}
+.sqwr-cta-btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-j);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;background:var(--cream);padding:16px 32px;margin-top:40px;transition:background .2s;align-self:flex-start;}
+.sqwr-cta-btn:hover{background:var(--sage);}
+.sqwr-cta-btn-arrow{transition:transform .2s;}
+.sqwr-cta-btn:hover .sqwr-cta-btn-arrow{transform:translateX(6px);}
+
+/* ── POISE INTERSTITIEL ─── */
+.poise-interstitiel{
+  border-top:1px solid rgba(237,232,223,.06);
+  padding:clamp(48px,7vh,80px) clamp(32px,8vw,120px);
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  background:rgba(122,153,119,.04);
+}
+.pi-text{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(1.3rem,2.5vw,1.9rem);color:rgba(237,232,223,.55);
+  line-height:1.2;
+}
+.pi-text em{color:var(--cream);font-style:normal;}
+.pi-btn{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);background:var(--sage);
+  padding:14px 28px;text-decoration:none;
+  transition:background .2s;
+}
+.pi-btn:hover{background:var(--cream);}
+.pi-btn-arrow{transition:transform .2s;}
+.pi-btn:hover .pi-btn-arrow{transform:translateX(6px);}
+
+/* ── FOOTER ─── */
+footer{padding:32px clamp(32px,8vw,120px);display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(237,232,223,.06);}
+footer span{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,223,.2);}
+footer a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(237,232,223,.2);text-decoration:none;}
+footer a:hover{color:rgba(237,232,223,.5);}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><em class="nl-poise">Poise</em><span class="nl-studio">Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="agents.html">Agents</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="sqwr-studio.html" class="active">Studio</a></li>
+    <li><a href="a-propos.html">À propos</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Réserver une démo →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-word" aria-hidden="true">SQWR</div>
+  <span class="hero-tag">Notre jumeau créatif</span>
+  <h1 class="hero-title">La forme et le fond.<br>Ensemble.</h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">Poise Studio automatise et déploie les agents IA. SQWR Studio crée les identités, les sites et les systèmes visuels. Les deux travaillent ensemble quand un projet le mérite.</p>
+  </div>
+</section>
+
+<!-- DUALITÉ -->
+<div class="duality">
+  <div class="duality-col">
+    <span class="duality-num">01</span>
+    <div class="duality-name">Poise<br>Studio</div>
+    <div class="duality-role">Intelligence · Automatisation</div>
+    <p class="duality-desc">Agents IA déployés en 72h. FAQ, WhatsApp, Instagram DM, Emailing B2B. L'infrastructure qui travaille 24h/24 à la place de vos équipes.</p>
+    <div class="duality-tags">
+      <span class="duality-tag">Agents IA</span>
+      <span class="duality-tag">Automatisation</span>
+      <span class="duality-tag">Présence digitale</span>
+    </div>
+  </div>
+  <div class="duality-sep"></div>
+  <div class="duality-col">
+    <span class="duality-num">02</span>
+    <div class="duality-name">SQWR<br>Studio</div>
+    <div class="duality-role">Créativité · Identité</div>
+    <p class="duality-desc">Branding, design system, sites web sur mesure. Chaque pixel est une décision. Chaque typographie est un argument. L'identité qui fait la différence avant même que l'agent parle.</p>
+    <div class="duality-tags">
+      <span class="duality-tag">Branding</span>
+      <span class="duality-tag">Site web</span>
+      <span class="duality-tag">Design system</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <p class="statement-text">Un agent IA déployé dans un site générique, c'est du potentiel gaspillé. Un agent déployé dans une <em>identité cohérente</em>, une DA sur mesure, un site qui reflète exactement qui vous êtes — c'est une expérience que vos clients retiennent.</p>
+</div>
+
+<!-- PROJETS CONJOINTS -->
+<section class="projects-section">
+  <span class="projects-label">Réalisations conjointes</span>
+
+  <!-- AW CONSTRUCT -->
+  <div class="project-card">
+    <div class="project-meta">
+      <span class="project-num">Projet 01</span>
+      <h2 class="project-name">A.W<br>Construct</h2>
+      <div class="project-sector">Construction & Rénovation · Overijse</div>
+      <p class="project-desc">Identité de marque complète et site vitrine pour une entreprise de construction premium en région bruxelloise. SQWR Studio a conçu le branding et le site. Poise Studio intègre la présence digitale automatisée.</p>
+      <div class="project-services">
+        <span class="project-service-tag sqwr">Branding SQWR</span>
+        <span class="project-service-tag sqwr">Site web SQWR</span>
+        <span class="project-service-tag poise">Agent FAQ Poise</span>
+      </div>
+      <a href="https://aw-construct.com" target="_blank" rel="noopener" class="project-link">
+        Voir le site <span>↗</span>
+      </a>
+    </div>
+    <div class="project-visual">
+      <div class="project-visual-inner">
+        <!-- Simulated nav -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-bottom:1px solid rgba(237,232,223,.1);margin-bottom:6px;">
+          <div style="font-family:var(--font-j);font-size:5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);opacity:.7;">A.W CONSTRUCT</div>
+          <div style="display:flex;gap:8px;">
+            <div style="width:18px;height:3px;background:rgba(237,232,223,.18);border-radius:1px;"></div>
+            <div style="width:18px;height:3px;background:rgba(237,232,223,.18);border-radius:1px;"></div>
+            <div style="width:18px;height:3px;background:rgba(237,232,223,.18);border-radius:1px;"></div>
+          </div>
+        </div>
+        <!-- Hero block -->
+        <div class="pv-hero-block">
+          <div style="font-family:var(--font-j);font-size:5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:4px;opacity:.8;">CONSTRUCTION · RENOVATION</div>
+          <div class="pv-hero-text">A.W Construct<br>Bâtisseurs de confiance.</div>
+          <div style="display:flex;gap:6px;margin-top:8px;">
+            <div style="background:var(--sage);padding:3px 8px;font-family:var(--font-j);font-size:4px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);">Demander un devis</div>
+            <div style="border:1px solid rgba(237,232,223,.25);padding:3px 8px;font-family:var(--font-j);font-size:4px;font-weight:300;letter-spacing:.08em;color:rgba(237,232,223,.5);">Nos réalisations</div>
+          </div>
+        </div>
+        <!-- Services grid -->
+        <div style="font-family:var(--font-j);font-size:4px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,223,.25);margin:6px 0 4px;">Services</div>
+        <div class="pv-grid">
+          <div class="pv-card" style="position:relative;">
+            <div style="position:absolute;top:6px;left:6px;width:8px;height:2px;background:var(--sage);opacity:.6;"></div>
+          </div>
+          <div class="pv-card"></div>
+          <div class="pv-card"></div>
+        </div>
+        <!-- Footer sim -->
+        <div class="pv-footer" style="border-top:1px solid rgba(237,232,223,.08);padding-top:4px;margin-top:4px;">
+          <div style="display:flex;gap:5px;align-items:center;">
+            <div class="pv-dot sage"></div>
+            <div class="pv-dot cream"></div>
+          </div>
+          <span class="pv-url">aw-construct.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- À VENIR -->
+  <div class="project-card" style="opacity:.3;pointer-events:none;">
+    <div class="project-meta">
+      <span class="project-num">Projet 02</span>
+      <h2 class="project-name">Bientôt<br>dévoilé.</h2>
+      <div class="project-sector">Confidentiel · En production</div>
+      <p class="project-desc">Un nouveau projet conjoint est en cours. Branding SQWR Studio + agents Poise Studio. Publication prévue prochainement.</p>
+      <div class="project-services">
+        <span class="project-service-tag sqwr">Branding SQWR</span>
+        <span class="project-service-tag poise">Agents Poise</span>
+      </div>
+    </div>
+    <div class="project-visual">
+      <div class="project-visual-inner">
+        <div class="pv-bar" style="width:60%;"></div>
+        <div class="pv-hero-block"></div>
+        <div class="pv-grid">
+          <div class="pv-card"></div>
+          <div class="pv-card"></div>
+          <div class="pv-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- POISE INTERSTITIEL -->
+<div class="poise-interstitiel">
+  <p class="pi-text">Vous avez besoin des <em>agents sans le branding</em> ?<br>Poise Studio s'en charge seul.</p>
+  <a href="agents.html" class="pi-btn">Voir nos agents <span class="pi-btn-arrow">→</span></a>
+</div>
+
+<!-- CTA SQWR -->
+<div class="sqwr-cta">
+  <div class="sqwr-cta-left">
+    <span class="sqwr-cta-tag">SQWR Studio</span>
+    <h2 class="sqwr-cta-title">Besoin d'un projet<br>complet — forme<br>et fond ?</h2>
+    <p class="sqwr-cta-desc">Branding, site web, design system et agents IA. On coordonne les deux studios pour que vous n'ayez qu'un interlocuteur et une vision cohérente de bout en bout.</p>
+  </div>
+  <div class="sqwr-cta-right">
+    <div>
+      <div class="sqwr-cta-stat">
+        <span class="sqwr-cta-stat-val">4+</span>
+        <span class="sqwr-cta-stat-lbl">Projets livrés ensemble</span>
+      </div>
+      <div class="sqwr-cta-stat">
+        <span class="sqwr-cta-stat-val">72h</span>
+        <span class="sqwr-cta-stat-lbl">Du brief au premier livrable</span>
+      </div>
+      <div class="sqwr-cta-stat">
+        <span class="sqwr-cta-stat-val">1</span>
+        <span class="sqwr-cta-stat-lbl">Vision partagée, de l'identité à l'agent</span>
+      </div>
+    </div>
+    <a href="https://sqwr.be" target="_blank" rel="noopener" class="sqwr-cta-btn">
+      Découvrir SQWR Studio <span class="sqwr-cta-btn-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Poise Studio — Bruxelles · 2026</span>
+  <a href="mailto:studio@poise.be">studio@poise.be</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+/* ── CURSOR ─── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
+});
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
+});
+
+/* ── HERO BG WORD PARALLAX ─── */
+const bgWord = document.querySelector('.hero-bg-word');
+if (bgWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  window.addEventListener('scroll', () => {
+    bgWord.style.transform = `translateY(calc(-52% + ${window.scrollY * 0.18}px))`;
+  }, { passive:true });
+}
+
+/* ── FADE IN ON SCROLL ─── */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      gsap.to(entry.target, { opacity:1, y:0, duration:.6, ease:'power3.out' });
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.08 });
+
+document.querySelectorAll('.project-card:not([style*="opacity:.3"])').forEach(el => {
+  gsap.set(el, { opacity:0, y:24 });
+  obs.observe(el);
+});
+</script>
+</body>
+</html>

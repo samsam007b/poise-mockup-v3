@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Process — Poise Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);cursor:none;overflow-x:hidden;font-family:'Plus Jakarta Sans',sans-serif;}
+
+:root{
+  --ink:#0e0d0a;
+  --cream:#ede8df;
+  --sage:#7a9977;
+  --terra:#c45c2b;
+  --bleu:#9bb0c4;
+  --font-j:'Plus Jakarta Sans',sans-serif;
+  --font-f:'Spectral',serif;
+}
+
+/* ── CURSOR ─── */
+#cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--ink);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .2s,height .2s;}
+#cursor.expand{width:32px;height:32px;}
+
+/* ── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 40px;background:rgba(237,232,223,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(14,13,10,.06);pointer-events:none;}
+.nav-logo{font-family:var(--font-j);font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);pointer-events:all;display:flex;align-items:baseline;text-decoration:none;}
+.nl-poise{font-family:var(--font-f);font-weight:300;font-size:18px;letter-spacing:-.025em;text-transform:none;}
+.nl-studio{font-family:var(--font-j);font-weight:400;font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin-left:.7em;}
+.nav-links{display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
+.nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .2s;}
+.nav-links a:hover,.nav-links a.active{opacity:1;}
+.nav-cta{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;pointer-events:all;border:1px solid rgba(14,13,10,.3);padding:8px 18px;transition:background .25s,color .25s,border-color .25s;}
+.nav-cta:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+@media(max-width:768px){.nav-links{display:none;}.nav-cta{display:none;}}
+
+/* ── PAGE HERO ─── */
+.page-hero{
+  padding:clamp(120px,16vh,160px) clamp(32px,8vw,120px) clamp(56px,8vh,80px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:flex-end;
+  border-bottom:1px solid rgba(14,13,10,.08);
+}
+@media(max-width:768px){.page-hero{grid-template-columns:1fr;}}
+.page-hero-tag{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:20px;}
+.page-hero-title{font-family:var(--font-f);font-weight:300;font-size:clamp(2.8rem,6vw,5.5rem);line-height:.95;letter-spacing:-.02em;color:var(--ink);}
+.page-hero-right{display:flex;flex-direction:column;justify-content:flex-end;gap:24px;}
+.page-hero-sub{font-family:var(--font-j);font-weight:300;font-size:clamp(.95rem,1.3vw,1.05rem);line-height:1.7;color:rgba(14,13,10,.5);}
+.page-hero-proof{display:flex;gap:clamp(24px,3vw,40px);}
+.proof-item{display:flex;flex-direction:column;gap:2px;}
+.proof-val{font-family:var(--font-j);font-weight:800;font-size:clamp(1.4rem,2.5vw,2rem);color:var(--ink);line-height:1;}
+.proof-lbl{font-family:var(--font-j);font-weight:300;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(14,13,10,.35);}
+
+/* ── TIMELINE ─── */
+.timeline-section{
+  padding:clamp(56px,8vh,96px) clamp(32px,8vw,120px);
+  display:grid;grid-template-columns:200px 1fr;gap:clamp(40px,6vw,80px);
+  border-bottom:1px solid rgba(14,13,10,.08);
+}
+@media(max-width:900px){.timeline-section{grid-template-columns:1fr;}}
+
+/* Left — SVG + labels */
+.tl-rail{position:sticky;top:120px;height:fit-content;}
+.tl-svg-wrap{position:relative;}
+.tl-label-list{position:absolute;top:0;left:20px;display:flex;flex-direction:column;justify-content:space-between;height:100%;}
+.tl-label{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(14,13,10,.2);transition:color .4s;}
+.tl-label.active{color:var(--sage);}
+@media(max-width:900px){.tl-rail{display:none;}}
+
+/* Right — Steps */
+.tl-steps{display:flex;flex-direction:column;gap:0;}
+.tl-step{
+  padding:clamp(40px,5vh,56px) 0;
+  border-bottom:1px solid rgba(14,13,10,.06);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.tl-step.visible{opacity:1;transform:translateY(0);}
+.tl-step:last-child{border-bottom:none;}
+.tl-step-num{
+  font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:10px;
+  margin-bottom:16px;
+}
+.tl-step-num::after{content:'';flex:1;height:1px;background:rgba(122,153,119,.2);}
+.tl-step-title{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(1.8rem,3.5vw,3rem);color:var(--ink);line-height:1;
+  margin-bottom:12px;
+}
+.tl-step-duration{
+  font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(14,13,10,.3);margin-bottom:20px;
+}
+.tl-step-desc{
+  font-family:var(--font-j);font-weight:300;font-size:13px;letter-spacing:.03em;
+  line-height:1.75;color:rgba(14,13,10,.55);max-width:540px;margin-bottom:24px;
+}
+.tl-step-deliverable{
+  display:inline-flex;align-items:baseline;gap:10px;
+  font-family:var(--font-j);font-weight:300;font-size:11px;letter-spacing:.06em;
+  color:rgba(14,13,10,.4);padding:10px 16px;
+  border:1px solid rgba(14,13,10,.08);
+}
+.tl-step-deliverable strong{font-weight:800;color:var(--ink);}
+
+/* ── STATS ─── */
+.stats-section{
+  padding:clamp(56px,8vh,80px) clamp(32px,8vw,120px);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(14,13,10,.08);
+  border-bottom:1px solid rgba(14,13,10,.08);
+}
+@media(max-width:600px){.stats-section{grid-template-columns:1fr;}}
+.stat-item{background:var(--cream);padding:clamp(32px,5vw,48px) clamp(24px,4vw,40px);}
+.stat-val{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(3rem,6vw,5rem);color:var(--ink);display:block;line-height:1;
+  margin-bottom:8px;
+}
+.stat-unit{font-size:clamp(1.2rem,2vw,2rem);}
+.stat-lbl{
+  font-family:var(--font-j);font-weight:300;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(14,13,10,.4);display:block;margin-bottom:10px;
+}
+.stat-note{
+  font-family:var(--font-j);font-weight:300;font-size:11px;letter-spacing:.03em;
+  line-height:1.6;color:rgba(14,13,10,.3);
+}
+
+/* ── FAQ ─── */
+.faq-section{
+  padding:clamp(56px,8vh,80px) clamp(32px,8vw,120px);
+  display:grid;grid-template-columns:240px 1fr;gap:clamp(40px,6vw,80px);
+  border-bottom:1px solid rgba(14,13,10,.08);
+}
+@media(max-width:768px){.faq-section{grid-template-columns:1fr;}}
+.faq-label{
+  font-family:var(--font-f);font-weight:300;
+  font-size:clamp(1.3rem,2.5vw,1.8rem);color:var(--ink);line-height:1.2;
+  position:sticky;top:120px;height:fit-content;
+}
+@media(max-width:768px){.faq-label{position:static;}}
+.faq-list{display:flex;flex-direction:column;gap:0;}
+.faq-item{padding:clamp(20px,3vh,28px) 0;border-top:1px solid rgba(14,13,10,.08);}
+.faq-q{font-family:var(--font-j);font-weight:800;font-size:13px;letter-spacing:.02em;color:var(--ink);margin-bottom:10px;}
+.faq-a{font-family:var(--font-j);font-weight:300;font-size:12px;letter-spacing:.03em;line-height:1.75;color:rgba(14,13,10,.5);}
+
+/* ── CTA FINAL ─── */
+.cta-section{
+  padding:clamp(56px,10vh,100px) clamp(32px,8vw,120px);
+  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+}
+@media(max-width:768px){.cta-section{grid-template-columns:1fr;}}
+.cta-title{font-family:var(--font-f);font-weight:300;font-size:clamp(1.8rem,4vw,3.5rem);color:var(--ink);line-height:1.1;}
+.cta-btn{
+  flex-shrink:0;font-family:var(--font-j);font-weight:800;font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--cream);
+  text-decoration:none;background:var(--ink);padding:20px 40px;
+  white-space:nowrap;transition:background .2s;
+}
+.cta-btn:hover{background:var(--sage);}
+
+/* ── FOOTER ─── */
+footer{padding:28px clamp(32px,8vw,120px);display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(14,13,10,.08);}
+footer span{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(14,13,10,.3);}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><em class="nl-poise">Poise</em><span class="nl-studio">Studio</span></a>
+  <ul class="nav-links">
+    <li><a href="agents.html">Agents</a></li>
+    <li><a href="process.html" class="active">Process</a></li>
+    <li><a href="sqwr-studio.html">Studio</a></li>
+    <li><a href="a-propos.html">À propos</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Réserver une démo →</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div>
+    <span class="page-hero-tag">Process · De zéro à live</span>
+    <h1 class="page-hero-title">Brief aujourd'hui.<br>Déployé sous 72h.</h1>
+  </div>
+  <div class="page-hero-right">
+    <p class="page-hero-sub">Pas de réunions interminables. Pas de spec document de 40 pages. Un appel, une configuration, un agent live. Le reste, on s'en occupe.</p>
+    <div class="page-hero-proof">
+      <div class="proof-item">
+        <span class="proof-val">4</span>
+        <span class="proof-lbl">Étapes</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-val">72<span style="font-size:.6em;">h</span></span>
+        <span class="proof-lbl">Délai moyen</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-val">1</span>
+        <span class="proof-lbl">Interlocuteur</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<div class="timeline-section">
+
+  <!-- Rail SVG gauche -->
+  <div class="tl-rail">
+    <div class="tl-svg-wrap">
+      <svg id="tl-svg" width="16" height="400" viewBox="0 0 16 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line x1="8" y1="0" x2="8" y2="400" stroke="rgba(14,13,10,.1)" stroke-width="1"/>
+        <line id="tl-progress" x1="8" y1="0" x2="8" y2="0" stroke="#7a9977" stroke-width="1.5" stroke-linecap="round"/>
+        <circle id="dot-0" cx="8" cy="24"  r="4" fill="rgba(14,13,10,.15)"/>
+        <circle id="dot-1" cx="8" cy="160" r="4" fill="rgba(14,13,10,.15)"/>
+        <circle id="dot-2" cx="8" cy="265" r="4" fill="rgba(14,13,10,.15)"/>
+        <circle id="dot-3" cx="8" cy="374" r="4" fill="rgba(14,13,10,.15)"/>
+      </svg>
+      <div class="tl-label-list" style="height:400px;">
+        <span class="tl-label" id="lbl-0">01</span>
+        <span class="tl-label" id="lbl-1">02</span>
+        <span class="tl-label" id="lbl-2">03</span>
+        <span class="tl-label" id="lbl-3">04</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="tl-steps">
+
+    <div class="tl-step" data-step="0">
+      <div class="tl-step-num">01 — Brief</div>
+      <h2 class="tl-step-title">On vous écoute.</h2>
+      <div class="tl-step-duration">30 minutes · Appel ou formulaire</div>
+      <p class="tl-step-desc">On part de votre activité réelle : vos canaux, vos clients, les questions qu'ils posent le plus souvent, vos objections fréquentes. Pas de jargon IA. Juste une conversation concrète sur ce qui vous fait perdre du temps aujourd'hui.</p>
+      <div class="tl-step-deliverable">Livrable : <strong>Fiche agent + proposition tarifaire sous 24h</strong></div>
+    </div>
+
+    <div class="tl-step" data-step="1">
+      <div class="tl-step-num">02 — Configuration</div>
+      <h2 class="tl-step-title">On construit l'agent.</h2>
+      <div class="tl-step-duration">48 à 72 heures · Sur notre infrastructure</div>
+      <p class="tl-step-desc">On configure l'agent sur notre infrastructure, on l'entraîne sur votre base de connaissance (FAQ, menus, catalogue, tarifs), on teste ses réponses sur 50+ scénarios réels avant de vous le soumettre. Vous ne touchez rien.</p>
+      <div class="tl-step-deliverable">Livrable : <strong>Agent en sandbox + rapport de tests complet</strong></div>
+    </div>
+
+    <div class="tl-step" data-step="2">
+      <div class="tl-step-num">03 — Validation & Go Live</div>
+      <h2 class="tl-step-title">Vous testez. On déploie.</h2>
+      <div class="tl-step-duration">1 journée · Votre accord suffit</div>
+      <p class="tl-step-desc">On vous donne accès au sandbox. Vous testez l'agent comme si vous étiez un client. Vous validez — ou vous nous donnez vos retours. Quand c'est bon pour vous, on bascule en production. Votre agent est live.</p>
+      <div class="tl-step-deliverable">Livrable : <strong>Accès dashboard · Documentation d'utilisation</strong></div>
+    </div>
+
+    <div class="tl-step" data-step="3">
+      <div class="tl-step-num">04 — Support continu</div>
+      <h2 class="tl-step-title">On reste là.</h2>
+      <div class="tl-step-duration">Inclus · Sans supplément</div>
+      <p class="tl-step-desc">Vous changez de carte menu, de tarif, de produit, d'offre saisonnière ? On met à jour l'agent sous 24h. Un problème de réponse ? On corrige. Vous n'avez pas à vous en préoccuper — c'est inclus dans votre mensualité.</p>
+      <div class="tl-step-deliverable">Inclus : <strong>Mises à jour illimitées · Support par email · Suivi mensuel</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stat-item">
+    <span class="stat-val">3<span class="stat-unit"> j</span></span>
+    <span class="stat-lbl">Délai moyen de mise en service</span>
+    <span class="stat-note">Du premier appel à l'agent live sur vos canaux.</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">14<span class="stat-unit"> j</span></span>
+    <span class="stat-lbl">Garantie satisfaction</span>
+    <span class="stat-note">Si l'agent ne vous convient pas, on rembourse le setup intégralement.</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">24<span class="stat-unit"> h</span></span>
+    <span class="stat-lbl">Délai de mise à jour</span>
+    <span class="stat-note">Votre base de connaissance change ? L'agent suit sous 24h ouvrables.</span>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-label">Questions sur le process</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Faut-il signer un contrat annuel ?</div>
+      <div class="faq-a">Non. Vous payez un setup unique (entre €200 et €350 selon l'agent) et une mensualité résiliable à tout moment avec 30 jours de préavis. Pas d'engagement minimum, pas de frais de résiliation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Que se passe-t-il si je veux changer d'agent ou en ajouter un ?</div>
+      <div class="faq-a">Vous nous en faites la demande par email. On planifie un nouveau brief (30 min) et on déploie le nouvel agent dans les mêmes délais. Si vous avez déjà un agent actif, les deux coexistent sans interférence.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">L'agent peut-il vraiment parler au nom de ma marque ?</div>
+      <div class="faq-a">Oui. Le brief initial sert précisément à calibrer le ton, le vocabulaire, et la personnalité de l'agent. Il apprend votre façon de vous exprimer — pas une formule générique. Vos clients ne sauront pas qu'ils ne parlent pas à un humain de votre équipe, sauf si vous leur dites.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Que se passe-t-il si l'agent fait une erreur ?</div>
+      <div class="faq-a">On a un système d'escalade automatique : si l'agent n'est pas sûr de sa réponse, il vous notifie plutôt que de répondre n'importe quoi. Vous restez toujours en contrôle. Et si une erreur passe quand même, signalez-la — on corrige sous 24h et on renforce la base de connaissance.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title">Prêt à démarrer ?<br>Le brief prend 30 minutes.</h2>
+  <a href="contact.html" class="cta-btn">Réserver un brief →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Poise Studio — Bruxelles · 2026</span>
+  <span>studio@poise.be</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+/* ── CURSOR ─── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
+});
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
+});
+
+/* ── TIMELINE STEPS FADE-IN + RAIL PROGRESSION ─── */
+const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const steps = document.querySelectorAll('.tl-step');
+const dots  = [0,1,2,3].map(i => document.getElementById('dot-'+i));
+const lbls  = [0,1,2,3].map(i => document.getElementById('lbl-'+i));
+const prog  = document.getElementById('tl-progress');
+const dotY  = [24, 160, 265, 374];
+
+if (reduced) {
+  steps.forEach(s => s.classList.add('visible'));
+  dots.forEach(d => d && d.setAttribute('fill', '#7a9977'));
+  lbls.forEach(l => l && l.classList.add('active'));
+  if (prog) prog.setAttribute('y2', '400');
+} else {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const i = parseInt(entry.target.dataset.step);
+      entry.target.classList.add('visible');
+      if (dots[i]) dots[i].setAttribute('fill', '#7a9977');
+      if (lbls[i]) lbls[i].classList.add('active');
+      if (prog) prog.setAttribute('y2', String(dotY[i]));
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.3 });
+  steps.forEach(s => obs.observe(s));
+}
+</script>
+</body>
+</html>

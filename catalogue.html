@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poise Studio — Catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;800&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{overflow-x:hidden;background:#0e0d0a;color:#ede8df;cursor:none}
+
+:root{
+  --ink:#0e0d0a;
+  --cream:#ede8df;
+  --sage:#7a9977;
+  --terra:#c45c2b;
+  --bleu:#9bb0c4;
+  --font-j:'Plus Jakarta Sans',sans-serif;
+  --font-f:'Fraunces',serif;
+  --ease-q:cubic-bezier(.76,0,.24,1);
+  --ease-o:cubic-bezier(.2,.7,.2,1);
+  --ramp-w-0:#1a0f0c;--ramp-w-1:#3a1810;--ramp-w-2:#7a2a16;
+  --ramp-w-3:#c45c2b;--ramp-w-4:#e08a64;--ramp-w-5:#f0baa0;
+  --ramp-w-6:#f8e3d4;--ramp-w-7:#faf9f6;
+  --ramp-c-0:#0a0e12;--ramp-c-1:#1d2733;--ramp-c-2:#3d536b;
+  --ramp-c-3:#6a85a0;--ramp-c-4:#9bb0c4;--ramp-c-5:#c4d0dc;
+  --ramp-c-6:#dee6ee;--ramp-c-7:#ede8df;
+  --ramp-m-0:#0e0d0a;--ramp-m-1:#1f2a1d;--ramp-m-2:#3d5238;
+  --ramp-m-3:#5e7a5c;--ramp-m-4:#7a9977;--ramp-m-5:#a8bda6;
+  --ramp-m-6:#d2dccf;--ramp-m-7:#ede8df;
+  --r-chromatic:10px;
+  --angle-diagonal:-45deg;
+  /* ── EASING DOCTRINE */
+  --ease-enter:cubic-bezier(.22,1,.36,1);
+  --ease-scrub:cubic-bezier(.65,0,.35,1);
+  --ease-breath:cubic-bezier(.45,.05,.55,.95);
+}
+
+/* ── CURSOR */
+#cursor{position:fixed;top:0;left:0;z-index:9999;width:10px;height:10px;
+  border-radius:50%;background:#ede8df;mix-blend-mode:difference;
+  pointer-events:none;transform:translate(-50%,-50%);
+  transition:width .22s var(--ease-q),height .22s var(--ease-q)}
+#cursor.expand{width:48px;height:48px}
+
+/* ── NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:28px 40px;mix-blend-mode:difference;pointer-events:none}
+.nav-logo{font-family:var(--font-j);font-weight:800;font-size:13px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cream);pointer-events:all}
+.nav-tag{font-family:var(--font-j);font-weight:300;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--cream);pointer-events:all;opacity:.6}
+.nav-back{font-family:var(--font-j);font-weight:300;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--cream);
+  pointer-events:all;opacity:.5;text-decoration:none;
+  transition:opacity .2s}
+.nav-back:hover{opacity:1}
+
+/* ── HERO CATALOGUE */
+#cat-hero{
+  height:100vh;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:clip;
+}
+.cat-hero-stage{
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+.cat-hero-panel{
+  position:absolute;
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(1.6rem,2.5vw,2.6rem);color:var(--cream);
+  letter-spacing:-.02em;
+}
+.cat-hero-panel.hp-1{width:clamp(110px,13vw,180px);height:clamp(165px,20vw,265px);
+  background:var(--cream);color:var(--ink);
+  left:4%;top:10%;transform:rotate(-12deg);opacity:.22}
+.cat-hero-panel.hp-2{width:clamp(90px,11vw,155px);height:clamp(140px,17vw,225px);
+  background:var(--terra);
+  left:8%;bottom:6%;transform:rotate(8deg);opacity:.28}
+.cat-hero-panel.hp-3{width:clamp(85px,10vw,140px);height:clamp(130px,16vw,210px);
+  background:var(--bleu);
+  right:6%;top:8%;transform:rotate(14deg);opacity:.22}
+.cat-hero-panel.hp-4{width:clamp(100px,12vw,165px);height:clamp(155px,19vw,250px);
+  background:var(--sage);
+  right:10%;bottom:10%;transform:rotate(-7deg);opacity:.2}
+
+.cat-hero-content{
+  position:relative;z-index:2;text-align:center;
+  padding:0 40px;
+}
+.cat-hero-title{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(3.5rem,9vw,11rem);
+  line-height:.92;letter-spacing:-.05em;color:var(--cream);
+  display:block;
+}
+.cat-hero-sub{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(1.1rem,2vw,1.8rem);
+  color:var(--cream);opacity:.5;
+  margin-top:24px;line-height:1.4;
+  max-width:560px;margin-left:auto;margin-right:auto;
+}
+.cat-hero-body{
+  font-family:var(--font-j);font-weight:300;font-size:clamp(11px,.9vw,13px);
+  letter-spacing:.08em;color:var(--cream);opacity:.3;
+  margin-top:32px;max-width:440px;
+  margin-left:auto;margin-right:auto;line-height:1.7;
+}
+.cat-scroll-hint{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cream);opacity:.2;
+}
+
+/* ── FILTER BAR */
+#cat-filter{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,13,10,.92);
+  backdrop-filter:none;
+  border-bottom:1px solid rgba(237,232,223,.06);
+  display:flex;align-items:center;
+  padding:0 40px;height:52px;
+  gap:0;
+}
+.cat-filter-btn{
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cream);opacity:.3;
+  background:none;border:none;cursor:none;
+  padding:0 20px;height:100%;
+  transition:opacity .2s;
+  white-space:nowrap;
+}
+.cat-filter-btn:hover{opacity:.7}
+.cat-filter-btn.active{opacity:1;font-weight:800}
+.cat-filter-sep{width:1px;height:16px;background:rgba(237,232,223,.12);flex-shrink:0}
+
+/* ── MOSAIC SECTION */
+#cat-mosaic{
+  background:var(--ink);
+  padding:0 0 120px;
+}
+.agent-cluster{
+  position:relative;
+  min-height:110vh;
+  width:100%;
+  overflow:visible;
+}
+.agent-cluster + .agent-cluster{
+  margin-top:40px;
+  padding-top:40px;
+  border-top:1px solid rgba(237,232,223,.04);
+}
+
+/* ── AGENT PANELS */
+.agent-panel{
+  position:absolute;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  cursor:none;
+  will-change:transform,opacity;
+  transition:none;
+}
+.agent-panel::after{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--cream);opacity:0;
+  transition:opacity .3s var(--ease-q);
+  mix-blend-mode:overlay;
+}
+.agent-panel:hover::after{opacity:.06}
+
+.ap-num{
+  position:absolute;top:14px;left:16px;
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(1.8rem,3vw,2.8rem);
+  color:var(--cream);opacity:.18;
+  line-height:1;letter-spacing:-.04em;
+}
+.ap-sector-tag{
+  position:absolute;top:14px;right:14px;
+  font-family:var(--font-j);font-weight:800;font-size:8px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cream);opacity:.5;
+  padding:4px 8px;border:1px solid rgba(237,232,223,.2);
+}
+.ap-content{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px;
+  background:linear-gradient(to top, rgba(14,13,10,.85) 0%, transparent 100%);
+}
+.ap-name{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(.9rem,1.5vw,1.3rem);
+  line-height:1.1;color:var(--cream);
+  margin-bottom:6px;
+}
+.ap-analogy{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(.72rem,1.1vw,1rem);
+  line-height:1.4;color:var(--cream);opacity:.55;
+  margin-bottom:10px;
+}
+.ap-price{
+  display:flex;gap:16px;
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.1em;color:var(--cream);opacity:.45;
+}
+.ap-price strong{font-weight:800;opacity:.9;margin-right:2px}
+
+/* Widget hover preview */
+.ap-widget{
+  position:absolute;
+  top:0;right:0;
+  width:200px;
+  height:100%;
+  background:var(--cream);
+  color:var(--ink);
+  transform:translateX(110%);
+  display:flex;flex-direction:column;
+  pointer-events:none;
+  z-index:10;
+  overflow:hidden;
+}
+.apw-header{
+  padding:10px 14px;
+  border-bottom:1px solid rgba(14,13,10,.08);
+  display:flex;align-items:center;gap:8px;
+  background:var(--cream);
+  flex-shrink:0;
+}
+.apw-dot{width:8px;height:8px;border-radius:50%;background:var(--sage);flex-shrink:0}
+.apw-name{font-family:var(--font-j);font-weight:800;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.apw-bubbles{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden}
+.apw-bubble{
+  font-family:var(--font-j);font-weight:300;font-size:9px;line-height:1.4;
+  padding:7px 10px;border-radius:2px;max-width:85%;
+}
+.apw-bubble.user{background:rgba(14,13,10,.08);align-self:flex-end;border-radius:8px 2px 8px 8px}
+.apw-bubble.agent{background:var(--ink);color:var(--cream);align-self:flex-start;border-radius:2px 8px 8px 8px}
+.apw-bubble.typing .apw-cursor{display:inline-block;width:1px;height:9px;background:var(--cream);animation:blink .7s infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── PACKAGES SECTION */
+#cat-packages{
+  background:var(--cream);color:var(--ink);
+  padding:120px 40px;
+}
+.pkg-header{
+  margin-bottom:72px;
+}
+.pkg-eyebrow{
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;opacity:.4;
+  margin-bottom:16px;
+}
+.pkg-title{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(2.4rem,5vw,5.5rem);
+  line-height:.95;letter-spacing:-.05em;
+}
+.pkg-sub{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(1rem,1.6vw,1.4rem);
+  color:var(--ink);opacity:.5;margin-top:16px;
+}
+.pkg-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+}
+.pkg-card{
+  background:var(--ink);color:var(--cream);
+  padding:48px 36px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.pkg-card::before{
+  content:'';position:absolute;inset:0;
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .6s var(--ease-q);
+}
+.pkg-card.a::before{background:rgba(196,92,43,.06)}
+.pkg-card.b::before{background:rgba(155,176,196,.06)}
+.pkg-card.c::before{background:rgba(122,153,119,.06)}
+.pkg-card:hover::before{transform:scaleX(1)}
+.pkg-card-num{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(5rem,10vw,9rem);
+  line-height:1;letter-spacing:-.04em;opacity:.06;
+  position:absolute;top:24px;right:20px;
+}
+.pkg-plan{
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;opacity:.4;
+  margin-bottom:12px;
+}
+.pkg-name{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(1.4rem,2.5vw,2.2rem);
+  line-height:1.1;margin-bottom:24px;
+}
+.pkg-tagline{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(.85rem,1.2vw,1.05rem);
+  line-height:1.4;opacity:.5;margin-bottom:28px;
+}
+.pkg-agents{
+  list-style:none;margin-bottom:32px;flex:1;
+}
+.pkg-agents li{
+  font-family:var(--font-j);font-weight:300;font-size:11px;
+  letter-spacing:.04em;opacity:.55;padding:6px 0;
+  border-bottom:1px solid rgba(237,232,223,.06);
+  display:flex;align-items:center;gap:8px;
+}
+.pkg-agents li::before{content:'—';opacity:.3;font-size:9px}
+.pkg-price{margin-top:auto;padding-top:28px;border-top:1px solid rgba(237,232,223,.1)}
+.pkg-setup{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(1.6rem,2.5vw,2.4rem);
+  letter-spacing:-.03em;
+}
+.pkg-setup sup{font-size:.5em;vertical-align:super;opacity:.6}
+.pkg-monthly{
+  font-family:var(--font-j);font-weight:300;font-size:11px;
+  opacity:.4;margin-top:4px;
+}
+.pkg-discount{
+  display:inline-block;margin-top:8px;
+  font-family:var(--font-j);font-weight:800;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--terra);opacity:.8;
+}
+
+/* ── CTA SECTION */
+#cat-cta{
+  background:var(--ink);
+  height:60vh;min-height:340px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-title{
+  font-family:var(--font-j);font-weight:800;
+  font-size:clamp(2.2rem,5vw,5.5rem);
+  line-height:.95;letter-spacing:-.05em;color:var(--cream);
+  margin-bottom:20px;
+}
+.cta-sub{
+  font-family:var(--font-f);font-style:italic;font-weight:300;
+  font-size:clamp(1rem,1.6vw,1.4rem);
+  color:var(--cream);opacity:.45;margin-bottom:48px;
+}
+.cta-btn{
+  position:relative;
+  background:var(--terra);color:var(--cream);
+  font-family:var(--font-j);font-weight:800;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:18px 40px;border:none;cursor:none;
+  text-decoration:none;display:inline-block;
+  overflow:hidden;
+}
+.cta-btn::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(237,232,223,.15);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform .4s var(--ease-q);
+}
+.cta-btn:hover::before{transform:scaleY(1)}
+.cta-secondary{
+  margin-top:20px;
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--cream);opacity:.3;
+  text-decoration:none;display:block;
+  transition:opacity .2s;
+}
+.cta-secondary:hover{opacity:.7}
+
+.ct-footer{
+  position:absolute;bottom:28px;width:100%;
+  display:flex;justify-content:space-between;padding:0 40px;
+}
+.ct-footer span{
+  font-family:var(--font-j);font-weight:300;font-size:10px;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--cream);opacity:.2;
+}
+
+/* ── CLUSTER LABEL */
+.cluster-label{
+  position:absolute;top:32px;left:40px;
+  font-family:var(--font-j);font-weight:300;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cream);opacity:.2;
+  z-index:5;
+}
+
+/* ── REDUCE MOTION */
+@media(prefers-reduced-motion:reduce){
+  .agent-panel,.ap-widget,.cat-hero-panel{transition:none!important;transform:none!important;animation:none!important}
+}
+/* ── MOBILE */
+@media(max-width:768px){
+  nav{padding:20px 24px}
+  #cat-filter{padding:0 20px;overflow-x:auto;gap:0}
+  .cat-filter-btn{padding:0 14px;font-size:9px}
+  .agent-cluster{min-height:auto;display:flex;flex-direction:column;gap:16px;padding:20px}
+  .agent-panel{position:relative!important;left:auto!important;top:auto!important;
+    width:100%!important;height:220px!important;transform:none!important}
+  .pkg-grid{grid-template-columns:1fr}
+  #cat-packages{padding:60px 24px}
+  .cta-title{font-size:clamp(1.8rem,6vw,3rem)}
+  #cat-cta{height:auto;padding:80px 24px}
+  .ct-footer{padding:0 24px}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="nav-back">← Accueil</a>
+  <span class="nav-logo">Poise Studio</span>
+  <span class="nav-tag">Catalogue · 2026</span>
+</nav>
+
+<!-- ── §1 HERO CATALOGUE -->
+<section id="cat-hero">
+  <div class="cat-hero-stage" id="hero-stage">
+    <div class="cat-hero-panel hp-1">FAQ</div>
+    <div class="cat-hero-panel hp-2">DM</div>
+    <div class="cat-hero-panel hp-3">24/7</div>
+    <div class="cat-hero-panel hp-4">Email</div>
+  </div>
+  <div class="cat-hero-content">
+    <span class="cat-hero-title" id="hero-title">13 agents.</span>
+    <p class="cat-hero-sub">Une infrastructure. Votre standing.</p>
+    <p class="cat-hero-body">Chaque agent répond à une friction réelle.<br>Chacun fonctionne seul. Ensemble, ils deviennent<br>votre secrétariat invisible.</p>
+  </div>
+  <span class="cat-scroll-hint">Découvrir le catalogue</span>
+</section>
+
+<!-- ── §2 FILTER BAR -->
+<div id="cat-filter">
+  <button class="cat-filter-btn active" data-sector="all">Tous</button>
+  <div class="cat-filter-sep"></div>
+  <button class="cat-filter-btn" data-sector="sport">Sport</button>
+  <div class="cat-filter-sep"></div>
+  <button class="cat-filter-btn" data-sector="hospitality">Hospitality</button>
+  <div class="cat-filter-sep"></div>
+  <button class="cat-filter-btn" data-sector="evenementiel">Événementiel</button>
+  <div class="cat-filter-sep"></div>
+  <button class="cat-filter-btn" data-sector="b2b">B2B</button>
+  <div class="cat-filter-sep"></div>
+  <button class="cat-filter-btn" data-sector="formation">Formation</button>
+</div>
+
+<!-- ── §3 MOSAÏQUE AGENTS -->
+<section id="cat-mosaic">
+
+  <!-- Cluster 1 — Universels & Sport -->
+  <div class="agent-cluster" id="cluster-1">
+    <span class="cluster-label">01 — Universels & Sport</span>
+
+    <!-- 01 Widget FAQ -->
+    <div class="agent-panel" data-sector="all"
+      style="left:7%;top:14%;width:clamp(200px,22vw,300px);height:clamp(280px,32vw,420px);background:#1a0f0c;transform:rotate(-3deg)">
+      <span class="ap-num">01</span>
+      <span class="ap-sector-tag">Universel</span>
+      <div class="ap-content">
+        <div class="ap-name">Widget FAQ</div>
+        <div class="ap-analogy">Le visiteur qui frappe à la porte à 23h. Il repart avec une réponse.</div>
+        <div class="ap-price"><span><strong>300€</strong> setup</span><span><strong>100€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot"></div><span class="apw-name">Votre assistant</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Quels sont vos horaires ?</div>
+          <div class="apw-bubble agent" data-typing="Nous sommes ouverts du lundi au samedi, 9h–19h. En quoi puis-je vous aider ?"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Réponses DM -->
+    <div class="agent-panel" data-sector="sport hospitality"
+      style="left:33%;top:6%;width:clamp(180px,20vw,270px);height:clamp(260px,30vw,390px);background:var(--ramp-w-4);transform:rotate(5deg)">
+      <span class="ap-num">02</span>
+      <span class="ap-sector-tag">Sport · Hospitality</span>
+      <div class="ap-content">
+        <div class="ap-name">Réponses DM<br>Insta/WhatsApp</div>
+        <div class="ap-analogy">Vos 40 DMs du week-end. Triés, répondus. Lundi matin, votre boîte est propre.</div>
+        <div class="ap-price"><span><strong>250€</strong> setup</span><span><strong>100€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--terra)"></div><span class="apw-name">Instagram DM</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Vous avez des places dispo ?</div>
+          <div class="apw-bubble agent" data-typing="Oui ! Plusieurs créneaux sont disponibles cette semaine. Quel jour vous convient ?"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 Prospecting Partenariats -->
+    <div class="agent-panel" data-sector="sport"
+      style="left:57%;top:18%;width:clamp(170px,19vw,255px);height:clamp(240px,28vw,370px);background:var(--ramp-m-4);transform:rotate(-2deg)">
+      <span class="ap-num">07</span>
+      <span class="ap-sector-tag">Sport</span>
+      <div class="ap-content">
+        <div class="ap-name">Prospecting<br>Partenariats</div>
+        <div class="ap-analogy">Le club qui cherche un sponsor. L'agent prospective, vous signez.</div>
+        <div class="ap-price"><span><strong>350€</strong> setup</span><span><strong>120€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--sage)"></div><span class="apw-name">Partenariats</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Partenariat club possible ?</div>
+          <div class="apw-bubble agent" data-typing="Absolument. Envoyez-moi vos coordonnées, notre directeur commercial vous contacte sous 24h."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 Pipeline Clubs -->
+    <div class="agent-panel" data-sector="sport"
+      style="left:74%;top:4%;width:clamp(155px,17vw,230px);height:clamp(220px,26vw,340px);background:var(--ramp-w-6);color:var(--ink);transform:rotate(3deg)">
+      <span class="ap-num" style="color:var(--ink)">13</span>
+      <span class="ap-sector-tag" style="color:var(--ink);border-color:rgba(14,13,10,.2)">Sport</span>
+      <div class="ap-content" style="background:linear-gradient(to top, rgba(248,227,212,.9) 0%, transparent 100%)">
+        <div class="ap-name" style="color:var(--ink)">Pipeline Clubs<br>& Fédérations</div>
+        <div class="ap-analogy" style="color:var(--ink)">Le club affilié qui cherche une info fédération. Réponse instantanée. Zéro email.</div>
+        <div class="ap-price" style="color:var(--ink)"><span><strong>300€</strong> setup</span><span><strong>120€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget" style="background:var(--ink);color:var(--cream)">
+        <div class="apw-header" style="background:var(--ink);border-color:rgba(237,232,223,.08)"><div class="apw-dot"></div><span class="apw-name" style="color:var(--cream)">Fédération</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user" style="background:rgba(237,232,223,.12);color:var(--cream)">Dossier affiliation 2026 ?</div>
+          <div class="apw-bubble agent" style="background:var(--cream);color:var(--ink)" data-typing="Le dossier est disponible sur notre portail. Je vous envoie le lien directement."></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cluster 2 — B2B -->
+  <div class="agent-cluster" id="cluster-2">
+    <span class="cluster-label">02 — B2B</span>
+
+    <!-- 03 Marketing Emails -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:5%;top:10%;width:clamp(190px,21vw,280px);height:clamp(270px,31vw,400px);background:var(--ramp-c-3);transform:rotate(-6deg)">
+      <span class="ap-num">03</span>
+      <span class="ap-sector-tag">B2B</span>
+      <div class="ap-content">
+        <div class="ap-name">Marketing<br>& Emails</div>
+        <div class="ap-analogy">La pile d'emails entrants qui grossit chaque matin. Triée, classée, répondue.</div>
+        <div class="ap-price"><span><strong>300€</strong> setup</span><span><strong>150€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--bleu)"></div><span class="apw-name">Emails entrants</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Demande de devis reçue</div>
+          <div class="apw-bubble agent" data-typing="Triée → Urgent. Réponse envoyée. Suit dans votre CRM."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Concierge Business B2B -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:29%;top:5%;width:clamp(200px,23vw,310px);height:clamp(290px,34vw,440px);background:var(--ramp-c-4);transform:rotate(2deg)">
+      <span class="ap-num">05</span>
+      <span class="ap-sector-tag">B2B</span>
+      <div class="ap-content">
+        <div class="ap-name">Concierge<br>Business B2B</div>
+        <div class="ap-analogy">Votre partenaire qui cherche une info à l'autre bout du monde. Votre concierge répond.</div>
+        <div class="ap-price"><span><strong>375€</strong> setup</span><span><strong>130€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--bleu)"></div><span class="apw-name">Concierge B2B</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Conditions de partenariat ?</div>
+          <div class="apw-bubble agent" data-typing="Je vous transmets notre deck partenaire. Un call cette semaine ?"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 Dév Commercial B2B -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:56%;top:15%;width:clamp(175px,20vw,265px);height:clamp(250px,29vw,380px);background:var(--ramp-c-2);transform:rotate(-4deg)">
+      <span class="ap-num">06</span>
+      <span class="ap-sector-tag">B2B</span>
+      <div class="ap-content">
+        <div class="ap-name">Développement<br>Commercial B2B</div>
+        <div class="ap-analogy">Vos prospects entrants qualifiés. Pas de pitch. Juste les bons au bon moment.</div>
+        <div class="ap-price"><span><strong>350€</strong> setup</span><span><strong>130€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--bleu)"></div><span class="apw-name">Commercial</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Intéressé par vos services</div>
+          <div class="apw-bubble agent" data-typing="Parfait. Quelle est la taille de votre structure ? Je qualifie votre besoin."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 Accueil Qualif B2B -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:77%;top:7%;width:clamp(155px,17vw,230px);height:clamp(220px,26vw,340px);background:var(--ramp-c-1);transform:rotate(6deg)">
+      <span class="ap-num">12</span>
+      <span class="ap-sector-tag">B2B</span>
+      <div class="ap-content">
+        <div class="ap-name">Accueil &<br>Qualification B2B</div>
+        <div class="ap-analogy">Le lead entrant. Qualifié avant même d'atterrir dans votre CRM.</div>
+        <div class="ap-price"><span><strong>300€</strong> setup</span><span><strong>110€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--bleu)"></div><span class="apw-name">Accueil</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">On cherche un prestataire</div>
+          <div class="apw-bubble agent" data-typing="Pour quel secteur ? Et quel budget estimé ? Je vous oriente vers la bonne offre."></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cluster 3 — Événementiel, Formation, Franchise, Hospitality -->
+  <div class="agent-cluster" id="cluster-3">
+    <span class="cluster-label">03 — Événementiel, Formation & Franchise</span>
+
+    <!-- 04 Concierge Événements -->
+    <div class="agent-panel" data-sector="evenementiel hospitality"
+      style="left:6%;top:8%;width:clamp(200px,22vw,295px);height:clamp(280px,33vw,430px);background:var(--ramp-w-5);color:var(--ink);transform:rotate(-5deg)">
+      <span class="ap-num" style="color:var(--ink)">04</span>
+      <span class="ap-sector-tag" style="color:var(--ink);border-color:rgba(14,13,10,.2)">Événementiel</span>
+      <div class="ap-content" style="background:linear-gradient(to top, rgba(240,186,160,.9) 0%, transparent 100%)">
+        <div class="ap-name" style="color:var(--ink)">Concierge<br>Événements</div>
+        <div class="ap-analogy" style="color:var(--ink)">Un invité qui pose une question à 22h30. Il a une réponse en 8 secondes.</div>
+        <div class="ap-price" style="color:var(--ink)"><span><strong>400€</strong> setup</span><span><strong>150€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget" style="background:var(--ink);color:var(--cream)">
+        <div class="apw-header" style="background:var(--ink);border-color:rgba(237,232,223,.08)"><div class="apw-dot" style="background:var(--terra)"></div><span class="apw-name" style="color:var(--cream)">Concierge</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user" style="background:rgba(237,232,223,.12);color:var(--cream)">Menu végétarien dispo ?</div>
+          <div class="apw-bubble agent" style="background:var(--cream);color:var(--ink)" data-typing="Oui, toutes nos formules proposent une option végétarienne. Je vous envoie la carte."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 Formations — cycle complet (fusion 08 + 10) -->
+    <div class="agent-panel" data-sector="formation"
+      style="left:30%;top:5%;width:clamp(190px,21vw,285px);height:clamp(265px,31vw,420px);background:var(--ramp-m-3);transform:rotate(4deg)">
+      <span class="ap-num">08</span>
+      <span class="ap-sector-tag">Formation</span>
+      <div class="ap-content">
+        <div class="ap-name">Formations —<br>cycle complet</div>
+        <div class="ap-analogy">L'élève qui s'inscrit à 6h. Le prospect qui hésite à 22h. Un seul agent, zéro friction.</div>
+        <div class="ap-price"><span><strong>350€</strong> setup</span><span><strong>180€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget">
+        <div class="apw-header"><div class="apw-dot" style="background:var(--sage)"></div><span class="apw-name">Formations</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user">Formation Excel avancé ?</div>
+          <div class="apw-bubble agent" data-typing="Prochaine session le 12 juin. Je vous réserve une place ?"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 Franchise Europe -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:58%;top:10%;width:clamp(185px,21vw,280px);height:clamp(265px,31vw,405px);background:var(--ramp-c-5);color:var(--ink);transform:rotate(-6deg)">
+      <span class="ap-num" style="color:var(--ink)">09</span>
+      <span class="ap-sector-tag" style="color:var(--ink);border-color:rgba(14,13,10,.2)">B2B · Multilingue</span>
+      <div class="ap-content" style="background:linear-gradient(to top, rgba(196,208,220,.9) 0%, transparent 100%)">
+        <div class="ap-name" style="color:var(--ink)">Franchise<br>Europe</div>
+        <div class="ap-analogy" style="color:var(--ink)">Votre franchisé à Amsterdam, votre franchisé à Lyon. Une réponse cohérente dans leurs langues.</div>
+        <div class="ap-price" style="color:var(--ink)"><span><strong>350€</strong> setup</span><span><strong>100€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget" style="background:var(--ink);color:var(--cream)">
+        <div class="apw-header" style="background:var(--ink);border-color:rgba(237,232,223,.08)"><div class="apw-dot" style="background:var(--bleu)"></div><span class="apw-name" style="color:var(--cream)">Franchise</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user" style="background:rgba(237,232,223,.12);color:var(--cream)">Franchise opportunities?</div>
+          <div class="apw-bubble agent" style="background:var(--cream);color:var(--ink)" data-typing="Absolutely. Our franchise pack starts at €15K. I'll send you our information document."></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 Support Franchisés -->
+    <div class="agent-panel" data-sector="b2b"
+      style="left:20%;top:52%;width:clamp(195px,22vw,290px);height:clamp(275px,32vw,415px);background:var(--ramp-m-5);color:var(--ink);transform:rotate(-3deg)">
+      <span class="ap-num" style="color:var(--ink)">11</span>
+      <span class="ap-sector-tag" style="color:var(--ink);border-color:rgba(14,13,10,.2)">Franchise</span>
+      <div class="ap-content" style="background:linear-gradient(to top, rgba(168,189,166,.9) 0%, transparent 100%)">
+        <div class="ap-name" style="color:var(--ink)">Support<br>Franchisés</div>
+        <div class="ap-analogy" style="color:var(--ink)">Votre réseau. Une question à 20h. Une réponse cohérente avec votre charte.</div>
+        <div class="ap-price" style="color:var(--ink)"><span><strong>300€</strong> setup</span><span><strong>150€</strong>/mo</span></div>
+      </div>
+      <div class="ap-widget" style="background:var(--ink);color:var(--cream)">
+        <div class="apw-header" style="background:var(--ink);border-color:rgba(237,232,223,.08)"><div class="apw-dot" style="background:var(--sage)"></div><span class="apw-name" style="color:var(--cream)">Support réseau</span></div>
+        <div class="apw-bubbles">
+          <div class="apw-bubble user" style="background:rgba(237,232,223,.12);color:var(--cream)">Comment déclarer un incident ?</div>
+          <div class="apw-bubble agent" style="background:var(--cream);color:var(--ink)" data-typing="Via le portail franchisé, section Incidents. Je vous envoie le lien directement."></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cluster-3 -->
+
+</section><!-- /cat-mosaic -->
+
+<!-- ── §4 PACKAGES -->
+<section id="cat-packages">
+  <div class="pkg-header">
+    <p class="pkg-eyebrow">Comment ça s'assemble</p>
+    <h2 class="pkg-title">3 configurations.<br>Une pour chaque besoin.</h2>
+    <p class="pkg-sub">Commencez par une. Ajoutez au besoin.</p>
+  </div>
+  <div class="pkg-grid">
+
+    <div class="pkg-card a" id="pkg-a">
+      <span class="pkg-card-num">A</span>
+      <p class="pkg-plan">Package A</p>
+      <h3 class="pkg-name">Experience<br>Starter</h3>
+      <p class="pkg-tagline">Pour commencer. Le secrétariat s'ouvre.</p>
+      <ul class="pkg-agents">
+        <li>Widget FAQ</li>
+        <li>Réponses DM Insta/WhatsApp</li>
+      </ul>
+      <div class="pkg-price">
+        <div class="pkg-setup"><sup>€</sup>495 <span style="font-family:var(--font-j);font-weight:300;font-size:.45em;opacity:.5;letter-spacing:0">setup</span></div>
+        <div class="pkg-monthly">+ 200€/mois</div>
+        <span class="pkg-discount">— 10% sur le setup</span>
+      </div>
+    </div>
+
+    <div class="pkg-card b" id="pkg-b">
+      <span class="pkg-card-num">B</span>
+      <p class="pkg-plan">Package B</p>
+      <h3 class="pkg-name">Growth</h3>
+      <p class="pkg-tagline">Votre présence est complète. Vos messages sortent aussi.</p>
+      <ul class="pkg-agents">
+        <li>Widget FAQ</li>
+        <li>Réponses DM Insta/WhatsApp</li>
+        <li>Marketing & Emails</li>
+      </ul>
+      <div class="pkg-price">
+        <div class="pkg-setup"><sup>€</sup>748 <span style="font-family:var(--font-j);font-weight:300;font-size:.45em;opacity:.5;letter-spacing:0">setup</span></div>
+        <div class="pkg-monthly">+ 350€/mois</div>
+        <span class="pkg-discount">— 12% sur le setup</span>
+      </div>
+    </div>
+
+    <div class="pkg-card c" id="pkg-c">
+      <span class="pkg-card-num">C</span>
+      <p class="pkg-plan">Package C</p>
+      <h3 class="pkg-name">Full<br>Concierge</h3>
+      <p class="pkg-tagline">L'infrastructure complète. Votre business ne ferme plus jamais.</p>
+      <ul class="pkg-agents">
+        <li>Widget FAQ</li>
+        <li>Réponses DM Insta/WhatsApp</li>
+        <li>Marketing & Emails</li>
+        <li>Concierge Événements</li>
+      </ul>
+      <div class="pkg-price">
+        <div class="pkg-setup"><sup>€</sup>1 062 <span style="font-family:var(--font-j);font-weight:300;font-size:.45em;opacity:.5;letter-spacing:0">setup</span></div>
+        <div class="pkg-monthly">+ 500€/mois</div>
+        <span class="pkg-discount">— 15% sur le setup</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── §5 CTA -->
+<section id="cat-cta">
+  <h2 class="cta-title">Construisez<br>votre config.</h2>
+  <p class="cta-sub">Devis sous 48h. Premier mois offert.</p>
+  <a href="index.html#contact" class="cta-btn" id="cat-cta-btn">Commencer l'audit</a>
+  <a href="#" class="cta-secondary">Voir tous les tarifs →</a>
+  <div class="ct-footer">
+    <span>Poise Studio — Bruxelles</span>
+    <span>info@cozygrowth.studio</span>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ── CURSOR */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  gsap.to(cur, { x:e.clientX, y:e.clientY, duration:.12, ease:'none', overwrite:'auto' });
+});
+document.querySelectorAll('a,button,.cta-btn,.agent-panel').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expand'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expand'));
+});
+
+/* ── LENIS */
+const lenis = new Lenis({ lerp:0.09, smoothWheel:true });
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+lenis.on('scroll', ScrollTrigger.update);
+ScrollTrigger.scrollerProxy(document.body, {
+  scrollTop(v) { return arguments.length ? lenis.scrollTo(v,{immediate:true}) : window.scrollY },
+  getBoundingClientRect() { return { top:0, left:0, width:window.innerWidth, height:window.innerHeight } }
+});
+
+/* ── HERO ANIMATION */
+function initHero() {
+  const panels = document.querySelectorAll('.cat-hero-panel');
+  const title = document.getElementById('hero-title');
+  if (reduced) return;
+
+  gsap.set(panels, { x: i => (i % 2 === 0 ? -60 : 60), opacity:0 });
+  gsap.to(panels, {
+    x:0, opacity:1, duration:1.4, stagger:0.12,
+    ease:'power4.out', delay:0.3
+  });
+
+  gsap.fromTo(title,
+    { opacity:0, y:20 },
+    { opacity:1, y:0, duration:1.0, ease:'power3.out', delay:0.5 }
+  );
+}
+initHero();
+
+/* ── FILTER — M-20 sector-filter morph */
+const filterBtns = document.querySelectorAll('.cat-filter-btn');
+const allPanels = document.querySelectorAll('.agent-panel');
+
+function getOrigRotation(el) {
+  const t = el.style.transform || '';
+  const m = t.match(/rotate\(([-\d.]+)deg\)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (reduced) {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      return;
+    }
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sector = btn.dataset.sector;
+
+    allPanels.forEach(panel => {
+      const panelSectors = panel.dataset.sector || 'all';
+      const match = sector === 'all' || panelSectors.includes(sector);
+      const origRot = getOrigRotation(panel);
+
+      if (match) {
+        gsap.to(panel, {
+          scale:1, opacity:1,
+          rotation: origRot,
+          duration:0.4, ease:'power3.out'
+        });
+      } else {
+        gsap.to(panel, {
+          scale:0.6, opacity:0.2,
+          rotation: origRot - 2,
+          duration:0.35, ease:'power3.inOut'
+        });
+      }
+    });
+  });
+});
+
+/* ── PANEL HOVER — M-21 card-flip widget + conversation typing M-23 */
+let typingIntervals = new Map();
+
+function startTyping(bubble) {
+  const text = bubble.dataset.typing;
+  if (!text) return;
+  bubble.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'apw-cursor';
+  bubble.appendChild(cursor);
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      bubble.insertBefore(document.createTextNode(text[i]), cursor);
+      i++;
+    } else {
+      clearInterval(interval);
+      bubble.removeChild(cursor);
+    }
+  }, 38);
+  return interval;
+}
+
+function stopTyping(bubble, intervalId) {
+  if (intervalId) clearInterval(intervalId);
+  const text = bubble.dataset.typing;
+  if (text) bubble.textContent = '';
+}
+
+allPanels.forEach(panel => {
+  const widget = panel.querySelector('.ap-widget');
+  if (!widget) return;
+
+  const typingBubbles = widget.querySelectorAll('[data-typing]');
+  const panelIntervals = [];
+
+  panel.addEventListener('mouseenter', () => {
+    if (reduced) return;
+    gsap.killTweensOf([panel, widget]);
+    gsap.to(widget, { x:'0%', duration:0.32, ease:'power2.out', overwrite:true });
+    gsap.to(panel, { scale:1.04, duration:0.3, ease:'power2.out', overwrite:true });
+
+    typingBubbles.forEach((bubble, i) => {
+      const delay = i === 0 ? 400 : 900;
+      setTimeout(() => {
+        const id = startTyping(bubble);
+        panelIntervals[i] = id;
+      }, delay);
+    });
+  });
+
+  panel.addEventListener('mouseleave', () => {
+    if (reduced) return;
+    gsap.killTweensOf([panel, widget]);
+    gsap.to(widget, { x:'110%', duration:0.28, ease:'power2.in', overwrite:true });
+    gsap.to(panel, { scale:1, duration:0.3, ease:'power2.out', overwrite:true });
+
+    panelIntervals.forEach((id, i) => {
+      stopTyping(typingBubbles[i], id);
+    });
+    panelIntervals.length = 0;
+  });
+});
+
+/* ── CLUSTER REVEAL — panel-assemble on scroll */
+document.querySelectorAll('.agent-cluster').forEach(cluster => {
+  const panels = cluster.querySelectorAll('.agent-panel');
+  if (reduced) return;
+
+  ScrollTrigger.create({
+    trigger: cluster,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.fromTo(panels,
+        { opacity:0, y:28 },
+        { opacity:1, y:0, duration:0.85, stagger:0.1, ease:'power3.out', immediateRender:false }
+      );
+    },
+    once: true
+  });
+});
+
+/* ── PACKAGES REVEAL */
+const pkgCards = document.querySelectorAll('.pkg-card');
+if (!reduced) {
+  ScrollTrigger.create({
+    trigger: '#cat-packages',
+    start: 'top 70%',
+    onEnter: () => {
+      gsap.fromTo(pkgCards,
+        { opacity:0, y:20 },
+        { opacity:1, y:0, duration:0.9, stagger:0.12, ease:'power3.out', immediateRender:false }
+      );
+    },
+    once: true
+  });
+}
+
+/* ── MAGNETIC CTA */
+const ctaBtn = document.getElementById('cat-cta-btn');
+if (ctaBtn && !reduced) {
+  const qx = gsap.quickTo(ctaBtn, 'x', { duration:.5, ease:'elastic.out(1,.5)' });
+  const qy = gsap.quickTo(ctaBtn, 'y', { duration:.5, ease:'elastic.out(1,.5)' });
+  ctaBtn.addEventListener('pointermove', e => {
+    const r = ctaBtn.getBoundingClientRect();
+    qx((e.clientX - r.left - r.width / 2) * 0.22);
+    qy((e.clientY - r.top - r.height / 2) * 0.22);
+  });
+  ctaBtn.addEventListener('pointerleave', () => { qx(0); qy(0); });
+}
+
+ScrollTrigger.refresh();
+</script>
+</body>
+</html>
