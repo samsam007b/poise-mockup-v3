@@ -35,7 +35,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .nav-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;list-style:none;gap:32px;align-items:center;pointer-events:all;}
 .nav-links a{font-family:var(--font-j);font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .2s;}
 .nav-links a:hover,.nav-links a.active{opacity:1;}
-@media(max-width:768px){.nav-links{display:none;}}
+/* ── HAMBURGER & MOBILE MENU ─── */
+.nav-burger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:16px;background:none;border:none;cursor:none;pointer-events:all;padding:0;flex-shrink:0;}
+.nav-burger span{display:block;width:100%;height:1px;background:currentColor;transform-origin:center;transition:transform .35s ease,opacity .25s ease;}
+.nav-burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+.mobile-menu{position:fixed;inset:0;z-index:89;background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 clamp(32px,10vw,80px);gap:4px;opacity:0;pointer-events:none;transition:opacity .4s ease;}
+.mobile-menu.open{opacity:1;pointer-events:all;}
+.mobile-menu a{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(3rem,13vw,5rem);color:var(--cream);text-decoration:none;opacity:.3;transition:opacity .2s;letter-spacing:-.025em;line-height:1.2;display:block;}
+.mobile-menu a:hover,.mobile-menu a.active{opacity:1;}
+.mobile-menu-footer{position:absolute;bottom:40px;left:clamp(32px,10vw,80px);font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(237,232,223,.2);}
+@media(max-width:768px){.nav-links{display:none;}.nav-burger{display:flex;}}
 
 /* ── HERO ─── */
 .hero{min-height:100vh;padding:140px 40px 60px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;background:var(--cream);}
@@ -188,7 +199,15 @@ footer a:hover{opacity:1;}
     <li><a href="sqwr-studio.html" class="active">Studio</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu">
+  <a href="agents.html">Agents</a>
+  <a href="process.html">Process</a>
+  <a href="sqwr-studio.html" class="active">Studio</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-footer">Simple Studio · studio@simple.be</div>
+</div>
 
 <section class="hero" data-fade>
   <div class="hero-logo-wrap">
@@ -623,6 +642,26 @@ if(flipDemo){
   flipDemo.addEventListener('mouseleave',()=>{
     const inner=flipDemo.querySelector('.flip-demo-inner');
     inner.style.transform='rotateX(0) rotateY(0)';
+  });
+}
+
+/* ── HAMBURGER ─── */
+const burger = document.querySelector('.nav-burger');
+const mobileMenu = document.querySelector('.mobile-menu');
+if (burger && mobileMenu) {
+  burger.addEventListener('click', () => {
+    const isOpen = burger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    burger.setAttribute('aria-expanded', String(isOpen));
+  });
+  document.querySelectorAll('.mobile-menu a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+      burger.setAttribute('aria-expanded', 'false');
+    });
   });
 }
 </script>
